@@ -7,15 +7,17 @@ namespace FruitClassLib.Tests
     [TestClass()]
     public class ReadingTests
     {
-        [TestMethod()]
-        
-
         [TestMethod]
-        public void CreateTest(int temp, int humidity, DateTime timestamp)
+        [DataRow]
+        public void CreateTest(double temp, double humidity, int id)
         {
-            Reading expected = new Reading(temp, humidity, DateTime time); 
+            Reading expected = new Reading(temp, humidity, id); 
+            Assert.IsNotNull(expected);
 
         }
+
+        [TestMethod]
+
         
     }
 }
