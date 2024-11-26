@@ -38,7 +38,7 @@ namespace FruitClassLib.Tests
             Reading expected = new Reading(temp, humidity);
             ReadingsDB mockTest = new ReadingsDB(testMode);
             Reading actual = mockTest.Add(expected);
-            Assert.AreEqual(expected, actual);
+            Assert.AreNotEqual(expected.Id, actual.Id);
         }
 
         [TestMethod()]
