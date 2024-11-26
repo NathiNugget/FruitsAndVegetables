@@ -1,6 +1,5 @@
 using FruitClassLib;
 using FruitREST;
-using FruitREST.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 

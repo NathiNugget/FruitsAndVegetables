@@ -6,15 +6,15 @@ namespace FruitREST.Controllers
     [Route("[controller]")]
     public class ReadingsController_Old : ControllerBase
     {
-     
 
-      
+
+
 
         public ReadingsController_Old()
         {
-            
+
         }
 
-        
+
     }
 }

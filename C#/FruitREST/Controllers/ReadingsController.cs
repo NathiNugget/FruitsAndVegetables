@@ -66,15 +66,16 @@ namespace FruitREST.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult Nuke()
         {
-            if(TestMode.TestModeIsDev)
+            if (TestMode.TestModeIsDev)
             {
                 _repo.Nuke();
                 return Ok();
-            } else
+            }
+            else
             {
                 return StatusCode(401);
             }
-            
+
         }
 
         [HttpPost]
