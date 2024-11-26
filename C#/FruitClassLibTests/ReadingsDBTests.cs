@@ -52,6 +52,14 @@ namespace FruitClassLib.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod()]
+        public void GetWithoutOffsetTest()
+        {
+            int expected = 15;
+
+            int actual = _repo.Get(null, null).Count;
+            Assert.AreEqual(expected, actual);
+        }
 
 
         [TestCleanup]
