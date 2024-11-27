@@ -1,5 +1,7 @@
 ﻿using FruitClassLib;
+using FruitREST.Authentication;
 using FruitREST.Model;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -8,6 +10,7 @@ namespace FruitREST.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class ReadingsController : ControllerBase
     {
         private IReadingsRepository _repo;
@@ -22,6 +25,7 @@ namespace FruitREST.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [EnableCors]
         public IActionResult Get([FromQuery] RangeDTO dto)
         {
             try
@@ -46,6 +50,8 @@ namespace FruitREST.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [EnableCors("PrivilegedPolicy")]
+
         public IActionResult Post([FromBody] ReadingDTO dto)
         {
             try
@@ -64,6 +70,7 @@ namespace FruitREST.Controllers
         [Route("nuke")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [EnableCors("PrivilegedPolicy")]
         public IActionResult Nuke()
         {
             if (TestMode.TestModeIsDev)
@@ -82,6 +89,7 @@ namespace FruitREST.Controllers
         [Route("setup")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [EnableCors("PrivilegedPolicy")]
         public IActionResult Setup()
         {
             if (TestMode.TestModeIsDev)

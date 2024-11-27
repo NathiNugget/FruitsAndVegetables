@@ -23,7 +23,7 @@ namespace FruitClassLib
                 _connectionstring = Secret.SecretKey.ConnectionStringProduction;
             }
         }
-
+        
         public Reading Add(Reading reading)
         {
             string query = "AddMeasurement";

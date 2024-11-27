@@ -1,0 +1,26 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white; 
+    background-color: rgb(61, 61, 61);
+}
+
+h1 {
+    font-family: Comic Sans MS, Comic Sans, cursive;
+    
+}
+
+:root{
+    --colorgaming:goldenrod; 
+    
+}
+
+#app {
+    background-color: black;
+    padding: 5px; 
+    border-radius: 20px;
+    box-shadow: 0 0 20px 2px goldenrod;
+}
+
+#app:hover {
+    box-shadow: 0 0 20px 5px var(--colorgaming);
+}
