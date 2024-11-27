@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace UITest
 {
@@ -31,6 +32,41 @@ namespace UITest
         {
             IWebElement newestHumidity = driver.FindElement(By.Id("NewestHumidity"));
             Assert.IsNotNull(newestHumidity);
+        }
+
+        [TestMethod]
+        public void ClickableDropDown()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            IWebElement selectedFood = driver.FindElement(By.Id("Banan"));
+            Assert.IsNotNull(selectedFood);
+        }
+
+        [TestMethod]
+        public void SelectFood()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            IWebElement selectedFood = driver.FindElement(By.Id("Banan"));
+            selectedFood.Click();
+            Thread.Sleep(1000);
+            IWebElement spoilTime = driver.FindElement(By.Id("SpoilTime"));
+            Assert.IsNotNull(spoilTime);
+        }
+
+        [TestMethod]
+        public void SelectFoodCorrectName()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            IWebElement selectedFood = driver.FindElement(By.Id("Banan"));
+            selectedFood.Click();
+            Thread.Sleep(1000);
+            IWebElement selectedElement = driver.FindElement(By.Id("Placeholder")); //TODO: Change Placeholder ID to actual element
+            string expected = "Banan";
+            string actual = selectedElement.Text;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCleanup]
