@@ -1,6 +1,5 @@
 using FruitClassLib;
 using FruitREST;
-using FruitREST.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +15,7 @@ TestMode.TestModeIsDev = true;
 
 ReadingsDB _readingrepo = new ReadingsDB(TestMode.TestModeIsDev);
 // TODO: Add singleton and create interface
+builder.Services.AddSingleton<ReadingsDB>(new ReadingsDB(TestMode.TestModeIsDev));
 
 
 var app = builder.Build();

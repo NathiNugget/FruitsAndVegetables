@@ -55,7 +55,7 @@ namespace FruitClassLib
             return readingToReturn;
         }
 
-        public List<Reading> Get(int offset, int count)
+        public List<Reading> Get(int? offset, int? count)
         {
             string query = "GetMeasurements";
             List<Reading> readingList = new List<Reading>();
@@ -104,6 +104,10 @@ namespace FruitClassLib
 
         public void Setup()
         {
+#if !DEBUG
+            return;
+#endif
+
             Reading _reading = new Reading(50, 50);
             for (int i = 0; i < 15; i++)
             {

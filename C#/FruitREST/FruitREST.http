@@ -1,6 +1,6 @@
 @FruitREST_HostAddress = http://localhost:5110
 
-GET {{FruitREST_HostAddress}}/weatherforecast/
+GET {{FruitREST_HostAddress}}/readings/
 Accept: application/json
 
 ###

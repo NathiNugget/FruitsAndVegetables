@@ -2,6 +2,6 @@
 {
     public static class TestMode
     {
-        public static bool TestModeIsDev = false; 
+        public static bool TestModeIsDev = false;
     }
 }
