@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Code here! -->
+        <h1>Giflar er nice!</h1>
+        yolo
+
+        <ul>
+            <li v-for="(reading, index) in readings" :key="index">
+                {{reading.temperature}}, {{reading.humidity}}, {{reading.id}}, {{reading.timestamp}}, 
+            </li>
+        </ul>
+
+
+
+
+
+        <!-- But before the end of this -->
+    </div>
+
+    <script type="module" src="js/index.js"></script>
+</body>
+</html>
