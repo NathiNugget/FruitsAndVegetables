@@ -24,6 +24,7 @@ namespace FruitClassLib
         
         public Food Add(Food food)
         {
+            //TODO storeprocedure  til AddFood
             string query = "AddFood";
             Food foodToReturn = null!;
             using (SqlConnection conn = new SqlConnection(_connectionstring))
@@ -64,6 +65,7 @@ namespace FruitClassLib
 
         public List<Food> FindByIsVegetable()
         {
+            //TODO storeprocedure  til FindByIsVegetableFood
             string query = "FindByIsVegetableFood";
             List<Food> listOfFood = new List<Food>();
             using (SqlConnection conn = new SqlConnection(_connectionstring))
@@ -100,12 +102,64 @@ namespace FruitClassLib
 
         public Food FindByName(Food food)
         {
-            throw new NotImplementedException();
+            //TODO storeprocedure  til findbyname
+            string query = "FindByName";
+            Food foodToReturn = null!;
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        bool isVegetable = reader.GetBoolean(2);
+                        string apiLink = reader.GetString(3);
+                        byte spoilDate = reader.GetByte(4);
+                        byte spoilHours = reader.GetByte(5);
+                        double idealTemperature = reader.GetDouble(6);
+                        double idealHumidity = reader.GetDouble(7);
+                        foodToReturn = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, id);
+                    }
+                }
+            }
+            if (foodToReturn == null) throw new Exception($"No food found with that name. passed: {foodToReturn.Name}");
+            return foodToReturn;
+
         }
 
         public List<Food> GetAll()
         {
-            throw new NotImplementedException();
+            //TODO storeprocedure  til GetAll
+            string query = "GetAll";
+            List<Food> listOfFood = new List<Food>();
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure; 
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        bool isVegetable = reader.GetBoolean(2);
+                        string apiLink = reader.GetString(3);
+                        byte spoilDate = reader.GetByte(4);
+                        byte spoilHours = reader.GetByte(5);
+                        double idealTemperature = reader.GetDouble(6);
+                        double idealHumidity = reader.GetDouble(7);
+                        Food foodToReturn = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, id);
+                        listOfFood.Add(foodToReturn);
+                    }
+                }
+            }
+            return listOfFood;
         }
 
         public void Nuke()
@@ -113,8 +167,8 @@ namespace FruitClassLib
 #if !DEBUG
             return;
 #endif
-
-            string query = "NukeMeasurements";
+            //TODO storeprocedure til NukeFood
+            string query = "NukeFood";
             using (SqlConnection connection = new SqlConnection(_connectionstring))
             {
                 connection.Open();
