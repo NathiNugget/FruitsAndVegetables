@@ -30,9 +30,10 @@ namespace FruitClassLib.Tests
         }
 
         [TestMethod()]
-        public void AddFoodDBTest(bool testMode, string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+
+        public void AddFoodDBTest(bool testMode, string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food expected = new Food(name, isVeg, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food expected = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             FoodDB mockTest = new FoodDB(testMode);
             Food actual = mockTest.Add(expected);
             Assert.AreEqual(expected, actual);
@@ -40,9 +41,9 @@ namespace FruitClassLib.Tests
 
         [TestMethod()]
         [DataRow(true, "Banan", false, "Banan.Link", (byte)2, (byte)5, 50.0, 50.0)]
-        public void FindByNameTest(bool testMode, string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+        public void FindByNameTest(bool testMode, string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food expected = new Food(name, isVeg, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food expected = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             FoodDB mockTest = new FoodDB(testMode);
             Food actual = mockTest.FindByName(expected);
             Assert.AreEqual(expected, actual);
@@ -50,9 +51,9 @@ namespace FruitClassLib.Tests
 
         [TestMethod()]
         [DataRow(true, "Cucumber", true, "Cucumber.Link", (byte)2, (byte)5, 50.0, 50.0)]
-        public void FindByIsVegTest(bool testMode, string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+        public void FindByIsVegetableTest(bool testMode, string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food expected = new Food(name, isVeg, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food expected = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             FoodDB mockTest = new FoodDB(testMode);
             Food actual = mockTest.FindByIsVeg(expected);
             Assert.AreEqual(expected, actual);

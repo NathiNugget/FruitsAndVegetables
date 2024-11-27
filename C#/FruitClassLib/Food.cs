@@ -12,24 +12,26 @@ namespace FruitClassLib
     {
         private int _id;
         private string _name;
-        private bool _isVeg;
+        private bool _isVegetable;
         private string _apiLink;
         private byte _spoilDate;
         private byte _spoilHours;
         private double _idealTemperature;
         private double _idealHumidity;
 
-        public Food(string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, int id = 1)
+        public Food(string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, int id = 1)
         {
             Id = id;
             Name = name;
-            IsVeg = isVeg;
+            IsVegetable = isVegetable;
             ApiLink = apiLink;
             SpoilDate = spoilDate;
             SpoilHours = spoilHours;
             IdealTemperature = idealTemperature;
             IdealHumidity = idealHumidity;
         }
+
+
 
         public int Id { get => _id;
 
@@ -54,7 +56,7 @@ namespace FruitClassLib
             }
         
         }
-        public bool IsVeg { get => _isVeg; set => _isVeg = value; }
+        public bool IsVegetable { get => _isVegetable; set => _isVegetable = value; }
 
         public string ApiLink { get => _apiLink; 
         

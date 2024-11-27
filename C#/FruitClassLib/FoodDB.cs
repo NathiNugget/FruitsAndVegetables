@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,45 @@ namespace FruitClassLib
                 _connectionstring = Secret.SecretKey.ConnectionStringProduction;
             }
         }
-
+        
         public Food Add(Food food)
         {
-            throw new NotImplementedException();
+            string query = "AddFood";
+            Food foodToReturn = null!;
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@name", food.Name);
+                cmd.Parameters.AddWithValue("@isVegetable", food.IsVegetable);
+                cmd.Parameters.AddWithValue("@apiLink", food.ApiLink);
+                cmd.Parameters.AddWithValue("@spoilDate", food.SpoilDate);
+                cmd.Parameters.AddWithValue("@spoilHours", food.SpoilHours);
+                cmd.Parameters.AddWithValue("@temperature", food.IdealTemperature);
+                cmd.Parameters.AddWithValue("@humidity", food.IdealHumidity);
+
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        bool isVegetable = reader.GetBoolean(2);
+                        string apiLink = reader.GetString(3);
+                        byte spoilDate = reader.GetByte(4);
+                        byte spoilHours = reader.GetByte(5);
+                        double idealTemperature = reader.GetDouble(6);
+                        double idealHumidity = reader.GetDouble(7);
+                        foodToReturn = new Food (name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, id);
+
+                    }
+                }
+            }
+            if (foodToReturn == null) throw new Exception("Food could not be inserted into database");
+            return foodToReturn;
         }
 
         public Food FindByIsVeg(Food food)
