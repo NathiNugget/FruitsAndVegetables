@@ -49,5 +49,14 @@ namespace FruitClassLib.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod()]
+        [DataRow(true, "Cucumber", true, "Cucumber.Link", (byte)2, (byte)5, 50.0, 50.0)]
+        public void FindByIsVegValid(bool testMode, string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+        {
+            Food expected = new Food(name, isVeg, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            FoodDB mockTest = new FoodDB(testMode);
+            Food actual = mockTest.FindByIsVeg(expected);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

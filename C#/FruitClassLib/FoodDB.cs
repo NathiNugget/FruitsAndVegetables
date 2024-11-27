@@ -26,6 +26,11 @@ namespace FruitClassLib
             throw new NotImplementedException();
         }
 
+        public Food FindByIsVeg(Food expected)
+        {
+            throw new NotImplementedException();
+        }
+
         public Food FindByName(Food expected)
         {
             throw new NotImplementedException();
