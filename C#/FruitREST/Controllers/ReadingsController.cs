@@ -10,9 +10,9 @@ namespace FruitREST.Controllers
     [ApiController]
     public class ReadingsController : ControllerBase
     {
-        private ReadingsDB _repo;
+        private IReadingsRepository _repo;
 
-        public ReadingsController(ReadingsDB readingsDB)
+        public ReadingsController(IReadingsRepository readingsDB)
         {
             _repo = readingsDB;
         }
