@@ -31,21 +31,23 @@ namespace FruitClassLib.Tests
 
         [TestMethod()]
 
+        [DataRow(true, "Banan", false, "Banan.Link", (byte)2, (byte)5, 50.0, 50.0)]
+
         public void AddFoodDBTest(bool testMode, string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
             Food expected = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             FoodDB mockTest = new FoodDB(testMode);
-            Food actual = mockTest.Add(expected);
+            var actual = mockTest.Add(expected);
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
-        [DataRow(true, "Banan", false, "Banan.Link", (byte)2, (byte)5, 50.0, 50.0)]
+        [DataRow(true, "Pære", false, "Pear.Link", (byte)2, (byte)5, 50.0, 50.0)]
         public void FindByNameTest(bool testMode, string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
             Food expected = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             FoodDB mockTest = new FoodDB(testMode);
-            Food actual = mockTest.FindByName(expected);
+            Food actual = mockTest.FindByName("Pære");
             Assert.AreEqual(expected, actual);
         }
 

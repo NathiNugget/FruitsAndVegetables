@@ -24,14 +24,14 @@ namespace FruitClassLib
         
         public Food Add(Food food)
         {
-            //TODO storeprocedure  til AddFood
-            string query = "AddFood";
+            string query = @"INSERT INTO Fruits (DanishName, IsVegetable, ApiMapping, SpoilDays, SpoilHours, IdealTemperature, IdealHumidity) 
+            VALUES (@name, @isVegetable, @apiLink, @spoilDate, @spoilHours, @temperature, @humidity);";
             Food foodToReturn = null!;
             using (SqlConnection conn = new SqlConnection(_connectionstring))
             {
+
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@name", food.Name);
                 cmd.Parameters.AddWithValue("@isVegetable", food.IsVegetable);
                 cmd.Parameters.AddWithValue("@apiLink", food.ApiLink);
@@ -65,96 +65,83 @@ namespace FruitClassLib
 
         public List<Food> FindByIsVegetable()
         {
-            //TODO storeprocedure  til FindByIsVegetableFood
-            string query = "FindByIsVegetableFood";
+            string query = "SELECT * FROM Foods WHERE Vegestable = 1";
             List<Food> listOfFood = new List<Food>();
             using (SqlConnection conn = new SqlConnection(_connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-
                         int id = reader.GetInt32(0);
                         string name = reader.GetString(1);
                         bool isVegetable = reader.GetBoolean(2);
                         string apiLink = reader.GetString(3);
-                        byte spoilDate = reader.GetByte(4);
+                        byte spoilDays = reader.GetByte(4);
                         byte spoilHours = reader.GetByte(5);
                         double idealTemperature = reader.GetDouble(6);
                         double idealHumidity = reader.GetDouble(7);
-                        Food foodToReturn = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, id);
+                        Food foodToReturn = new Food(name, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id);
                         listOfFood.Add(foodToReturn);
-
                     }
-                    
                 }
-                
-
             }
             return listOfFood;
-
         }
 
-        public Food FindByName(Food food)
-        {
-            //TODO storeprocedure  til findbyname
-            string query = "FindByName";
-            Food foodToReturn = null!;
-            using (SqlConnection conn = new SqlConnection(_connectionstring))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                using(SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        int id = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        bool isVegetable = reader.GetBoolean(2);
-                        string apiLink = reader.GetString(3);
-                        byte spoilDate = reader.GetByte(4);
-                        byte spoilHours = reader.GetByte(5);
-                        double idealTemperature = reader.GetDouble(6);
-                        double idealHumidity = reader.GetDouble(7);
-                        foodToReturn = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, id);
-                    }
-                }
-            }
-            if (foodToReturn == null) throw new Exception($"No food found with that name. passed: {foodToReturn.Name}");
-            return foodToReturn;
-
+            public Food FindByName(string name)
+        { 
+            string query = "SELECT * FROM Foods WHERE DanishName = @Name"; 
+            Food foodToReturn = null; 
+            using (SqlConnection conn = new SqlConnection(_connectionstring)) 
+            { 
+                conn.Open(); SqlCommand cmd = new SqlCommand(query, conn); 
+                cmd.Parameters.AddWithValue("@Name", name); 
+                using (SqlDataReader reader = cmd.ExecuteReader()) 
+                { 
+                    while (reader.Read()) 
+                    { 
+                        int id = reader.GetInt32(0); 
+                        string danishName = reader.GetString(1); 
+                        bool isVegetable = reader.GetBoolean(2); 
+                        string apiLink = reader.GetString(3); 
+                        byte spoilDays = reader.GetByte(4); 
+                        byte spoilHours = reader.GetByte(5); 
+                        double idealTemperature = reader.GetDouble(6); 
+                        double idealHumidity = reader.GetDouble(7); 
+                        foodToReturn = new Food(danishName, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id); 
+                    } 
+                } 
+            } 
+            if (foodToReturn == null) 
+            { 
+                throw new Exception($"No food found with the name: {name}"); 
+            } return foodToReturn; 
         }
 
         public List<Food> GetAll()
         {
-            //TODO storeprocedure  til GetAll
-            string query = "GetAll";
+            string query = "SELECT * FROM Foods";
             List<Food> listOfFood = new List<Food>();
             using (SqlConnection conn = new SqlConnection(_connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure; 
-                using(SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-
                         int id = reader.GetInt32(0);
                         string name = reader.GetString(1);
                         bool isVegetable = reader.GetBoolean(2);
                         string apiLink = reader.GetString(3);
-                        byte spoilDate = reader.GetByte(4);
+                        byte spoilDays = reader.GetByte(4);
                         byte spoilHours = reader.GetByte(5);
                         double idealTemperature = reader.GetDouble(6);
                         double idealHumidity = reader.GetDouble(7);
-                        Food foodToReturn = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, id);
+                        Food foodToReturn = new Food(name, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id);
                         listOfFood.Add(foodToReturn);
                     }
                 }
@@ -162,13 +149,13 @@ namespace FruitClassLib
             return listOfFood;
         }
 
-        public void Nuke()
+            public void Nuke()
         {
 #if !DEBUG
             return;
 #endif
             //TODO storeprocedure til NukeFood
-            string query = "NukeFood";
+            string query = "NukeFruits";
             using (SqlConnection connection = new SqlConnection(_connectionstring))
             {
                 connection.Open();
@@ -182,11 +169,7 @@ namespace FruitClassLib
 
         public void Setup()
         {
-            Food Food = new Food("Banan", false, "Banan.link", (byte)2 , (byte)48, 23.0, 50.0);
-            for (int i = 0; i < 15; i++)
-            {
-                Add(Food);
-            }
+            Food Food = new Food("Æble", false, "Apple.link", (byte)2 , (byte)20, 23.0, 50.0);
         }
     }
 }
