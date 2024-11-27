@@ -4,6 +4,7 @@ import json
 import requests
 import datetime
 
+headers = {"Content-Type": "application/json"}
 
 serverPort = 727
 
@@ -32,7 +33,7 @@ while True:
         elif "humidity" not in messageAsDictionary or (type(messageAsDictionary["humidity"]) is not float and type(messageAsDictionary["humidity"]) is not int):
             raise KeyError("humidity was not included in the JSON, or has an invalid value")
         # TODO: Remove "verify=False" if we can make it work without
-        response = requests.post(destinationURL, json=messageAsString, verify=False)
+        response = requests.post(destinationURL, data=messageAsString, headers=headers, verify=False)
         if response.status_code != 201:
             writeLogEntry(datetime.datetime.now(), "WRONG STATUS CODE", "Status code was " + str(response.status_code) + " RESPONSE TEXT: " + response.text )
             
