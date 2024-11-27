@@ -62,9 +62,40 @@ namespace FruitClassLib
             return foodToReturn;
         }
 
-        public Food FindByIsVeg(Food food)
+        public List<Food> FindByIsVegetable()
         {
-            throw new NotImplementedException();
+            string query = "FindByIsVegetableFood";
+            List<Food> listOfFood = new List<Food>();
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        bool isVegetable = reader.GetBoolean(2);
+                        string apiLink = reader.GetString(3);
+                        byte spoilDate = reader.GetByte(4);
+                        byte spoilHours = reader.GetByte(5);
+                        double idealTemperature = reader.GetDouble(6);
+                        double idealHumidity = reader.GetDouble(7);
+                        Food foodToReturn = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, id);
+                        listOfFood.Add(foodToReturn);
+
+                    }
+                    
+                }
+                
+
+            }
+            return listOfFood;
+
         }
 
         public Food FindByName(Food food)
@@ -77,12 +108,21 @@ namespace FruitClassLib
             throw new NotImplementedException();
         }
 
-            public void Nuke()
+        public void Nuke()
         {
-#if DEBUG
+#if !DEBUG
             return;
 #endif
-            // TODO: Write implementation for nuking database.
+
+            string query = "NukeMeasurements";
+            using (SqlConnection connection = new SqlConnection(_connectionstring))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                int nuked = cmd.ExecuteNonQuery();
+                Console.WriteLine($"I am Jimmy, destroyer of the universe. Rows nuked: {nuked} but i am just a chill guy");
+            }
 
         }
 

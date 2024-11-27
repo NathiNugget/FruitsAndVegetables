@@ -50,13 +50,17 @@ namespace FruitClassLib.Tests
         }
 
         [TestMethod()]
-        [DataRow(true, "Cucumber", true, "Cucumber.Link", (byte)2, (byte)5, 50.0, 50.0)]
-        public void FindByIsVegetableTest(bool testMode, string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+        public void FindByIsVegetableTest(bool testMode)
         {
-            Food expected = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             FoodDB mockTest = new FoodDB(testMode);
-            Food actual = mockTest.FindByIsVeg(expected);
-            Assert.AreEqual(expected, actual);
+            foreach (var food in _repo.FindByIsVegetable())
+            {
+                mockTest.Add(food);
+            }
+
+            var expected = _repo.FindByIsVegetable();
+            var actual = mockTest.FindByIsVegetable();
+            Assert.AreEqual(expected.Count, actual.Count);
         }
 
         [TestMethod()]
