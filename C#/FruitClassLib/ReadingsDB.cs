@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FruitClassLib
 {
-    public class ReadingsDB
+    public class ReadingsDB : IReadingsRepository
     {
         private string _connectionstring;
         public ReadingsDB(bool isTest)
@@ -64,18 +64,19 @@ namespace FruitClassLib
                 connection.Open();
 
                 SqlCommand cmd = new SqlCommand(@query, connection);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure; 
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@lowInterval", offset);
                 cmd.Parameters.AddWithValue("@highInterval", count);
 
                 using (SqlDataReader r = cmd.ExecuteReader())
                 {
-                    while (r.Read()) { 
+                    while (r.Read())
+                    {
                         int id = r.GetInt32(0);
                         long timestamp = r.GetInt64(1);
                         double temperature = r.GetDouble(2);
                         double humidity = r.GetDouble(3);
-                        Reading reading = new Reading(temperature, humidity, id, timestamp); 
+                        Reading reading = new Reading(temperature, humidity, id, timestamp);
                         readingList.Add(reading);
                     }
                 }
@@ -89,13 +90,13 @@ namespace FruitClassLib
 #if !DEBUG
             return;
 #endif
-           
+
             string query = "NukeMeasurements";
             using (SqlConnection connection = new SqlConnection(_connectionstring))
             {
-                connection.Open(); 
+                connection.Open();
                 SqlCommand cmd = new SqlCommand(query, connection);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure; 
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 int nuked = cmd.ExecuteNonQuery();
                 Console.WriteLine($"I am become death, destroyer of universes. Rows nuked: {nuked}");
             }

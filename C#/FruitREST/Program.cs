@@ -13,9 +13,8 @@ builder.Services.AddSwaggerGen();
 TestMode.TestModeIsDev = true;
 #endif
 
-ReadingsDB _readingrepo = new ReadingsDB(TestMode.TestModeIsDev);
 // TODO: Add singleton and create interface
-builder.Services.AddSingleton<ReadingsDB>(new ReadingsDB(TestMode.TestModeIsDev));
+builder.Services.AddSingleton<IReadingsRepository>(new ReadingsDB(TestMode.TestModeIsDev));
 
 
 var app = builder.Build();
