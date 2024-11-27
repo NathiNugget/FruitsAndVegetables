@@ -40,7 +40,7 @@ namespace FruitClassLib.Tests
         }
 
         [TestMethod()]
-        [DataRow(true, "Banan", false, "bongo", (byte)2, (byte)5, 50.0, 50.0)]
+        [DataRow(true, "Banan", false, "Banan.Link", (byte)2, (byte)5, 50.0, 50.0)]
         public void FindByNameValid(bool testMode, string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
             Food expected = new Food(name, isVeg, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
