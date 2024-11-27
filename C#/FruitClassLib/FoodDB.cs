@@ -21,22 +21,27 @@ namespace FruitClassLib
             }
         }
 
-        public Food Add(Food expected)
+        public Food Add(Food food)
         {
             throw new NotImplementedException();
         }
 
-        public Food FindByIsVeg(Food expected)
+        public Food FindByIsVeg(Food food)
         {
             throw new NotImplementedException();
         }
 
-        public Food FindByName(Food expected)
+        public Food FindByName(Food food)
         {
             throw new NotImplementedException();
         }
 
-        public void Nuke()
+        public List<Food> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+            public void Nuke()
         {
 #if DEBUG
             return;
@@ -47,10 +52,10 @@ namespace FruitClassLib
 
         public void Setup()
         {
-            Reading _reading = new Reading(50, 50);
+            Food Food = new Food("Banan", false, "Banan.link", (byte)2 , (byte)48, 23.0, 50.0);
             for (int i = 0; i < 15; i++)
             {
-                Add(_reading);
+                Add(Food);
             }
         }
     }

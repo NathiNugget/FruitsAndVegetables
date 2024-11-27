@@ -12,13 +12,12 @@ namespace FruitClassLib.Tests
     [TestClass()]
     public class FoodDBTests
     {
-        private ReadingsDB _repo;
+        private FoodDB _repo;
 
-        [TestInitialize]
-        public void Setup()
-        {
-            _repo = new ReadingsDB(true);
-            _repo.Setup();
+        [TestInitialize] public void Setup() 
+        { 
+            _repo = new FoodDB(true); 
+            _repo.Setup(); 
         }
 
         [TestMethod()]
@@ -41,7 +40,7 @@ namespace FruitClassLib.Tests
 
         [TestMethod()]
         [DataRow(true, "Banan", false, "Banan.Link", (byte)2, (byte)5, 50.0, 50.0)]
-        public void FindByNameValid(bool testMode, string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+        public void FindByNameValidTest(bool testMode, string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
             Food expected = new Food(name, isVeg, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             FoodDB mockTest = new FoodDB(testMode);
@@ -51,12 +50,33 @@ namespace FruitClassLib.Tests
 
         [TestMethod()]
         [DataRow(true, "Cucumber", true, "Cucumber.Link", (byte)2, (byte)5, 50.0, 50.0)]
-        public void FindByIsVegValid(bool testMode, string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+        public void FindByIsVegValidTest(bool testMode, string name, bool isVeg, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
             Food expected = new Food(name, isVeg, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             FoodDB mockTest = new FoodDB(testMode);
             Food actual = mockTest.FindByIsVeg(expected);
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetAllTest(bool testMode)
+        {
+
+            FoodDB mockTest = new FoodDB(testMode);
+            foreach (var food in _repo.GetAll())
+            {
+                mockTest.Add(food);
+            }
+            var expected = _repo.GetAll();
+            var actual = mockTest.GetAll();
+
+            Assert.AreEqual(expected.Count, actual.Count);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _repo.Nuke();
         }
     }
 }
