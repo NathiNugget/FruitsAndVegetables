@@ -27,9 +27,9 @@ while True:
         messageAsString = message.decode()
         messageAsDictionary = json.loads(messageAsString)
         if "temperature" not in messageAsDictionary or type(messageAsDictionary["temperature"] != type(float)):
-            raise KeyError("temperature was not included in the dictionary")
+            raise KeyError("temperature was not included in the JSON, or has an invalid value")
         elif "humidity" not in messageAsDictionary or type(messageAsDictionary["humidity"] != type(float)):
-            raise KeyError("humidity was not included in the dictionary")
+            raise KeyError("humidity was not included in the JSON, or has an invalid value")
         response = requests.post(destinationURL, json=messageAsString)
         if response.status_code != 201:
             writeLogEntry(datetime.datetime.now(), "WRONG STATUS CODE", "Status code was " + response.status_code )
