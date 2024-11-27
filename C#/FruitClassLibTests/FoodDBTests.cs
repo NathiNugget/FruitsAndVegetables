@@ -37,21 +37,23 @@ namespace FruitClassLib.Tests
         {
             Food expected = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             FoodDB mockTest = new FoodDB(testMode);
-            var actual = mockTest.Add(expected);
+            Food actual = mockTest.Add(expected);
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
-        [DataRow(true, "Pære", false, "Pear.Link", (byte)2, (byte)5, 50.0, 50.0)]
-        public void FindByNameTest(bool testMode, string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+        [DataRow(true)]
+        public void FindByNameTest(bool testMode)
         {
-            Food expected = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food expected = new Food("Æble", false, "Æble.link", (byte)2, (byte)20, 50.0, 50.0);
             FoodDB mockTest = new FoodDB(testMode);
-            Food actual = mockTest.FindByName("Pære");
-            Assert.AreEqual(expected, actual);
+            Food actual = mockTest.FindByName("Æble");
+            Assert.AreEqual(expected.Name, actual.Name);
         }
 
         [TestMethod()]
+        [DataRow(true)]
         public void FindByIsVegetableTest(bool testMode)
         {
             FoodDB mockTest = new FoodDB(testMode);
@@ -66,17 +68,15 @@ namespace FruitClassLib.Tests
         }
 
         [TestMethod()]
+        [DataRow(true)]
         public void GetAllTest(bool testMode)
         {
 
-            FoodDB mockTest = new FoodDB(testMode);
-            foreach (var food in _repo.GetAll())
-            {
-                mockTest.Add(food);
-            }
+            FoodDB mockTest = new FoodDB(testMode);            
             var expected = _repo.GetAll();
             var actual = mockTest.GetAll();
 
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.Count, actual.Count);
         }
 

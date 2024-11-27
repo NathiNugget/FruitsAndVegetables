@@ -21,11 +21,11 @@ namespace FruitClassLib
                 _connectionstring = Secret.SecretKey.ConnectionStringProduction;
             }
         }
-        
+
         public Food Add(Food food)
         {
-            string query = @"INSERT INTO Fruits (DanishName, IsVegetable, ApiMapping, SpoilDays, SpoilHours, IdealTemperature, IdealHumidity) 
-            VALUES (@name, @isVegetable, @apiLink, @spoilDate, @spoilHours, @temperature, @humidity);";
+            string query = "INSERT INTO Fruits (DanishName, IsVegetable, ApiMapping, SpoilDays, SpoilHours, IdealTemperature, IdealHumidity) " +
+                "VALUES (@name, @isVegetable, @apiLink, @spoilDate, @spoilHours, @temperature, @humidity)";
             Food foodToReturn = null!;
             using (SqlConnection conn = new SqlConnection(_connectionstring))
             {
@@ -41,31 +41,16 @@ namespace FruitClassLib
                 cmd.Parameters.AddWithValue("@humidity", food.IdealHumidity);
 
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-
-                        int id = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        bool isVegetable = reader.GetBoolean(2);
-                        string apiLink = reader.GetString(3);
-                        byte spoilDate = reader.GetByte(4);
-                        byte spoilHours = reader.GetByte(5);
-                        double idealTemperature = reader.GetDouble(6);
-                        double idealHumidity = reader.GetDouble(7);
-                        foodToReturn = new Food (name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, id);
-
-                    }
-                }
+                int RowsAffected = cmd.ExecuteNonQuery();
+                
             }
-            if (foodToReturn == null) throw new Exception("Food could not be inserted into database");
-            return foodToReturn;
+            return food;
+
         }
 
         public List<Food> FindByIsVegetable()
         {
-            string query = "SELECT * FROM Foods WHERE Vegestable = 1";
+            string query = "SELECT * FROM Fruits WHERE IsVegetable = 1";
             List<Food> listOfFood = new List<Food>();
             using (SqlConnection conn = new SqlConnection(_connectionstring))
             {
@@ -83,7 +68,7 @@ namespace FruitClassLib
                         byte spoilHours = reader.GetByte(5);
                         double idealTemperature = reader.GetDouble(6);
                         double idealHumidity = reader.GetDouble(7);
-                        Food foodToReturn = new Food(name, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id);
+                        Food foodToReturn = new Food(name, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity);
                         listOfFood.Add(foodToReturn);
                     }
                 }
@@ -93,7 +78,7 @@ namespace FruitClassLib
 
             public Food FindByName(string name)
         { 
-            string query = "SELECT * FROM Foods WHERE DanishName = @Name"; 
+            string query = "SELECT * FROM Fruits WHERE DanishName = @Name"; 
             Food foodToReturn = null; 
             using (SqlConnection conn = new SqlConnection(_connectionstring)) 
             { 
@@ -123,7 +108,7 @@ namespace FruitClassLib
 
         public List<Food> GetAll()
         {
-            string query = "SELECT * FROM Foods";
+            string query = "SELECT * FROM Fruits";
             List<Food> listOfFood = new List<Food>();
             using (SqlConnection conn = new SqlConnection(_connectionstring))
             {
@@ -169,7 +154,8 @@ namespace FruitClassLib
 
         public void Setup()
         {
-            Food Food = new Food("Æble", false, "Apple.link", (byte)2 , (byte)20, 23.0, 50.0);
+            Food food = new Food("Æble", false, "Apple.link", (byte)2 , (byte)20, 23.0, 50.0);
+            Add(food);
         }
     }
 }

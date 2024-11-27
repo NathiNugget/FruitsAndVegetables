@@ -30,17 +30,6 @@ namespace FruitClassLib
             IdealTemperature = idealTemperature;
             IdealHumidity = idealHumidity;
         }
-        public Food(int id, string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
-        {
-            Id = id;
-            Name = name;
-            IsVegetable = isVegetable;
-            ApiLink = apiLink;
-            SpoilDate = spoilDate;
-            SpoilHours = spoilHours;
-            IdealTemperature = idealTemperature;
-            IdealHumidity = idealHumidity;
-        }
 
 
         public int Id { get => _id;
