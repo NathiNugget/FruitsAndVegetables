@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /C#/FruitClassLib/Secret/SecretKey.cs
+/C#/FruitClassLib/Secret/SecretKey.cs
