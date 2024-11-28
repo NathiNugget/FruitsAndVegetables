@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FruitClassLib
 {
-    public class FoodDB
+    public class FoodDB : IFoodDB
     {
         private string _connectionstring;
         public FoodDB(bool isTest)
@@ -16,7 +16,7 @@ namespace FruitClassLib
             {
                 _connectionstring = Secret.SecretKey.ConnectionStringTest;
             }
-            else 
+            else
             {
                 _connectionstring = Secret.SecretKey.ConnectionStringProduction;
             }
@@ -42,7 +42,7 @@ namespace FruitClassLib
 
 
                 int RowsAffected = cmd.ExecuteNonQuery();
-                
+
             }
             return food;
 
@@ -76,34 +76,35 @@ namespace FruitClassLib
             return listOfFood;
         }
 
-            public Food FindByName(string name)
-        { 
-            string query = "SELECT * FROM Fruits WHERE DanishName = @Name"; 
-            Food foodToReturn = null; 
-            using (SqlConnection conn = new SqlConnection(_connectionstring)) 
-            { 
-                conn.Open(); SqlCommand cmd = new SqlCommand(query, conn); 
-                cmd.Parameters.AddWithValue("@Name", name); 
-                using (SqlDataReader reader = cmd.ExecuteReader()) 
-                { 
-                    while (reader.Read()) 
-                    { 
-                        int id = reader.GetInt32(0); 
-                        string danishName = reader.GetString(1); 
-                        bool isVegetable = reader.GetBoolean(2); 
-                        string apiLink = reader.GetString(3); 
-                        byte spoilDays = reader.GetByte(4); 
-                        byte spoilHours = reader.GetByte(5); 
-                        double idealTemperature = reader.GetDouble(6); 
-                        double idealHumidity = reader.GetDouble(7); 
-                        foodToReturn = new Food(danishName, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id); 
-                    } 
-                } 
-            } 
-            if (foodToReturn == null) 
-            { 
-                throw new Exception($"No food found with the name: {name}"); 
-            } return foodToReturn; 
+        public Food FindByName(string name)
+        {
+            string query = "SELECT * FROM Fruits WHERE DanishName = @Name";
+            Food foodToReturn = null;
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open(); SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Name", name);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string danishName = reader.GetString(1);
+                        bool isVegetable = reader.GetBoolean(2);
+                        string apiLink = reader.GetString(3);
+                        byte spoilDays = reader.GetByte(4);
+                        byte spoilHours = reader.GetByte(5);
+                        double idealTemperature = reader.GetDouble(6);
+                        double idealHumidity = reader.GetDouble(7);
+                        foodToReturn = new Food(danishName, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id);
+                    }
+                }
+            }
+            if (foodToReturn == null)
+            {
+                throw new Exception($"No food found with the name: {name}");
+            }
+            return foodToReturn;
         }
 
         public List<Food> GetAll()
@@ -134,7 +135,7 @@ namespace FruitClassLib
             return listOfFood;
         }
 
-            public void Nuke()
+        public void Nuke()
         {
 #if !DEBUG
             return;
@@ -154,7 +155,7 @@ namespace FruitClassLib
 
         public void Setup()
         {
-            Food food = new Food("Æble", false, "Apple.link", (byte)2 , (byte)20, 23.0, 50.0);
+            Food food = new Food("Æble", false, "Apple.link", (byte)2, (byte)20, 23.0, 50.0);
             Add(food);
         }
     }
