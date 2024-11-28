@@ -1,6 +1,6 @@
-@FruitREST_HostAddress = http://localhost:5110
+@FruitREST_HostAddress = https://localhost:7165
 
-GET {{FruitREST_HostAddress}}/weatherforecast/
+GET {{FruitREST_HostAddress}}/Readings/
 Accept: application/json
 
 ###

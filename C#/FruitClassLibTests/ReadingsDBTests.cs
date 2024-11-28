@@ -38,7 +38,7 @@ namespace FruitClassLib.Tests
             Reading expected = new Reading(temp, humidity);
             ReadingsDB mockTest = new ReadingsDB(testMode);
             Reading actual = mockTest.Add(expected);
-            Assert.AreEqual(expected, actual);
+            Assert.AreNotEqual(expected.Id, actual.Id);
         }
 
         [TestMethod()]
@@ -52,6 +52,14 @@ namespace FruitClassLib.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod()]
+        public void GetWithoutOffsetTest()
+        {
+            int expected = 15;
+
+            int actual = _repo.Get(null, null).Count;
+            Assert.AreEqual(expected, actual);
+        }
 
 
         [TestCleanup]
