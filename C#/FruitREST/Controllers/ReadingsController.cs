@@ -1,5 +1,4 @@
 ﻿using FruitClassLib;
-using FruitREST.Authentication;
 using FruitREST.Model;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
