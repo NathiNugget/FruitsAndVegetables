@@ -74,6 +74,76 @@ namespace UITest
             
         }
 
+        [TestMethod]
+        public void SelectedFoodElementUpdated()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            string expected = "Banan";
+            selectElement.SelectByValue(expected);
+            Thread.Sleep(_maxWaitMillis);
+            IWebElement selectedElement = driver.FindElement(By.Id("SelectedName")); //TODO: Change Placeholder ID to actual element
+            string actual = selectedElement.Text;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ShelfLife_Days()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            string selectedFood = "Banan";
+            selectElement.SelectByValue(selectedFood);
+            Thread.Sleep(_maxWaitMillis);
+            IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
+            string expected = "3 dage";
+            string actual = shelflife.Text;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ShelfLife_Hours()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            string selectedFood = "Jordbær";
+            selectElement.SelectByValue(selectedFood);
+            Thread.Sleep(_maxWaitMillis);
+            IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
+            string expected = "8 timer";
+            string actual = shelflife.Text;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void FruitsOnly()
+        {
+            IWebElement fruitCheckbox = driver.FindElement(By.Id("FruitCheck"));
+            fruitCheckbox.Click();
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            IList<IWebElement>options = selectElement.Options;
+            IWebElement? CheckedElement = options.FirstOrDefault(v => v.Text == "Agurk");
+            Assert.IsNull(CheckedElement);
+        }
+
+        [TestMethod]
+        public void VegetablesOnly()
+        {
+            IWebElement vegetableCheckbox = driver.FindElement(By.Id("VegetableCheck"));
+            vegetableCheckbox.Click();
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            IList<IWebElement> options = selectElement.Options;
+            IWebElement? CheckedElement = options.FirstOrDefault(v => v.Text == "Banan");
+            Assert.IsNull(CheckedElement);
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
