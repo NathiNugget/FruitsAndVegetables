@@ -22,6 +22,7 @@ TestMode.TestModeIsDev = true;
 
 // TODO: Add singleton and create interface
 builder.Services.AddSingleton<IReadingsRepository>(new ReadingsDB(TestMode.TestModeIsDev));
+builder.Services.AddSingleton<IFoodDB>(new FoodDB(TestMode.TestModeIsDev));
 builder.Services.AddCors(opts =>
 {
     opts.AddPolicy("GETpolicy", pol =>
