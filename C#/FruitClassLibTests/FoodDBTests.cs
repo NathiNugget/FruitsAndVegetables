@@ -85,7 +85,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllBothFilterTest()
         {
-            var expected = 0;
+            var expected = 3;
             var actual = _repo.GetAll(filterVegetable: true, filterFruit: true);
 
             Assert.IsNotNull(actual);
