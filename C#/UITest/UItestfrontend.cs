@@ -74,6 +74,17 @@ namespace UITest
             
         }
 
+        [TestMethod]
+        public void FruitVegetableFiltersCanBeClicked()
+        {
+            IWebElement fruitFilter = driver.FindElement(By.Id("ShowFruits"));
+            IWebElement vegetableFilter = driver.FindElement(By.Id("ShowVegetable"));
+            fruitFilter.Click();
+            vegetableFilter.Click();
+            Assert.IsNotNull(fruitFilter);
+            Assert.IsNotNull(vegetableFilter);
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
