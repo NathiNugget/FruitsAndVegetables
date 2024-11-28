@@ -7,7 +7,7 @@ serverName = '<broadcast>'
 serverPort = 727
 
 clientSocket = socket(AF_INET, SOCK_DGRAM)
-clientSocket.setockopt(SOL_SOCKET, SO_BROADCAST, 1)
+clientSocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
 s = SenseHat()
 interval = 3600
