@@ -20,11 +20,11 @@ namespace FruitREST.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] FoodFilterDTO filter)
         {
             try
             {
-                List<Food> foods = _foodDB.GetAll();
+                List<Food> foods = _foodDB.GetAll(filter.filterFruit, filter.filterVegetable);
                 if (foods.Count == 0)
                 {
                     return NoContent();
@@ -106,6 +106,43 @@ namespace FruitREST.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        [HttpDelete]
+        [Route("nuke")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [EnableCors("PrivilegedPolicy")]
+        public IActionResult Nuke()
+        {
+            if (TestMode.TestModeIsDev)
+            {
+                _foodDB.Nuke();
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(401);
+            }
+
+        }
+
+        [HttpPost]
+        [Route("setup")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [EnableCors("PrivilegedPolicy")]
+        public IActionResult Setup()
+        {
+            if (TestMode.TestModeIsDev)
+            {
+                _foodDB.Setup();
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(401);
+            }
         }
     }
 }
