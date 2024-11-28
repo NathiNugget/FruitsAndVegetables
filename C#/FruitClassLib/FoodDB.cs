@@ -25,16 +25,26 @@ namespace FruitClassLib
 
         public Food Add(Food food)
         {
-            string query = "INSERT INTO Fruits (DanishName, IsVegetable, ApiMapping, SpoilDays, SpoilHours, IdealTemperature, IdealHumidity) " + 
-                "OUTPUT inserted.Id, inserted.DanishName, inserted.IsVegetable, inserted.ApiMapping, inserted.SpoilDays, inserted.SpoilHours, inserted.IdealTemperature, inserted.IdealHumidity " +
-                "VALUES (@name, @isVegetable, @apiLink, @spoilDate, @spoilHours, @temperature, @humidity)";
+            string query = "INSERT INTO Fruits (DanishName, FoodTypeId, ApiMapping, SpoilDays, SpoilHours, IdealTemperature, IdealHumidity) " + 
+                "OUTPUT inserted.Id, inserted.DanishName, inserted.FoodTypeId, inserted.ApiMapping, inserted.SpoilDays, inserted.SpoilHours, inserted.IdealTemperature, inserted.IdealHumidity " +
+                "VALUES (@name, @foodTypeId, @apiLink, @spoilDate, @spoilHours, @temperature, @humidity)";
+            
+          
             using (SqlConnection conn = new SqlConnection(_connectionstring))
             {
 
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@name", food.Name);
-                cmd.Parameters.AddWithValue("@isVegetable", food.IsVegetable);
+                if (food.IsVegetable)
+                {
+                    cmd.Parameters.AddWithValue("@foodTypeId", 2);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@foodTypeId", 1);
+                }
+               
                 cmd.Parameters.AddWithValue("@apiLink", food.ApiLink);
                 cmd.Parameters.AddWithValue("@spoilDate", food.SpoilDate);
                 cmd.Parameters.AddWithValue("@spoilHours", food.SpoilHours);
@@ -46,21 +56,13 @@ namespace FruitClassLib
                 {
                     if (reader.Read())
                     {
-                        int id = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        bool isVegetable = reader.GetBoolean(2);
-                        string apiLink = reader.GetString(3);
-                        byte spoilDays = reader.GetByte(4);
-                        byte spoilHours = reader.GetByte(5);
-                        double idealTemperature = reader.GetDouble(6);
-                        double idealHumidity = reader.GetDouble(7);
-                        return new Food(name, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity,id);
+                       return ReadFoodItem(reader);
                         
                     }
                 }
 
             }
-            return food;
+            throw new Exception("Error, something went wrong");
 
         }
 
@@ -74,17 +76,9 @@ namespace FruitClassLib
                 cmd.Parameters.AddWithValue("@Name", name);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
-                        int id = reader.GetInt32(0);
-                        string danishName = reader.GetString(1);
-                        bool isVegetable = reader.GetBoolean(2);
-                        string apiLink = reader.GetString(3);
-                        byte spoilDays = reader.GetByte(4);
-                        byte spoilHours = reader.GetByte(5);
-                        double idealTemperature = reader.GetDouble(6);
-                        double idealHumidity = reader.GetDouble(7);
-                        foodToReturn = new Food(danishName, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id);
+                        foodToReturn = ReadFoodItem(reader);
                     }
                 }
             }
@@ -111,15 +105,7 @@ namespace FruitClassLib
                 {
                     while (reader.Read())
                     {
-                        int id = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        bool isVegetable = reader.GetBoolean(2);
-                        string apiLink = reader.GetString(3);
-                        byte spoilDays = reader.GetByte(4);
-                        byte spoilHours = reader.GetByte(5);
-                        double idealTemperature = reader.GetDouble(6);
-                        double idealHumidity = reader.GetDouble(7);
-                        Food foodToReturn = new Food(name, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id);
+                        Food foodToReturn = ReadFoodItem(reader);
                         listOfFood.Add(foodToReturn);
                     }
                 }
@@ -173,6 +159,28 @@ namespace FruitClassLib
             Add(cucumber);
             Add(potato);
             Add(food);
+        }
+
+        private Food ReadFoodItem(SqlDataReader reader)
+        {
+            bool isVegetable;
+            int id = reader.GetInt32(0);
+            string name = reader.GetString(1);
+            int foodTypeId = reader.GetInt32(2);
+            if (foodTypeId == 1)
+            {
+                isVegetable = true;
+            }
+            else
+            {
+                isVegetable = false;
+            }
+            string apiLink = reader.GetString(3);
+            byte spoilDays = reader.GetByte(4);
+            byte spoilHours = reader.GetByte(5);
+            double idealTemperature = reader.GetDouble(6);
+            double idealHumidity = reader.GetDouble(7);
+            return new Food(name, isVegetable, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace FruitClassLib.Tests
         public void GetAllFruitFilterTest()
         {
             var expected = 1;
-            var actual = _repo.GetAll(filterFruit: true);
+            var actual = _repo.GetAll(filterFruit: true, filterVegetable: false);
 
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected, actual.Count);
@@ -76,7 +76,7 @@ namespace FruitClassLib.Tests
         public void GetAllVegetableFilterTest()
         {
             var expected = 2;
-            var actual = _repo.GetAll(filterVegetable: true);
+            var actual = _repo.GetAll(filterVegetable: true, filterFruit: false);
 
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected, actual.Count);
