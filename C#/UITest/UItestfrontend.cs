@@ -1,3 +1,4 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -5,11 +6,12 @@ using OpenQA.Selenium.Support.UI;
 namespace UITest
 {
     [TestClass]
-    public class UnitTest1
+    public class UItestfrontend
     {
         IWebDriver driver;
         // TODO: Replace URL when running tests
-        const string TEST_URL = "Placeholder";
+        const string TEST_URL = "http://127.0.0.1:5500/";
+        const int _maxWaitMillis = 500; 
 
         [TestInitialize]
         public void Setup()
@@ -50,7 +52,7 @@ namespace UITest
             dropdown.Click();
             IWebElement selectedFood = driver.FindElement(By.Id("Banan"));
             selectedFood.Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(_maxWaitMillis);
             IWebElement spoilTime = driver.FindElement(By.Id("SpoilTime"));
             Assert.IsNotNull(spoilTime);
         }
@@ -60,13 +62,16 @@ namespace UITest
         {
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
-            IWebElement selectedFood = driver.FindElement(By.Id("Banan"));
-            selectedFood.Click();
-            Thread.Sleep(1000);
-            IWebElement selectedElement = driver.FindElement(By.Id("Placeholder")); //TODO: Change Placeholder ID to actual element
-            string expected = "Banan";
-            string actual = selectedElement.Text;
-            Assert.AreEqual(expected, actual);
+            SelectElement selectElement = new SelectElement(dropdown);
+            string expected = "Banan"; 
+            selectElement.SelectByValue(expected);
+            Thread.Sleep(_maxWaitMillis);
+            //IWebElement selectedElement = driver.FindElement(By.Id("Placeholder")); //TODO: Change Placeholder ID to actual element
+            //string expected = "Banan";
+            //string actual = selectedElement.Text;
+            //Assert.AreEqual(expected, actual);
+            Assert.AreEqual(selectElement.WrappedElement.GetAttribute("value"), expected);    
+            
         }
 
         [TestCleanup]
