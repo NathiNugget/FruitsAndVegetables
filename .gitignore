@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /C#/FruitClassLib/Secret/SecretKey.cs
 /C#/FruitREST/.config/dotnet-tools.json
+

@@ -85,6 +85,11 @@ namespace FruitClassLib
 
         }
 
+        public IEnumerable<object> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Nuke()
         {
 #if !DEBUG
