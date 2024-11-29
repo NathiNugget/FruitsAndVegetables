@@ -32,7 +32,7 @@ builder.Services.AddCors(opts =>
     // Policy
     opts.AddPolicy("PrivilegedPolicy", newpol =>
     {
-        newpol.AllowAnyHeader().WithMethods("PATCH", "DELETE","OPTIONS").WithOrigins("zealand.dk"); 
+        newpol.AllowAnyHeader().WithMethods("GET", "PATCH", "DELETE", "OPTIONS").AllowAnyOrigin(); 
     });
 }); 
 
