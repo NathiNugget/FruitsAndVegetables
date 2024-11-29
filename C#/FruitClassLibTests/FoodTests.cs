@@ -24,9 +24,9 @@ namespace FruitClassLib.Tests
         [DataRow("Banananananananananananananana", 1, "link", (byte)1, (byte)1, 50.0, 50.0)]
         public void NameValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food mock = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             string expected = name;
-            string actual = mock.Name;
+            string actual = mockFood.Name;
             Assert.AreEqual(expected, actual);
         }
 
@@ -37,16 +37,16 @@ namespace FruitClassLib.Tests
         {
             Assert.ThrowsException<ArgumentException>(() => new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity));
         }
-        //Evt. Lave test for at tjekke man ikke kan lave dupliket
+
 
         [TestMethod()]
         [DataRow("B", 1, "link", (byte)1, (byte)1, 50.0, 50.0)]
         [DataRow("Banananananananananananananana", 1, "link", (byte)1, (byte)1, 50.0, 50.0)]
         public void ApiLinkValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food mock = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             string expected = apiLink;
-            string actual = mock.ApiLink;
+            string actual = mockFood.ApiLink;
             Assert.AreEqual(expected, actual);
         }
 
@@ -61,9 +61,9 @@ namespace FruitClassLib.Tests
         [DataRow("Banana", 1, "link", (byte)0, (byte)1, 50.0, 50.0)]
         public void SpoilDateValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food mock = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             byte expected = spoilDate;
-            byte actual = mock.SpoilDate;
+            byte actual = mockFood.SpoilDate;
             Assert.AreEqual(expected, actual);
         }
 
@@ -71,9 +71,9 @@ namespace FruitClassLib.Tests
         [DataRow("Banana", 1, "link", (byte)1, (byte)0, 50.0, 50.0)]
         public void SpoilHoursValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food mock = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             byte expected = spoilHours;
-            byte actual = mock.SpoilHours;
+            byte actual = mockFood.SpoilHours;
             Assert.AreEqual(expected, actual);
         }
 
@@ -82,9 +82,9 @@ namespace FruitClassLib.Tests
         [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0)]
         public void IdealTemperatureValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food mock = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             double expected = idealTemperature;
-            double actual = mock.IdealTemperature;
+            double actual = mockFood.IdealTemperature;
             Assert.AreEqual(expected, actual);
         }
 
@@ -101,9 +101,9 @@ namespace FruitClassLib.Tests
         [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 0.0)]
         public void IdealHumidityValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food mock = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             double expected = idealHumidity;
-            double actual = mock.IdealHumidity;
+            double actual = mockFood.IdealHumidity;
             Assert.AreEqual(expected, actual);
         }
 
