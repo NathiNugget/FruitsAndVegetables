@@ -31,7 +31,7 @@ const app = Vue.createApp({
       newestTemperature: NaN,
       newestHumidity: NaN,
       spoilTime: NaN,
-      chosenFood: undefined,
+      chosenFood: "Vælg venligst en frugt",
 
     }
   },

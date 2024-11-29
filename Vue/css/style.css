@@ -1,26 +1,74 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
 html {
     font-family: Arial, Helvetica, sans-serif;
     color: white; 
     background-color: rgb(61, 61, 61);
+    background-color: white; 
 }
 
-h1 {
-    font-family: Comic Sans MS, Comic Sans, cursive;
-    
+body {
+    font-family: "Montserrat Alternates"
 }
 
 :root{
     --colorgaming:goldenrod; 
-    
+    --accent: green;
+    --textaccent: white;
+    --box: lightgrey;
+    --main: white;
 }
 
 #app {
-    background-color: black;
-    padding: 5px; 
-    border-radius: 20px;
-    box-shadow: 0 0 20px 2px goldenrod;
+
 }
 
-#app:hover {
-    box-shadow: 0 0 20px 5px var(--colorgaming);
+
+.header {
+    display:flex;
+    align-items: center;
+    background-color: var(--accent);
+    color: var(--textaccent);
+    margin-bottom: 5px;
+    height: 4rem;
+    justify-content: center;
+}
+
+.elementBox {
+    background-color: var(--box);
+    border: 2px solid var(--accent);
+    border-radius: 40px;
+    min-height: 40px;
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 90%;
+}
+
+.checkboxcontainer {
+    width: auto;
+    font-size: 1.2rem;
+}
+
+.informationBox {
+    background-color: var(--white);
+    border-radius: 40px;
+    min-height: 40px;
+    margin: 1rem auto;
+    margin-top: 2rem;
+    padding: 1rem;
+    width: 90%;
+    box-shadow: 0px 0px 10px;
+    text-align: center;
+}
+
+
+
+.tinytext {
+    font-size: x-small;
+}
+
+.selectedFruit {
+    border-top: 0.1rem solid lightgray;
 }
