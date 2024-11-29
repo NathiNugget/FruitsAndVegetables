@@ -71,6 +71,7 @@ namespace UITest
             vegetableFilter.Click();
             Assert.IsNotNull(fruitFilter);
             Assert.IsNotNull(vegetableFilter);
+        }
 
         public void SelectedFoodElementUpdated()
         {
