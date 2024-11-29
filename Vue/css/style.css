@@ -21,11 +21,6 @@ body {
     --main: white;
 }
 
-#app {
-
-}
-
-
 .header {
     display:flex;
     align-items: center;
@@ -36,6 +31,11 @@ body {
     justify-content: center;
 }
 
+.checkboxcontainer {
+    width: auto;
+    font-size: 1.2rem;
+}
+
 .elementBox {
     background-color: var(--box);
     border: 2px solid var(--accent);
@@ -44,11 +44,6 @@ body {
     margin: 1rem auto;
     padding: 1rem;
     width: 90%;
-}
-
-.checkboxcontainer {
-    width: auto;
-    font-size: 1.2rem;
 }
 
 .informationBox {
@@ -62,8 +57,6 @@ body {
     box-shadow: 0px 0px 10px;
     text-align: center;
 }
-
-
 
 .tinytext {
     font-size: x-small;
