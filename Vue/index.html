@@ -21,8 +21,8 @@
 
         <p id="NewestTemp">Newest temp: {{newestTemperature}}&deg;C</p>
         <p id="NewestHumidity">Newest humidity: {{newestHumidity}}% wet</p>
-        <input type="checkbox"> Hejbr <br>
-        <input type="checkbox"> Hello there
+        <input type="checkbox" id="FruitCheck"> Hejbr <br>
+        <input type="checkbox" id="VegetableCheck"> Hello there
 
         <select id="FoodDropdown" v-model="chosenFood" @change="console.log(this.chosenFood)">
             <option disabled>Vælg venligst en ingrediens!</option>
