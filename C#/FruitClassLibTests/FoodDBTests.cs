@@ -27,29 +27,27 @@ namespace FruitClassLib.Tests
         [DataRow(false)]
         public void FoodDBInstiateTest(bool testMode)
         {
-           
             Assert.IsNotNull(_repo);
         }
 
         [TestMethod()]
-
         [DataRow( "Banan", 1, "Banan.Link", (byte)2, (byte)5, 50.0, 50.0)]
 
         public void AddFoodDBTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
             Food expected = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
-
             Food actual = _repo.Add(expected);
-            Assert.IsNotNull(actual);
+
             Assert.AreEqual(expected.Name, actual.Name);
         }
 
         [TestMethod()]
-        public void FindByNameTest()
+        [DataRow("Æble", 1, "Æble.link", (byte)2, (byte)20, 50.0, 50.0)]
+        public void FindByNameTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food expected = new Food("Æble", 1, "Æble.link", (byte)2, (byte)20, 50.0, 50.0);
-            
+            Food expected = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             Food actual = _repo.FindByName("Æble");
+
             Assert.AreEqual(expected.Name, actual.Name);
         }
 
@@ -59,7 +57,6 @@ namespace FruitClassLib.Tests
             var expected = 3;
             var actual = _repo.GetAll();
 
-            Assert.IsNotNull(actual);
             Assert.AreEqual(expected, actual.Count);
         }
 
@@ -69,7 +66,6 @@ namespace FruitClassLib.Tests
             var expected = 1;
             var actual = _repo.GetAll(filterFruit: true, filterVegetable: false);
 
-            Assert.IsNotNull(actual);
             Assert.AreEqual(expected, actual.Count);
         }
         [TestMethod()]
@@ -78,7 +74,6 @@ namespace FruitClassLib.Tests
             var expected = 2;
             var actual = _repo.GetAll(filterVegetable: true, filterFruit: false);
 
-            Assert.IsNotNull(actual);
             Assert.AreEqual(expected, actual.Count);
         }
 
@@ -88,7 +83,6 @@ namespace FruitClassLib.Tests
             var expected = 3;
             var actual = _repo.GetAll(filterVegetable: true, filterFruit: true);
 
-            Assert.IsNotNull(actual);
             Assert.AreEqual(expected, actual.Count);
         }
 
