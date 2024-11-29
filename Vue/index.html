@@ -14,10 +14,48 @@
 </head>
 <body>
     <div id="app">
-        <header class="header p-3">
+<!--Bootstrap used in comments-->
+    <!--"p-3"-->
+    <header class="header p-3">
+        <!--"row w-100"-->
         <div class="row w-100">
-        <div class="col-12 row"><h1 style="text-align: center;"><i class="fa-solid fa-leaf fa-xl"></i> Frugt og grønt</h1></div>
+            <!--"col-12 row"-->
+            <div class="col-12 row">
+                <h1 style="text-align: center;">
+                    <i class="fa-solid fa-leaf fa-xl"></i> 
+                    Frugt og grønt
+                </h1>
+            </div>
+        </div>
+    </header>
+
+    <!--"row d-flex justify-content-between"-->
+    <div class="row elementBox d-flex justify-content-between">
+        <!--"col-6 mx-3"-->
+        <div class="col-6 checkboxcontainer mx-3">
+            <!--"form-check-label"-->
+            <label for="FruitCheck" class="form-check-label">Frugt</label>
+            <!--"form-check-input"-->
+            <input type="checkbox" id="FruitCheck" class="form-check-input">
+        </div>
+        <!--"col-6 mx-3"-->
+        <div class="col-6 checkboxcontainer mx-3">
+            <!--"form-check-label"-->
+            <label for="FruitCheck" class="form-check-label">Grønt</label>
+            <!--"form-check-input"-->
+            <input type="checkbox" id="VegetableCheck" class="form-check-input">
+        </div>
     </div>
+
+
+    <!--form-select-->
+    <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFood" @change="console.log(this.chosenFood)" class="form-select elementBox">
+        <option disabled>Vælg venligst en ingrediens!</option>
+        <option value="Banan" id="Banan">
+            Banan
+        </option>
+    </select>
+
 </header>
 <div class="row elementBox d-flex justify-content-between">
     <div class="col-6 checkboxcontainer mx-3">
@@ -38,13 +76,35 @@
     <option v-for="(food, index) in foods" :key="index" :value="foods[index].name">{{food.name}}</option>
 </select>
 
-<div class="informationBox">
-<div class="d-flex justify-content-between">
-    <div class="col-6 row">
-        <div class="col-6">
-            <p id="NewestTemp">{{newestTemperature}}&deg;C</p>
-            <p class="tinytext">Temperatur</p>
+
+    <div class="informationBox">
+        <!--"d-flex justify-content-between"-->
+        <div class="d-flex justify-content-between">
+            <!--"col-6 row"-->
+            <div class="col-6 row">
+                <!--"col-6"-->
+                <div class="col-6">
+                    <p id="NewestTemp">{{newestTemperature}}&deg;C</p>
+                    <p class="tinytext">Temperatur</p>
+                </div>
+                <!--"col-6"-->
+                <div class="col-6">
+                    <p id="NewestHumidity">{{newestHumidity}}%</p>
+                    <p class="tinytext">Luftfugtighed</p>
+                </div>
+            </div>
+            <!--"col-6"-->
+            <div class="col-6">
+                <p>2 dage</p>
+                <p class="tinytext">Holdbarhed</p>
+            </div>
         </div>
+        <!--"col-12"-->
+        <div class="col-12 selectedFruit">
+            <p id="SelectedName">Banan</p>
+        </div>
+
+
         <div class="col-6">
         <p id="NewestHumidity">{{newestHumidity}}%</p>
         <p class="tinytext">Luftfugtighed</p>
@@ -53,14 +113,8 @@
     <div class="col-6">
         <p>{{spoilTime}}</p>
         <p class="tinytext">Holdbarhed</p>
+
     </div>
-</div>
-<div class="col-12 selectedFruit">
-    <p id="SelectedName">Banan</p>
-</div>
-</div>
-<!--         <h1 class="display-4">Giflar er nice!</h1>
-        yolo -->
 
         <ul>
             <li v-for="(reading, index) in readings" :key="index">
@@ -68,17 +122,8 @@
             </li>
         </ul>
 
-        
-
-
-
-
-
-
-
-        <!-- But before the end of this -->
     </div>
+<script type="module" src="js/index.js"></script>
 
-    <script type="module" src="js/index.js"></script>
 </body>
 </html>
