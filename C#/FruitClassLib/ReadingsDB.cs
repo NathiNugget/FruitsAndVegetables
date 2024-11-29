@@ -68,21 +68,26 @@ namespace FruitClassLib
                 cmd.Parameters.AddWithValue("@lowInterval", offset);
                 cmd.Parameters.AddWithValue("@highInterval", count);
 
-                using (SqlDataReader r = cmd.ExecuteReader())
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (r.Read())
+                    while (reader.Read())
                     {
-                        int id = r.GetInt32(0);
-                        long timestamp = r.GetInt64(1);
-                        double temperature = r.GetDouble(2);
-                        double humidity = r.GetDouble(3);
-                        Reading reading = new Reading(temperature, humidity, id, timestamp);
+                        Reading reading = ReadFromReader(reader); 
                         readingList.Add(reading);
                     }
                 }
             }
             return readingList;
 
+        }
+
+        private Reading ReadFromReader(SqlDataReader reader)
+        {
+            int id = r.GetInt32(0);
+            long timestamp = reader.GetInt64(1);
+            double temperature = reader.GetDouble(2);
+            double humidity = reader.GetDouble(3);
+            return new Reading(temperature, humidity, id, timestamp);
         }
 
         public IEnumerable<object> GetAll()
