@@ -111,14 +111,17 @@ namespace FruitClassLib
             return listOfFood;
         }
 
-        public List<string> GetAllNames()
+        public List<string> GetAllNames(bool? filterFruit = null, bool? filterVegetable = null)
         {
-            string query = "SELECT DanishName FROM Fruits";
+            string query = "GetFruitNames";
             List<string> listOfNames = new List<string>();
             using (SqlConnection conn = new SqlConnection(_connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
+                cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())

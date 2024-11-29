@@ -9,6 +9,6 @@ namespace FruitClassLib
         void Nuke();
         void Setup();
 
-        List<string> GetAllNames();
+        List<string> GetAllNames(bool? filterFruit = null, bool? filterVegetable = null);
     }
 }

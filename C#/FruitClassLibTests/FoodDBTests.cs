@@ -87,6 +87,44 @@ namespace FruitClassLib.Tests
         }
 
 
+
+        [TestMethod()]
+        public void GetAllNamesTest()
+        {
+            var expected = 3;
+            var actual = _repo.GetAllNames();
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
+        public void GetAllNamesFruitFilterTest()
+        {
+            var expected = 1;
+            var actual = _repo.GetAllNames(filterFruit: true, filterVegetable: false);
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+        [TestMethod()]
+        public void GetAllNamesVegetableFilterTest()
+        {
+            var expected = 2;
+            var actual = _repo.GetAllNames(filterVegetable: true, filterFruit: false);
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
+        public void GetAllNamesBothFilterTest()
+        {
+            var expected = 3;
+            var actual = _repo.GetAllNames(filterVegetable: true, filterFruit: true);
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+
+
         [TestCleanup]
         public void Cleanup()
         {
