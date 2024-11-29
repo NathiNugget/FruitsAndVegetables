@@ -29,52 +29,32 @@
         </div>
     </header>
 
-    <!--"row d-flex justify-content-between"-->
-    <div class="row elementBox d-flex justify-content-between">
-        <!--"col-6 mx-3"-->
-        <div class="col-6 checkboxcontainer mx-3">
+        <!--"row d-flex justify-content-between"-->
+        <div class="row elementBox d-flex justify-content-between">
+            <!--"col-6 mx-3"-->
+            <div class="col-6 checkboxcontainer mx-3">
             <!--"form-check-label"-->
             <label for="FruitCheck" class="form-check-label">Frugt</label>
             <!--"form-check-input"-->
-            <input type="checkbox" id="FruitCheck" class="form-check-input">
+            <input type="checkbox" id="FruitCheck" v-model="fruitCheck" class="form-check-input">
         </div>
         <!--"col-6 mx-3"-->
         <div class="col-6 checkboxcontainer mx-3">
             <!--"form-check-label"-->
             <label for="FruitCheck" class="form-check-label">Grønt</label>
             <!--"form-check-input"-->
-            <input type="checkbox" id="VegetableCheck" class="form-check-input">
+            <input type="checkbox" id="VegetableCheck" v-model="vegetableCheck" class="form-check-input">
         </div>
     </div>
 
-
     <!--form-select-->
-    <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFood" @change="console.log(this.chosenFood)" class="form-select elementBox">
+    <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString" @change="ChooseFruit()" class="form-select elementBox">
         <option disabled>Vælg venligst en ingrediens!</option>
         <option value="Banan" id="Banan">
             Banan
         </option>
+        <option v-for="(food, index) in foods" :key="index" :value="foods[index].name">{{food.name}}</option>
     </select>
-
-</header>
-<div class="row elementBox d-flex justify-content-between">
-    <div class="col-6 checkboxcontainer mx-3">
-    <label for="FruitCheck" class="form-check-label">Frugt</label>
-    <input type="checkbox" id="FruitCheck" v-model="fruitCheck" class="form-check-input">
-</div>
-<div class="col-6 checkboxcontainer mx-3">
-    <label for="FruitCheck" class="form-check-label">Grønt</label>
-    <input type="checkbox" id="VegetableCheck" v-model="vegetableCheck" class="form-check-input">
-</div>
-</div>
-
-<select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString" @change="ChooseFruit()" class="form-select elementBox">
-    <option disabled>Vælg venligst en ingrediens!</option>
-    <option value="Banan" id="Banan">
-        Banan
-    </option>
-    <option v-for="(food, index) in foods" :key="index" :value="foods[index].name">{{food.name}}</option>
-</select>
 
 
     <div class="informationBox">
@@ -95,7 +75,7 @@
             </div>
             <!--"col-6"-->
             <div class="col-6">
-                <p>2 dage</p>
+                <p>{{spoilTime}}</p>
                 <p class="tinytext">Holdbarhed</p>
             </div>
         </div>
@@ -103,17 +83,6 @@
         <div class="col-12 selectedFruit">
             <p id="SelectedName">Banan</p>
         </div>
-
-
-        <div class="col-6">
-        <p id="NewestHumidity">{{newestHumidity}}%</p>
-        <p class="tinytext">Luftfugtighed</p>
-    </div>
-    </div>
-    <div class="col-6">
-        <p>{{spoilTime}}</p>
-        <p class="tinytext">Holdbarhed</p>
-
     </div>
 
         <ul>
