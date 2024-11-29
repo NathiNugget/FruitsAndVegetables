@@ -63,6 +63,15 @@ namespace UITest
         }
 
         [TestMethod]
+        public void FruitVegetableFiltersCanBeClicked()
+        {
+            IWebElement fruitFilter = driver.FindElement(By.Id("ShowFruits"));
+            IWebElement vegetableFilter = driver.FindElement(By.Id("ShowVegetable"));
+            fruitFilter.Click();
+            vegetableFilter.Click();
+            Assert.IsNotNull(fruitFilter);
+            Assert.IsNotNull(vegetableFilter);
+
         public void SelectedFoodElementUpdated()
         {
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
@@ -110,7 +119,7 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            string selectedFood = "Jordbær";
+            string selectedFood = "JordbÃ¦r";
             selectElement.SelectByValue(selectedFood);
             Thread.Sleep(_maxWaitMillis);
             IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
