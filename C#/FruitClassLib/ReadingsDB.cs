@@ -42,11 +42,8 @@ namespace FruitClassLib
                     if (reader.Read())
                     {
 
-                        int id = reader.GetInt32(0);
-                        long timestamp = reader.GetInt64(1);
-                        double temperature = reader.GetDouble(2);
-                        double humidity = reader.GetDouble(3);
-                        readingToReturn = new Reading(temperature, humidity, id, timestamp);
+                        
+                        readingToReturn = ReadFromDB(reader);
 
                     }
                 }
@@ -72,7 +69,7 @@ namespace FruitClassLib
                 {
                     while (reader.Read())
                     {
-                        Reading reading = ReadFromReader(reader); 
+                        Reading reading = ReadFromDB(reader); 
                         readingList.Add(reading);
                     }
                 }
@@ -81,9 +78,9 @@ namespace FruitClassLib
 
         }
 
-        private Reading ReadFromReader(SqlDataReader reader)
+        private Reading ReadFromDB(SqlDataReader reader)
         {
-            int id = r.GetInt32(0);
+            int id = reader.GetInt32(0);
             long timestamp = reader.GetInt64(1);
             double temperature = reader.GetDouble(2);
             double humidity = reader.GetDouble(3);
