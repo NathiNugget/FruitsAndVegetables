@@ -15,7 +15,8 @@ body
     font-family: "Montserrat Alternates"
 }
 
-:root{
+:root
+{
     --colorgaming:goldenrod; 
     --accent: green;
     --textaccent: white;
@@ -23,7 +24,8 @@ body
     --main: white;
 }
 
-.header {
+.header 
+{
     display:flex;
     align-items: center;
     background-color: var(--accent);
