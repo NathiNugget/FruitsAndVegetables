@@ -33,11 +33,11 @@ namespace FruitClassLib.Tests
 
         [TestMethod()]
 
-        [DataRow( "Banan", false, "Banan.Link", (byte)2, (byte)5, 50.0, 50.0)]
+        [DataRow( "Banan", 1, "Banan.Link", (byte)2, (byte)5, 50.0, 50.0)]
 
-        public void AddFoodDBTest(string name, bool isVegetable, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+        public void AddFoodDBTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
-            Food expected = new Food(name, isVegetable, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food expected = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
 
             Food actual = _repo.Add(expected);
             Assert.IsNotNull(actual);
@@ -47,7 +47,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void FindByNameTest()
         {
-            Food expected = new Food("Æble", false, "Æble.link", (byte)2, (byte)20, 50.0, 50.0);
+            Food expected = new Food("Æble", 1, "Æble.link", (byte)2, (byte)20, 50.0, 50.0);
             
             Food actual = _repo.FindByName("Æble");
             Assert.AreEqual(expected.Name, actual.Name);
