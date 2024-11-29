@@ -87,11 +87,11 @@ namespace FruitREST.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetNames()
+        public IActionResult GetNames([FromQuery] FoodFilterDTO filter)
         {
             try
             {
-                List<string> names = _foodDB.GetAllNames();
+                List<string> names = _foodDB.GetAllNames(filter.filterFruit, filter.filterVegetable);
                 if (names.Count == 0)
                 {
                     return NoContent();
