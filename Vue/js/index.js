@@ -1,9 +1,7 @@
 import "./bundle.js";
 
-
-
-
-
+const ReadingBaseURL = "https://fruitresttest.azurewebsites.net/api/Readings"; 
+const FoodsBaseURL = "https://fruitresttest.azurewebsites.net/api/Foods"
 
 class Reading {
   constructor(temperature, humidity, id, timestamp) {
@@ -49,7 +47,7 @@ const app = Vue.createApp({
   },
   methods: {
     async GetLatest() {
-      const response = await Axios.get('https://localhost:7165/api/Readings?offset=0&count=5').then(
+      const response = await Axios.get(ReadingBaseURL + '?offset=0&count=5').then(
         (response) => {
           //console.log(response.data);
 
@@ -68,29 +66,40 @@ const app = Vue.createApp({
 
 
     async GetFoods() {
-      let baseURL = "https://localhost:7165/api/foods";
-      if (this.fruitCheck) {
-        baseURL += "?filterFruit=true";
+     
+      let baseURL = FoodsBaseURL;
+      if (this.fruitCheck && this.vegetableCheck);
+      else {
+        if (this.fruitCheck) {
+          baseURL += "?filterFruit=true";
+        }
+        else if (this.vegetableCheck) {
+          baseURL += "?filterVegetable=true"
+        }
       }
-      if (this.vegetableCheck) {
-        baseURL += "?filterVegetable=true"
-      }
+
+      console.log(baseURL); 
+      
 
       const response = await Axios.get(baseURL).then(
         (response) => {
           //console.log(response.data);
           var respData = response.data;
           // TODO: REFACTOR THIS CONTSRUCTOR AS DTO HAS CHANGED
-
+          this.foods = []; 
           response.data.forEach((element) => {
             const currentFood = new Food(element.foodTypeId, element.foodTypeName, element.id, element.name, element.apiLink, element.spoilDate, element.spoilHours, element.idealTemperature, element.idealHumidity);
             //console.log(currentFood);
             this.foods.push(currentFood);
           });
+          console.log(this.foods); 
+          
         }
       );
 
     },
+
+    
 
     async SetupInitialData() {
       await this.GetLatest();
@@ -103,8 +112,12 @@ const app = Vue.createApp({
   
 
       const map = {
+        "Agurk": this.CalculateGenericFood(3, 2, 8),
         "Banan": this.CalculateGenericFood(5, 1, 3),
+
+        "Kartoffel" : this.CalculateGenericFood(15, 3, 4),
         "Æble" : this.CalculateGenericFood(10, 1, 3), 
+
       }
       console.log(map[foodName]); 
       return map[foodName];

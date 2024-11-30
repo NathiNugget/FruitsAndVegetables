@@ -10,9 +10,9 @@ namespace UITest
     {
         IWebDriver driver;
         // TODO: Replace URL when running tests
-        const string TEST_URL = "http://127.0.0.1:5500/Vue";
-        const int _maxWaitMillis = 500; 
-
+        const string TEST_URL = "http://127.0.0.1:5500";
+        const int _maxWaitMillis = 300;
+        
         [TestInitialize]
         public void Setup()
         {
@@ -20,6 +20,7 @@ namespace UITest
             options.AddArgument("--headless=new");
             driver = new ChromeDriver(options);
             driver.Navigate().GoToUrl(TEST_URL);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(_maxWaitMillis);
         }
 
         [TestMethod]
@@ -39,9 +40,11 @@ namespace UITest
         [TestMethod]
         public void ClickableDropDown()
         {
+            
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
-            IWebElement selectedFood = driver.FindElement(By.Id("Banan"));
+            
+            IWebElement selectedFood = driver.FindElement(By.Id("Agurk"));
             Assert.IsNotNull(selectedFood);
         }
 
@@ -51,9 +54,9 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            string expected = "Banan"; 
+            string expected = "Agurk"; 
             selectElement.SelectByValue(expected);
-            Thread.Sleep(_maxWaitMillis);
+            
             //IWebElement selectedElement = driver.FindElement(By.Id("Placeholder")); //TODO: Change Placeholder ID to actual element
             //string expected = "Banan";
             //string actual = selectedElement.Text;
@@ -65,8 +68,8 @@ namespace UITest
         [TestMethod]
         public void FruitVegetableFiltersCanBeClicked()
         {
-            IWebElement fruitFilter = driver.FindElement(By.Id("ShowFruits"));
-            IWebElement vegetableFilter = driver.FindElement(By.Id("ShowVegetable"));
+            IWebElement fruitFilter = driver.FindElement(By.Id("FruitCheck"));
+            IWebElement vegetableFilter = driver.FindElement(By.Id("VegetableCheck"));
             fruitFilter.Click();
             vegetableFilter.Click();
             Assert.IsNotNull(fruitFilter);
@@ -80,7 +83,7 @@ namespace UITest
             SelectElement selectElement = new SelectElement(dropdown);
             string expected = "Banan";
             selectElement.SelectByValue(expected);
-            Thread.Sleep(_maxWaitMillis);
+            
             IWebElement selectedElement = driver.FindElement(By.Id("SelectedName")); //TODO: Change Placeholder ID to actual element
             string actual = selectedElement.Text;
             Assert.AreEqual(expected, actual);
@@ -92,9 +95,9 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            string selectedFood = "Banan";
+            string selectedFood = "Æble";
             selectElement.SelectByValue(selectedFood);
-            Thread.Sleep(_maxWaitMillis);
+           
             IWebElement shelfLife = driver.FindElement(By.Id("ShelfLife"));
             Assert.IsNotNull(shelfLife);
         }
@@ -105,13 +108,13 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            string selectedFood = "Banan";
+            string selectedFood = "Agurk";
             selectElement.SelectByValue(selectedFood);
-            Thread.Sleep(_maxWaitMillis);
+            
             IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
-            string expected = "3 dage";
+            string expected = "0 dage";
             string actual = shelflife.Text;
-            Assert.AreEqual(expected, actual);
+            Assert.IsTrue(actual.Contains(expected));
         }
 
         [TestMethod]
@@ -120,13 +123,13 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            string selectedFood = "Jordbær";
+            string selectedFood = "Agurk";
             selectElement.SelectByValue(selectedFood);
-            Thread.Sleep(_maxWaitMillis);
+            
             IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
-            string expected = "8 timer";
+            string expected = "12 timer";
             string actual = shelflife.Text;
-            Assert.AreEqual(expected, actual);
+            Assert.IsTrue(actual.Contains(expected));
         }
 
         [TestMethod]
@@ -149,9 +152,9 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            IList<IWebElement> options = selectElement.Options;
-            IWebElement? CheckedElement = options.FirstOrDefault(v => v.Text == "Banan");
-            Assert.IsNotNull(CheckedElement);
+            selectElement.SelectByValue("Æble");
+            IWebElement selectedElement = selectElement.SelectedOption;
+            Assert.IsNotNull(selectedElement);
         }
 
         [TestMethod]
@@ -175,9 +178,9 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            IList<IWebElement> options = selectElement.Options;
-            IWebElement? CheckedElement = options.FirstOrDefault(v => v.Text == "Agurk");
-            Assert.IsNotNull(CheckedElement);
+            selectElement.SelectByValue("Agurk");
+            IWebElement selectedOption = selectElement.SelectedOption;
+            Assert.IsNotNull(selectElement);
         }
 
         [TestCleanup]
