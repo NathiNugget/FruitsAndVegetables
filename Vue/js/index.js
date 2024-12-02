@@ -32,13 +32,12 @@ class Food {
 
 const chartNumberOne = document.getElementById('tempChart')
 
-new Chart(chartNumberOne, {
+let temperatureChart = new Chart(chartNumberOne, {
   type: 'line',
   data: {
-    
     datasets: [{
       label: 'Sidste 5 Temperatur Målinger',
-      data: [{x: 1, y: 40}, {x: 2,y: 50}, {x: 3,y: 45}],
+      data: [],
       borderWidth: 1,
     }]
   },
@@ -47,7 +46,7 @@ new Chart(chartNumberOne, {
     plugins: {
       title: {
         display: true,
-        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
+        text: 'temp over time type shit',
       }
     },
     scales: {
@@ -82,10 +81,9 @@ const app = Vue.createApp({
             var toAdd = new Reading(element.temperature, element.humidity, element.id, element.timestamp);
             this.readings.push(toAdd);
 
-          }
-
+          },
           );
-
+          this.updateChartings();
         }
       );
 
@@ -182,6 +180,16 @@ const app = Vue.createApp({
       console.log(Vue.toRaw(this.chosenFood));
       const food = this.chosenFood;
       this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name);
+    },
+
+    updateChartings() {
+      const chartData = this.readings.map(reading => ({
+        x: reading.timestamp,
+        y: reading.temperature
+      }));
+      temperatureChart.data.datasets[0].data = chartData;
+      temperatureChart.update()
+
     },
 
 
