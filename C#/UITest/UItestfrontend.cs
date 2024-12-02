@@ -124,6 +124,7 @@ namespace UITest
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
             string selectedFood = "Agurk";
+            Thread.Sleep(500); 
             selectElement.SelectByValue(selectedFood);
             
             IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
@@ -150,6 +151,7 @@ namespace UITest
             IWebElement fruitCheckbox = driver.FindElement(By.Id("FruitCheck"));
             fruitCheckbox.Click();
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            Thread.Sleep(500); 
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
             selectElement.SelectByValue("Æble");
