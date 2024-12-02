@@ -36,7 +36,7 @@ namespace FruitClassLib
             {
                 conn.Open();
 
-                
+
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 cmd = new SqlCommand(query, conn);
@@ -49,15 +49,15 @@ namespace FruitClassLib
                 cmd.Parameters.AddWithValue("@humidity", food.IdealHumidity);
 
 
-                using(SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                       return ReadFoodItem(reader);
-                        
+                        return ReadFoodItem(reader);
+
                     }
                 }
-                
+
 
             }
             throw new Exception("Error, something went wrong");
@@ -97,8 +97,23 @@ namespace FruitClassLib
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
-                cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+                if (filterFruit != null && filterVegetable == null)
+                {
+                    cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
+                    cmd.Parameters.AddWithValue("@filterVegetable", false);
+                }
+                else if (filterFruit == null && filterVegetable != null)
+                {
+
+                    cmd.Parameters.AddWithValue("@filterFruit", false);
+                    cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
+                    cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+                }
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -120,8 +135,23 @@ namespace FruitClassLib
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
+                if (filterFruit != null && filterVegetable == null)
+                {
+                    cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
+                    cmd.Parameters.AddWithValue("@filterVegetable", false);
+                } else if (filterFruit == null && filterVegetable != null)
+                {
+                    
+                cmd.Parameters.AddWithValue("@filterFruit", false);
                 cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+                    
+                } else
+                {
+                    cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
+                    cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+                }
+
+
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -155,8 +185,8 @@ namespace FruitClassLib
         public void Setup()
         {
             Food food = new Food("Æble", 1, "Apple.link", (byte)2, (byte)20, 23.0, 50.0);
-            Food potato = new Food("Kartofel",2, "Potato.link", (byte)2, (byte)20, 23.0, 50.0);
-            Food cucumber = new Food("Agurk",2, "Cucumber.link", (byte)2, (byte)20, 23.0, 50.0);
+            Food potato = new Food("Kartoffel", 2, "Potato.link", (byte)2, (byte)20, 23.0, 50.0);
+            Food cucumber = new Food("Agurk", 2, "Cucumber.link", (byte)2, (byte)20, 23.0, 50.0);
             Add(cucumber);
             Add(potato);
             Add(food);
@@ -173,7 +203,7 @@ namespace FruitClassLib
             double idealTemperature = reader.GetDouble(6);
             double idealHumidity = reader.GetDouble(7);
             string foodTypeName = reader.GetString(8);
-            return new Food(name,foodTypeId, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id, foodTypeName);
+            return new Food(name, foodTypeId, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id, foodTypeName);
         }
     }
 }
