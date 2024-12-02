@@ -87,7 +87,7 @@ namespace FruitClassLib
             return foodToReturn;
         }
 
-        public List<Food> GetAll()
+        public List<Food> GetAll(int? offset = null, int? count = null)
         {
             string query = "GetFruitsJOIN";
 
@@ -101,6 +101,8 @@ namespace FruitClassLib
 
                 cmd.Parameters.AddWithValue("@filterFruit", true);
                 cmd.Parameters.AddWithValue("@filterVegetable", true);
+                cmd.Parameters.AddWithValue("@lowInterval", offset);
+                cmd.Parameters.AddWithValue("@highInterval", count);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -114,7 +116,7 @@ namespace FruitClassLib
             return listOfFood;
         }
 
-        public List<Food> GetAll(bool? filterFruit = null, bool? filterVegetable = null, string? filterName = null)
+        public List<Food> GetAllFiltered(bool? filterFruit = null, bool? filterVegetable = null, string? filterName = null, int? offset = null, int? count = null)
         {
             string query = "GetFruitsJOIN";
 
@@ -129,6 +131,8 @@ namespace FruitClassLib
                 cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
                 cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
                 cmd.Parameters.AddWithValue("@filterName", filterName);
+                cmd.Parameters.AddWithValue("@lowInterval", offset);
+                cmd.Parameters.AddWithValue("@highInterval", count);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
