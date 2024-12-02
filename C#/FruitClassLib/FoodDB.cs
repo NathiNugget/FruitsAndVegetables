@@ -161,12 +161,16 @@ namespace FruitClassLib
 
         public void Setup()
         {
-            Food food = new Food("Æble", 1, "Apple.link", (byte)2, (byte)20, 23.0, 50.0);
-            Food potato = new Food("Kartoffel", 2, "Potato.link", (byte)2, (byte)20, 23.0, 50.0);
-            Food cucumber = new Food("Agurk", 2, "Cucumber.link", (byte)2, (byte)20, 23.0, 50.0);
+            Food food = new Food("Æble", 1, "apple", (byte)2, (byte)20, 23.0, 50.0);
+            Food potato = new Food("Kartoffel", 2, "potato", (byte)2, (byte)20, 23.0, 50.0);
+            Food cucumber = new Food("Agurk", 2, "cucumber", (byte)2, (byte)20, 23.0, 50.0);
+            Food garlic = new Food("Hvidløg", 2, "garlic", (byte)182, (byte)0, 23.0, 25.0);
+            Food banana = new Food("Banan", 1, "banana", (byte)4, (byte)0, 10.0, 25.0);
             Add(cucumber);
             Add(potato);
             Add(food);
+            Add(garlic);
+            Add(banana);
         }
 
         private Food ReadFoodItem(SqlDataReader reader)
