@@ -97,23 +97,11 @@ namespace FruitClassLib
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                if (filterFruit != null && filterVegetable == null)
-                {
-                    cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
-                    cmd.Parameters.AddWithValue("@filterVegetable", false);
-                }
-                else if (filterFruit == null && filterVegetable != null)
-                {
 
-                    cmd.Parameters.AddWithValue("@filterFruit", false);
-                    cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
 
-                }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
-                    cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
-                }
+                cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
+                cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -135,21 +123,10 @@ namespace FruitClassLib
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                if (filterFruit != null && filterVegetable == null)
-                {
-                    cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
-                    cmd.Parameters.AddWithValue("@filterVegetable", false);
-                } else if (filterFruit == null && filterVegetable != null)
-                {
-                    
-                cmd.Parameters.AddWithValue("@filterFruit", false);
+
+                cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
                 cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
-                    
-                } else
-                {
-                    cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
-                    cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
-                }
+
 
 
                 using (SqlDataReader reader = cmd.ExecuteReader())

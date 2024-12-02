@@ -54,13 +54,15 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            string expected = "Agurk"; 
+            string expected = "Agurk";
+            
             selectElement.SelectByValue(expected);
             
             //IWebElement selectedElement = driver.FindElement(By.Id("Placeholder")); //TODO: Change Placeholder ID to actual element
             //string expected = "Banan";
             //string actual = selectedElement.Text;
             //Assert.AreEqual(expected, actual);
+            
             Assert.AreEqual(selectElement.WrappedElement.GetAttribute("value"), expected);    
             
         }
@@ -138,12 +140,14 @@ namespace UITest
         {
             IWebElement fruitCheckbox = driver.FindElement(By.Id("FruitCheck"));
             fruitCheckbox.Click();
+            Thread.Sleep(500);
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            IList<IWebElement>options = selectElement.Options;
-            IWebElement? CheckedElement = options.FirstOrDefault(v => v.Text == "Agurk");
-            Assert.IsNull(CheckedElement);
+            Assert.IsTrue(selectElement.Options.Count == 2); 
+
+            
+            
         }
         [TestMethod]
         public void FruitsOnly_ValidFruit()

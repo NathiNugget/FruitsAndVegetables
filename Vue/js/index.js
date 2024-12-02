@@ -67,14 +67,12 @@ const app = Vue.createApp({
     async GetFoods() {
 
       let baseURL = FoodsBaseURL;
-      if (this.fruitCheck && this.vegetableCheck);
+      if (!this.fruitCheck && !this.vegetableCheck);
       else {
-        if (this.fruitCheck) {
-          baseURL += "?filterFruit=true";
-        }
-        else if (this.vegetableCheck) {
-          baseURL += "?filterVegetable=true"
-        }
+
+
+        baseURL += `?filterFruit=${this.fruitCheck}&filterVegetable=${this.vegetableCheck}`
+        console.log(baseURL);
       }
 
       console.log(baseURL);
