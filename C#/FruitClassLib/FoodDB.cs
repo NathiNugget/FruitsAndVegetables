@@ -87,7 +87,7 @@ namespace FruitClassLib
             return foodToReturn;
         }
 
-        public List<Food> GetAll(bool? filterFruit = null, bool? filterVegetable = null)
+        public List<Food> GetAll()
         {
             string query = "GetFruitsJOIN";
 
@@ -99,8 +99,8 @@ namespace FruitClassLib
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
 
-                cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
-                cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+                cmd.Parameters.AddWithValue("@filterFruit", true);
+                cmd.Parameters.AddWithValue("@filterVegetable", true);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -114,6 +114,67 @@ namespace FruitClassLib
             return listOfFood;
         }
 
+        public List<Food> GetAll(bool? filterFruit = null, bool? filterVegetable = null, string? filterName = null)
+        {
+            string query = "GetFruitsJOIN";
+
+            List<Food> listOfFood = new List<Food>();
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+
+                cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
+                cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+                cmd.Parameters.AddWithValue("@filterName", filterName);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Food foodToReturn = ReadFoodItem(reader);
+                        listOfFood.Add(foodToReturn);
+                    }
+                }
+            }
+            return listOfFood;
+        }
+
+
+
+        public List<string> GetAllNames()
+        {
+            string query = "GetFruitNames";
+            List<string> listOfNames = new List<string>();
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@filterFruit", true);
+                cmd.Parameters.AddWithValue("@filterVegetable", true);
+
+
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string name = reader.GetString(0);
+                        listOfNames.Add(name);
+                    }
+                }
+            }
+            return listOfNames;
+        }
+
+
+
+
+
         public List<string> GetAllNames(bool? filterFruit = null, bool? filterVegetable = null)
         {
             string query = "GetFruitNames";
@@ -126,6 +187,7 @@ namespace FruitClassLib
 
                 cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
                 cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+             
 
 
 

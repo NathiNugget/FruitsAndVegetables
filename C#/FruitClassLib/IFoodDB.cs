@@ -5,7 +5,9 @@ namespace FruitClassLib
     {
         Food Add(Food food);
         Food FindByName(string name);
-        List<Food> GetAll(bool? filterFruit = null, bool? filterVegetable = null);
+        List<Food> GetAll(bool? filterFruit = null, bool? filterVegetable = null, string? nameFilter = null);
+
+        List<Food> GetAll();
         void Nuke();
         void Setup();
 

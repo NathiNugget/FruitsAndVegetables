@@ -78,6 +78,49 @@ namespace FruitClassLib.Tests
         }
 
         [TestMethod()]
+        public void GetAllFilterNamesTestPartOfString()
+        {
+            var expected = 1;
+            var actual = _repo.GetAll(filterName: "ag");
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
+        public void GetAllFilterNamesTestWholeString()
+        {
+            var expected = 1;
+            var actual = _repo.GetAll(filterName: "agurk");
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
+        public void GetAllFilterNamesTestEmptyString_ReturnsAll()
+        {
+            var expected = 3;
+            var actual = _repo.GetAll(filterName: "");
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+        [TestMethod()]
+        public void GetAllFilterNamesTestCaseLess_Returns1()
+        {
+            var expected = 1;
+            var actual = _repo.GetAll(filterName: "ÆBLE");
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+        [TestMethod()]
+        public void GetAllFilterNamesTestNull_ReturnsAll()
+        {
+            var expected = 3;
+            var actual = _repo.GetAll(filterName: null);
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
         public void GetAllBothFilterTest()
         {
             var expected = 3;
@@ -113,6 +156,7 @@ namespace FruitClassLib.Tests
 
             Assert.AreEqual(expected, actual.Count);
         }
+
 
         [TestMethod()]
         public void GetAllNamesBothFilterTest()
