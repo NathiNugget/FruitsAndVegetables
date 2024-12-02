@@ -30,6 +30,34 @@ class Food {
 
 }
 
+const chartNumberOne = document.getElementById('tempChart')
+
+new Chart(chartNumberOne, {
+  type: 'line',
+  data: {
+    
+    datasets: [{
+      label: 'Sidste 5 Temperatur Målinger',
+      data: [{x: 1, y: 40}, {x: 2,y: 50}, {x: 3,y: 45}],
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: false
+      }
+    }
+  }
+});
+
 const app = Vue.createApp({
   data() {
     return {
