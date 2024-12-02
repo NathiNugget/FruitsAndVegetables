@@ -24,7 +24,7 @@ namespace FruitREST.Controllers
         {
             try
             {
-                List<Food> foods = _foodDB.GetAll(filter.filterFruit, filter.filterVegetable);
+                List<Food> foods = _foodDB.GetAll(filter.filterFruit, filter.filterVegetable, filter.filterName);
                 if (foods.Count == 0)
                 {
                     return NoContent();
