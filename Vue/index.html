@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://kit.fontawesome.com/6ec0fc2274.js" crossorigin="anonymous"></script> 
+    <script src="https://kit.fontawesome.com/6ec0fc2274.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -51,7 +51,7 @@
 
         <!--form-select-->
         <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString"
-            @change="ChooseFruit()" class="form-select elementBox">
+            @change="ChooseFood()" class="form-select elementBox">
             <option disabled>Vælg venligst en ingrediens!</option>
             <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
                 {{food.name}}
@@ -87,6 +87,17 @@
             </div>
         </div>
 
+        <div id="RecipeDiv" v-if="recommendedRecipes.length > 0">
+            <ul id="RecommendedRecipes">
+                <li v-for="(recommendation, index) in recommendedRecipes" :key="index">
+                    {{recommendation.title}}, <img :src="recommendation.link">
+                </li>
+            </ul>
+        </div>
+        <!-- IMAGE FOR SHOWING THE SELECTED FOOD HERE -->
+         <!-- Please don't use in-line style -->
+        <img v-if="chosenFoodString != undefined" :src="chosenFoodImage" id="ChosenFoodImage" style="height: 2000px;">
+        {{}}
         <ul>
             <li v-for="(reading, index) in readings" :key="index">
                 {{reading.temperature}}, {{reading.humidity}}, {{reading.id}}, {{reading.timestamp}}

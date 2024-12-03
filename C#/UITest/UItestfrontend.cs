@@ -8,19 +8,21 @@ namespace UITest
     [TestClass]
     public class UItestfrontend
     {
-        IWebDriver driver;
+        ChromeOptions options = new();
+  
+        static IWebDriver driver = new ChromeDriver(); 
+
+
         // TODO: Replace URL when running tests
         const string TEST_URL = "http://127.0.0.1:5500";
         const int _maxWaitMillis = 300;
-        
+
         [TestInitialize]
         public void Setup()
         {
-            var options = new ChromeOptions();
-            options.AddArgument("--headless=new");
-            driver = new ChromeDriver(options);
             driver.Navigate().GoToUrl(TEST_URL);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(_maxWaitMillis);
+
         }
 
         [TestMethod]
@@ -144,7 +146,7 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            Assert.IsTrue(selectElement.Options.Count == 2); 
+            Assert.IsTrue(selectElement.Options.Count == 3); 
 
             
             
@@ -189,6 +191,85 @@ namespace UITest
             Assert.IsNotNull(selectElement);
         }
 
+
+        [TestMethod]
+        public void GetRecipeForBanana_FullListShown()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            string input = "Banan";
+            selectElement.SelectByValue(input);
+
+            string expected = "Banana Pancakes";
+            IWebElement recommendedRecipes = driver.FindElement(By.Id("RecommendedRecipes"));
+            IList<IWebElement> elementChildren = recommendedRecipes.FindElements(By.TagName("li"));
+            List<string> recipeNames = new();
+            foreach (IWebElement elementChild in elementChildren)
+            {
+                recipeNames.Add(elementChild.FindElement(By.ClassName("RecipeText")).Text);
+            }
+            Assert.IsTrue(recipeNames.Contains(expected));
+        }
+
+        [TestMethod]
+        public void GetRecipeForApple_NoRecipes()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            string input = "Æble";
+            selectElement.SelectByValue(input);
+            IWebElement recommendedRecipes = driver.FindElement(By.Id("RecommendedRecipes"));
+            IList<IWebElement> recipeChildren = recommendedRecipes.FindElements(By.TagName("li"));
+            Assert.IsTrue(recipeChildren.Count() == 0);
+        }
+
+        [TestMethod]
+        public void GetRecipeForGarlic_ListTooBig()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            string input = "Hvidløg";
+            selectElement.SelectByValue(input);
+
+            IWebElement recommendedRecipes = driver.FindElement(By.Id("RecommendedRecipes"));
+            IList<IWebElement> recipeChildren = recommendedRecipes.FindElements(By.TagName("li"));
+            Assert.IsTrue(recipeChildren.Count() == 3);
+        }
+
+        [TestMethod]
+        public void GetImageForBananaRecipe()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            string input = "Banan";
+            selectElement.SelectByValue(input);
+
+            string expected = "https://www.themealdb.com/images/media/meals/sywswr1511383814.jpg";
+            IWebElement recommendedRecipes = driver.FindElement(By.Id("RecommendedRecipes"));
+            IWebElement firstRecipe = recommendedRecipes.FindElement(By.ClassName("RecipeImage"));
+            string actual = firstRecipe.GetAttribute("src");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GetImageForApple()
+        {
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+            SelectElement selectElement = new SelectElement(dropdown);
+            string input = "Æble";
+            selectElement.SelectByValue(input);
+
+            string expected = "https://themealdb.com/images/ingredients/Apple.png";
+            IWebElement selectedFoodPicture = driver.FindElement(By.Id("ChosenFoodImage"));
+            string actual = selectedFoodPicture.GetAttribute("src");
+            Assert.AreEqual(expected.ToLower(), actual.ToLower());
+        }
+
         //[TestMethod]
         //public void SearchButtonCanBeClicked()
         //{
@@ -212,10 +293,11 @@ namespace UITest
         //    Assert.IsNotNull(vegetableFilter);
         //}
 
+
         [TestCleanup]
         public void Cleanup()
         {
-            driver.Dispose();
+            //driver.Navigate().Refresh();
         }
     }
 }

@@ -31,12 +31,13 @@ namespace FruitClassLib.Tests
         }
 
         [TestMethod()]
-        [DataRow( "Banan", 1, "Banan.Link", (byte)2, (byte)5, 50.0, 50.0)]
+        [DataRow( "TestFood", 1, "TestLink", (byte)2, (byte)5, 50.0, 50.0)]
 
         public void AddFoodDBTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
         {
             Food expected = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
             Food actual = _repo.Add(expected);
+
 
             Assert.AreEqual(expected.Name, actual.Name);
         }
@@ -54,7 +55,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllTest()
         {          
-            var expected = 3;
+            var expected = 5;
             var actual = _repo.GetAll();
 
             Assert.AreEqual(expected, actual.Count);
@@ -63,15 +64,15 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllFruitFilterTest()
         {
-            var expected = 1;
+            var expected = 2;
             var actual = _repo.GetAllFiltered(filterFruit: true, filterVegetable: false);
-
             Assert.AreEqual(expected, actual.Count);
         }
         [TestMethod()]
         public void GetAllVegetableFilterTest()
         {
-            var expected = 2;
+
+            var expected = 3;
             var actual = _repo.GetAllFiltered(filterVegetable: true, filterFruit: false);
 
             Assert.AreEqual(expected, actual.Count);
@@ -116,14 +117,13 @@ namespace FruitClassLib.Tests
         {
             var expected = 3;
             var actual = _repo.GetAllFiltered(filterName: null);
-
             Assert.AreEqual(expected, actual.Count);
         }
 
         [TestMethod()]
         public void GetAllBothFilterTest()
         {
-            var expected = 3;
+            var expected = 5;
             var actual = _repo.GetAllFiltered(filterVegetable: true, filterFruit: true);
 
             Assert.AreEqual(expected, actual.Count);
@@ -151,7 +151,6 @@ namespace FruitClassLib.Tests
         {
             var expected = 1;
             var actual = _repo.GetAll(offset: 2, count: 1);
-
             Assert.AreEqual(expected, actual.Count);
         }
 
@@ -160,7 +159,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllNamesTest()
         {
-            var expected = 3;
+            var expected = 5;
             var actual = _repo.GetAllNames();
 
             Assert.AreEqual(expected, actual.Count);
@@ -169,7 +168,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllNamesFruitFilterTest()
         {
-            var expected = 1;
+            var expected = 2;
             var actual = _repo.GetAllNames(filterFruit: true, filterVegetable: false);
 
             Assert.AreEqual(expected, actual.Count);
@@ -177,7 +176,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllNamesVegetableFilterTest()
         {
-            var expected = 2;
+            var expected = 3;
             var actual = _repo.GetAllNames(filterVegetable: true, filterFruit: false);
 
             Assert.AreEqual(expected, actual.Count);
@@ -187,7 +186,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllNamesBothFilterTest()
         {
-            var expected = 3;
+            var expected = 5;
             var actual = _repo.GetAllNames(filterVegetable: true, filterFruit: true);
 
             Assert.AreEqual(expected, actual.Count);
