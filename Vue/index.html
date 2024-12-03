@@ -24,7 +24,7 @@
             </div>
         </header>
 
-        <div class="row elementBox d-flex justify-content-between">
+        <div class="col-12 row elementBox d-flex justify-content-between">
             <div class="col-6 checkboxcontainer mx-3">
                 <label for="FruitCheck" class="form-check-label">Frugt</label>
                 <input type="checkbox" id="FruitCheck" v-model="fruitCheck" @change="GetFoods()"
@@ -43,7 +43,7 @@
                     {{food.name}}
                     </option>
                 </datalist>
-                <input list="FoodDropdown" autocomplete="true" v-model:="searchFoodString"
+                <input list="FoodDropdown" autocomplete="true" v-model:="chosenFoodString"
                 @input="GetFoodsByName()" @keypress="HandleChooseFood" @focusout="ChooseFruit()" placeholder="Vælg venligst en ingrediens!"
                 class="elementBox d-flex justify-content-between" style="text-align: center;"/>
             </div>
@@ -54,15 +54,18 @@
             </div>
         </div>
 
-        <datalist id="FoodDropdown" v-model="chosenFoodString">
+        <!--<datalist id="FoodDropdown" v-model="chosenFoodString">
             <option disabled>Vælg venligst her</option>
             <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
                 {{food.name}}
             </option>
         </datalist>
-        <input list="FoodDropdown" autocomplete="true" v-model:="searchFoodString"
+        <input list="FoodDropdown" autocomplete="true" v-model:="chosenFoodString"
             @input="GetFoodsByName()" @select="ChooseFruit()" placeholder="Vælg venligst en ingrediens!"
-            class="elementBox d-flex justify-content-between" style="text-align: center;"/>
+            class="elementBox d-flex justify-content-between" style="text-align: center;"/>-->
+
+
+
         <!--<select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString"
             @change="ChooseFruit()" class="form-select elementBox">
             <option disabled>Vælg venligst en ingrediens!</option>
@@ -85,8 +88,11 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <p id="ShelfLife" v-show="chosenFood != undefined">
+                    <p id="ShelfLife" v-if="chosenFood != undefined && spoilTime != undefined && spoilTime.constructor === Array" >
                         {{spoilTime[0]}} dage og {{spoilTime[1]}} timer
+                    </p>
+                    <p id="ShelfLife" v-else>
+                        Ukendt
                     </p>
                     <p class="tinytext">
                         Holdbarhed

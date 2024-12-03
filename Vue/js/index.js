@@ -103,12 +103,12 @@ const app = Vue.createApp({
 
       let baseURL = FoodsBaseURL;
       if (!this.fruitCheck && !this.vegetableCheck) {
-        baseURL += `/filtered/?filterFruit=true&filterVegetable=true&filterName=${this.searchFoodString}&offset=0&count=5`
+        baseURL += `/filtered/?filterFruit=true&filterVegetable=true&filterName=${this.chosenFoodString}&offset=0&count=5`
         console.log(baseURL);
       }
       else {
 
-        baseURL += `/filtered/?filterFruit=${this.fruitCheck}&filterVegetable=${this.vegetableCheck}&filterName=${this.searchFoodString}&offset=0&count=5`
+        baseURL += `/filtered/?filterFruit=${this.fruitCheck}&filterVegetable=${this.vegetableCheck}&filterName=${this.chosenFoodString}&offset=0&count=5`
         console.log(baseURL);
       }
 
@@ -179,7 +179,7 @@ const app = Vue.createApp({
       }
 
       if (fruit.spoilhours - penaltyhours < 0) {
-        penaltyhours -= fruits.spoilhours;
+        penaltyhours -= fruit.spoilhours;
         let durabilityHours = 24 - penaltyhours;
         let durabiliyDays = fruit.spoildays - (penaltydays + 1);
 
@@ -194,6 +194,9 @@ const app = Vue.createApp({
 
     ChooseFruit() {
       this.chosenFood = this.foods.find((elem) => elem.name == this.chosenFoodString);
+      if (this.chosenFood == null || this.chosenFood == "") {
+        return
+      }
       console.log(Vue.toRaw(this.chosenFood));
       const food = this.chosenFood;
       this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name);
