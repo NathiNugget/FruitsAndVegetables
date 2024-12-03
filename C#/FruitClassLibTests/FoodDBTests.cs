@@ -64,7 +64,7 @@ namespace FruitClassLib.Tests
         public void GetAllFruitFilterTest()
         {
             var expected = 1;
-            var actual = _repo.GetAll(filterFruit: true, filterVegetable: false);
+            var actual = _repo.GetAllFiltered(filterFruit: true, filterVegetable: false);
 
             Assert.AreEqual(expected, actual.Count);
         }
@@ -72,7 +72,50 @@ namespace FruitClassLib.Tests
         public void GetAllVegetableFilterTest()
         {
             var expected = 2;
-            var actual = _repo.GetAll(filterVegetable: true, filterFruit: false);
+            var actual = _repo.GetAllFiltered(filterVegetable: true, filterFruit: false);
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
+        public void GetAllFilterNamesTestPartOfString()
+        {
+            var expected = 1;
+            var actual = _repo.GetAllFiltered(filterName: "ag");
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
+        public void GetAllFilterNamesTestWholeString()
+        {
+            var expected = 1;
+            var actual = _repo.GetAllFiltered(filterName: "agurk");
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
+        public void GetAllFilterNamesTestEmptyString_ReturnsAll()
+        {
+            var expected = 3;
+            var actual = _repo.GetAllFiltered(filterName: "");
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+        [TestMethod()]
+        public void GetAllFilterNamesTestCaseLess_Returns1()
+        {
+            var expected = 1;
+            var actual = _repo.GetAllFiltered(filterName: "ÆBLE");
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+        [TestMethod()]
+        public void GetAllFilterNamesTestNull_ReturnsAll()
+        {
+            var expected = 3;
+            var actual = _repo.GetAllFiltered(filterName: null);
 
             Assert.AreEqual(expected, actual.Count);
         }
@@ -81,7 +124,33 @@ namespace FruitClassLib.Tests
         public void GetAllBothFilterTest()
         {
             var expected = 3;
-            var actual = _repo.GetAll(filterVegetable: true, filterFruit: true);
+            var actual = _repo.GetAllFiltered(filterVegetable: true, filterFruit: true);
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
+        public void GetAllPagnationTest_Get2()
+        {
+            var expected = 2;
+            var actual = _repo.GetAll(offset: 0, count: 2);
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+        [TestMethod()]
+        public void GetAllPagnationTest_GetAll()
+        {
+            var expected = 3;
+            var actual = _repo.GetAll(offset: 0);
+
+            Assert.AreEqual(expected, actual.Count);
+        }
+
+        [TestMethod()]
+        public void GetAllPagnationTest_Get1From2()
+        {
+            var expected = 1;
+            var actual = _repo.GetAll(offset: 2, count: 1);
 
             Assert.AreEqual(expected, actual.Count);
         }
@@ -113,6 +182,7 @@ namespace FruitClassLib.Tests
 
             Assert.AreEqual(expected, actual.Count);
         }
+
 
         [TestMethod()]
         public void GetAllNamesBothFilterTest()
