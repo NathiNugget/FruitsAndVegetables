@@ -27,12 +27,12 @@
         <div class="col-12 row elementBox d-flex justify-content-between">
             <div class="col-6 checkboxcontainer mx-3">
                 <label for="FruitCheck" class="form-check-label">Frugt</label>
-                <input type="checkbox" id="FruitCheck" v-model="fruitCheck" @change="GetFoods()"
+                <input type="checkbox" id="FruitCheck" v-model="fruitCheck" @change="GetFoodsByName()"
                     class="form-check-input">
             </div>
             <div class="col-6 checkboxcontainer mx-3">
                 <label for="VegetableCheck" class="form-check-label">Grønt</label>
-                <input type="checkbox" id="VegetableCheck" v-model="vegetableCheck" @change="GetFoods()"
+                <input type="checkbox" id="VegetableCheck" v-model="vegetableCheck" @change="GetFoodsByName()"
                     class="form-check-input">
             </div>
         </div>
