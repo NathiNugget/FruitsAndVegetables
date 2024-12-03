@@ -192,6 +192,7 @@ namespace UITest
             Assert.IsNotNull(selectElement);
         }
 
+
         [TestMethod]
         public void GetRecipeForBanana_FullListShown()
         {
@@ -272,6 +273,35 @@ namespace UITest
             Assert.AreEqual(expected.ToLower(), actual.ToLower());
         }
 
+        //[TestMethod]
+        //public void SearchButtonCanBeClicked()
+        //{
+        //    IWebElement filterBtn = driver.FindElement(By.Id("NameSearchBtn"));
+        //    filterBtn.Click();
+        //    Assert.IsNotNull(filterBtn);
+
+        //}
+
+        //[TestMethod]
+        //public void SearchBoxCanBeClicked()
+        //{
+        //    IWebElement 
+        //    IWebElement nameFilter = driver.FindElement(By.Id("NameSearchBox"));   
+        //    nameFilter.Click();
+        //    nameFilter.SendKeys("ag");
+        //    Thread.Sleep(500);
+
+
+        //    Assert.IsNotNull(nameFilter);
+        //    Assert.IsNotNull(vegetableFilter);
+        //}
+
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            //driver.Navigate().Refresh();
+        }
         
     }
 
