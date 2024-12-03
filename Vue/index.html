@@ -40,14 +40,14 @@
 
 
         <datalist id="SearchDropdown">
-            <option disabled>Vælg venligst en ingrediens!</option>
+            <option disabled>Vælg venligst her</option>
             <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
                 {{food.name}}
             </option>
         </datalist>
         <input list="SearchDropdown" name="myBrowser" v-model:="searchFoodString" @click="GetFoodsByName()"
             @input="GetFoodsByName()" @focus="GetFoodsByName()" placeholder="Vælg venligst en ingrediens!"
-            class="informationBox" />
+            class="elementBox d-flex justify-content-between"/>
 
         <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString"
             @change="ChooseFruit()" class="form-select elementBox">
