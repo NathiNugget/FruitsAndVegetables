@@ -24,7 +24,7 @@ namespace FruitREST.Controllers
         {
             try
             {
-                List<Food> foods = _foodDB.GetAll(filter.filterFruit, filter.filterVegetable, filter.filterName);
+                List<Food> foods = _foodDB.GetAllFiltered(filter.filterFruit, filter.filterVegetable, filter.filterName, offset: filter.offset, count: filter.count);
                 if (foods.Count == 0)
                 {
                     return NoContent();
@@ -47,11 +47,11 @@ namespace FruitREST.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] FoodRangeDTO rangeDTO)
         {
             try
             {
-                List<Food> foods = _foodDB.GetAll();
+                List<Food> foods = _foodDB.GetAll(offset: rangeDTO.offset, count: rangeDTO.count);
                 if (foods.Count == 0)
                 {
                     return NoContent();

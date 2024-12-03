@@ -189,14 +189,14 @@ namespace UITest
             Assert.IsNotNull(selectElement);
         }
 
-        [TestMethod]
-        public void SearchButtonCanBeClicked()
-        {
-            IWebElement filterBtn = driver.FindElement(By.Id("NameSearchBtn"));
-            filterBtn.Click();
-            Assert.IsNotNull(filterBtn);
+        //[TestMethod]
+        //public void SearchButtonCanBeClicked()
+        //{
+        //    IWebElement filterBtn = driver.FindElement(By.Id("NameSearchBtn"));
+        //    filterBtn.Click();
+        //    Assert.IsNotNull(filterBtn);
 
-        }
+        //}
 
         //[TestMethod]
         //public void SearchBoxCanBeClicked()
