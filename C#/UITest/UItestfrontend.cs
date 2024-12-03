@@ -189,6 +189,12 @@ namespace UITest
             Assert.IsNotNull(selectElement);
         }
 
+        public void ChartElementNotNull()
+        {
+            IWebElement TempChart = driver.FindElement(By.Id("tempChart"));
+            Assert.IsNotNull(TempChart);
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
