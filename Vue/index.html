@@ -43,7 +43,7 @@
                     {{food.name}}
                     </option>
                 </datalist>
-                <input list="FoodDropdown" autocomplete="true" v-model:="chosenFoodString"
+                <input list="FoodDropdown" autocomplete="off" v-model:="chosenFoodString"
                 @input="GetFoodsByName()" @keypress="HandleChooseFood" @focusout="ChooseFruit()" placeholder="Vælg venligst en ingrediens!"
                 class="elementBox d-flex justify-content-between" style="text-align: center;"/>
             </div>
