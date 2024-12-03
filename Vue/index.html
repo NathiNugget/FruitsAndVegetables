@@ -47,7 +47,7 @@
         </datalist>
         <input list="SearchDropdown" name="myBrowser" v-model:="searchFoodString"
             @input="GetFoodsByName()" placeholder="Vælg venligst en ingrediens!"
-            class="elementBox d-flex justify-content-between"/>
+            class="elementBox d-flex justify-content-between" style="text-align: center;"/>
 
         <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString"
             @change="ChooseFruit()" class="form-select elementBox">
