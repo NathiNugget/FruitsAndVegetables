@@ -64,10 +64,39 @@ body {
     text-align: center;
 }
 
+.informationDivider {
+    border-left: 0.1rem solid var(--box);
+}
+
 .tinytext {
     font-size: x-small;
 }
 
 .selectedFruit {
-    border-top: 0.1rem solid lightgray;
+    border-top: 0.1rem solid var(--box);
+}
+
+.fitImageInContainer{
+    width:100%;
+}
+
+.recipeScroll{
+    position:relative;
+    aspect-ratio: 1;
+    overflow-y: scroll;
+    justify-content: center;
+}
+
+.recipeCard{
+    position:relative;
+    margin: 5%;
+    width: 90%;
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    border-radius: 20%;
+}
+
+.RecipeImage{
+    width:100%;
+    border-radius: 20px;
 }
