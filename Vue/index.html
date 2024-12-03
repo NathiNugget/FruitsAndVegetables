@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://kit.fontawesome.com/6ec0fc2274.js" crossorigin="anonymous"></script> 
+    <script src="https://kit.fontawesome.com/6ec0fc2274.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -50,13 +50,16 @@
         </div>
 
 
-            <input list="SearchDropdown" name="myBrowser" v-model:="searchFoodString" @change="GetFoodsByName()" placeholder="Vælg venligst en ingrediens!" class="informationBox"/>
-            <datalist id="SearchDropdown">
-                <option disabled>Vælg venligst en ingrediens!</option>
-                <option v-for="food in foods">
-                    {{food.name}}
-                </option>
-            </datalist>
+
+        <datalist id="SearchDropdown">
+            <option disabled>Vælg venligst en ingrediens!</option>
+            <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
+                {{food.name}}
+            </option>
+        </datalist>
+        <input list="SearchDropdown" name="myBrowser" v-model:="searchFoodString" @click="GetFoodsByName()"
+            @input="GetFoodsByName()" @focus="GetFoodsByName()" placeholder="Vælg venligst en ingrediens!"
+            class="informationBox" />
 
         <!--form-select-->
         <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString"

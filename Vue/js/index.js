@@ -128,8 +128,9 @@ const app = Vue.createApp({
 
             foundFoods.push(currentFood);
           });
-          console.log(this.foods);
+          
           this.foods = foundFoods
+          console.log(this.foods);  
 
         }
       );
