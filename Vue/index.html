@@ -38,12 +38,12 @@
         </div>
         <div class="col-12 row d-flex justify-content-between">
             <div class="col-10">                
-                <datalist id="FoodDropdown" v-model="chosenFoodString">                
+                <datalist id="FoodSuggestions" v-model="chosenFoodString">                
                     <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
                     {{food.name}}
                     </option>
                 </datalist>
-                <input list="FoodDropdown" autocomplete="off" v-model:="chosenFoodString"
+                <input list="FoodSuggestions" id="FoodDropdown" autocomplete="off" v-model:="chosenFoodString"
                 @input="GetFoodsByName()" @keypress="HandleChooseFood" @focusout="ChooseFruit()" placeholder="Vælg venligst en ingrediens!"
                 class="elementBox d-flex justify-content-between" style="text-align: center;"/>
             </div>
