@@ -9,8 +9,8 @@ namespace UITest
     public class UItestfrontend
     {
         ChromeOptions options = new();
-  
-        static IWebDriver driver = new ChromeDriver(); 
+
+        static IWebDriver driver = new ChromeDriver();
 
 
         // TODO: Replace URL when running tests
@@ -42,10 +42,10 @@ namespace UITest
         [TestMethod]
         public void ClickableDropDown()
         {
-            
+
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
-            
+
             IWebElement selectedFood = driver.FindElement(By.Id("Agurk"));
             Assert.IsNotNull(selectedFood);
         }
@@ -57,16 +57,16 @@ namespace UITest
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
             string expected = "Agurk";
-            
+
             selectElement.SelectByValue(expected);
-            
+
             //IWebElement selectedElement = driver.FindElement(By.Id("Placeholder")); //TODO: Change Placeholder ID to actual element
             //string expected = "Banan";
             //string actual = selectedElement.Text;
             //Assert.AreEqual(expected, actual);
-            
-            Assert.AreEqual(selectElement.WrappedElement.GetAttribute("value"), expected);    
-            
+
+            Assert.AreEqual(selectElement.WrappedElement.GetAttribute("value"), expected);
+
         }
 
         [TestMethod]
@@ -87,7 +87,7 @@ namespace UITest
             SelectElement selectElement = new SelectElement(dropdown);
             string expected = "Banan";
             selectElement.SelectByValue(expected);
-            
+
             IWebElement selectedElement = driver.FindElement(By.Id("SelectedName")); //TODO: Change Placeholder ID to actual element
             string actual = selectedElement.Text;
             Assert.AreEqual(expected, actual);
@@ -101,7 +101,7 @@ namespace UITest
             SelectElement selectElement = new SelectElement(dropdown);
             string selectedFood = "Æble";
             selectElement.SelectByValue(selectedFood);
-           
+
             IWebElement shelfLife = driver.FindElement(By.Id("ShelfLife"));
             Assert.IsNotNull(shelfLife);
         }
@@ -114,7 +114,7 @@ namespace UITest
             SelectElement selectElement = new SelectElement(dropdown);
             string selectedFood = "Agurk";
             selectElement.SelectByValue(selectedFood);
-            
+
             IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
             string expected = "0 dage";
             string actual = shelflife.Text;
@@ -128,9 +128,9 @@ namespace UITest
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
             string selectedFood = "Agurk";
-            Thread.Sleep(500); 
+            Thread.Sleep(500);
             selectElement.SelectByValue(selectedFood);
-            
+
             IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
             string expected = "12 timer";
             string actual = shelflife.Text;
@@ -146,10 +146,10 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            Assert.IsTrue(selectElement.Options.Count == 3); 
+            Assert.IsTrue(selectElement.Options.Count == 3);
 
-            
-            
+
+
         }
         [TestMethod]
         public void FruitsOnly_ValidFruit()
@@ -157,7 +157,7 @@ namespace UITest
             IWebElement fruitCheckbox = driver.FindElement(By.Id("FruitCheck"));
             fruitCheckbox.Click();
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
-            Thread.Sleep(500); 
+            Thread.Sleep(500);
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
             selectElement.SelectByValue("Æble");
@@ -170,12 +170,13 @@ namespace UITest
         {
             IWebElement vegetableCheckbox = driver.FindElement(By.Id("VegetableCheck"));
             vegetableCheckbox.Click();
+            Thread.Sleep(500);
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
+            Thread.Sleep(500);
             SelectElement selectElement = new SelectElement(dropdown);
-            IList<IWebElement> options = selectElement.Options;
-            IWebElement? CheckedElement = options.FirstOrDefault(v => v.Text == "Banan");
-            Assert.IsNull(CheckedElement);
+            Assert.ThrowsException<NoSuchElementException>(() => selectElement.SelectByValue("Æble")); 
+            
         }
 
         [TestMethod]
@@ -201,6 +202,7 @@ namespace UITest
             selectElement.SelectByValue(input);
 
             string expected = "Banana Pancakes";
+            Thread.Sleep(200);
             IWebElement recommendedRecipes = driver.FindElement(By.Id("RecommendedRecipes"));
             IList<IWebElement> elementChildren = recommendedRecipes.FindElements(By.TagName("li"));
             List<string> recipeNames = new();
@@ -219,9 +221,10 @@ namespace UITest
             SelectElement selectElement = new SelectElement(dropdown);
             string input = "Æble";
             selectElement.SelectByValue(input);
-            IWebElement recommendedRecipes = driver.FindElement(By.Id("RecommendedRecipes"));
-            IList<IWebElement> recipeChildren = recommendedRecipes.FindElements(By.TagName("li"));
-            Assert.IsTrue(recipeChildren.Count() == 0);
+            string expected = "Ingen opskrifter fundet, find selv på noget! :P"; 
+            IWebElement recommendedRecipes = driver.FindElement(By.Id("NoRecipeFound"));
+            string acutal = recommendedRecipes.Text; 
+            Assert.AreEqual(expected, acutal);
         }
 
         [TestMethod]
@@ -248,8 +251,8 @@ namespace UITest
             selectElement.SelectByValue(input);
 
             string expected = "https://www.themealdb.com/images/media/meals/sywswr1511383814.jpg";
-            IWebElement recommendedRecipes = driver.FindElement(By.Id("RecommendedRecipes"));
-            IWebElement firstRecipe = recommendedRecipes.FindElement(By.ClassName("RecipeImage"));
+            Thread.Sleep(500);
+            IWebElement firstRecipe = driver.FindElement(By.Id("Banana Pancakes.img"));
             string actual = firstRecipe.GetAttribute("src");
             Assert.AreEqual(expected, actual);
         }
@@ -269,10 +272,8 @@ namespace UITest
             Assert.AreEqual(expected.ToLower(), actual.ToLower());
         }
 
-        [TestCleanup]
-        public void Cleanup()
-        {
-            //driver.Navigate().Refresh();
-        }
+        
     }
+
+
 }

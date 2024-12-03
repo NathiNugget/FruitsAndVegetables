@@ -90,13 +90,16 @@
         <div id="RecipeDiv" v-if="recommendedRecipes.length > 0">
             <ul id="RecommendedRecipes">
                 <li v-for="(recommendation, index) in recommendedRecipes" :key="index">
-                    {{recommendation.title}}, <img :src="recommendation.link">
+                    <p class="RecipeText">{{recommendation.title}}</p>, <img :src="recommendation.link" class="RecipeImage" :id="recommendation.title + '.img'">
                 </li>
             </ul>
         </div>
+        <div v-else-if="recommendedRecipes.length == 0 && chosenFoodString != undefined">
+            <p id="NoRecipeFound">Ingen opskrifter fundet, find selv på noget! :P</p>
+        </div>
         <!-- IMAGE FOR SHOWING THE SELECTED FOOD HERE -->
          <!-- Please don't use in-line style -->
-        <img v-if="chosenFoodString != undefined" :src="chosenFoodImage" id="ChosenFoodImage" style="height: 2000px;">
+        <img v-if="chosenFoodString != undefined" :src="chosenFoodImage" id="ChosenFoodImage"  style="height: 2000px;">
         {{}}
         <ul>
             <li v-for="(reading, index) in readings" :key="index">
