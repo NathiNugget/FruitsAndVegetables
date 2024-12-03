@@ -13,12 +13,8 @@
 
 <body>
     <div id="app">
-        <!--Bootstrap used in comments-->
-        <!--"p-3"-->
         <header class="header p-3">
-            <!--"row w-100"-->
             <div class="row w-100">
-                <!--"col-12 row"-->
                 <div class="col-12 row">
                     <h1 style="text-align: center;">
                         <i class="fa-solid fa-leaf fa-xl"></i>
@@ -28,25 +24,17 @@
             </div>
         </header>
 
-        <!--"row d-flex justify-content-between"-->
         <div class="row elementBox d-flex justify-content-between">
-            <!--"col-6 mx-3"-->
             <div class="col-6 checkboxcontainer mx-3">
-                <!--"form-check-label"-->
                 <label for="FruitCheck" class="form-check-label">Frugt</label>
-                <!--"form-check-input"-->
                 <input type="checkbox" id="FruitCheck" v-model="fruitCheck" @change="GetFoods()"
                     class="form-check-input">
             </div>
-            <!--"col-6 mx-3"-->
             <div class="col-6 checkboxcontainer mx-3">
-                <!--"form-check-label"-->
                 <label for="VegetableCheck" class="form-check-label">Grønt</label>
-                <!--"form-check-input"-->
                 <input type="checkbox" id="VegetableCheck" v-model="vegetableCheck" @change="GetFoods()"
                     class="form-check-input">
             </div>
-
         </div>
 
 
@@ -61,7 +49,6 @@
             @input="GetFoodsByName()" @focus="GetFoodsByName()" placeholder="Vælg venligst en ingrediens!"
             class="informationBox" />
 
-        <!--form-select-->
         <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString"
             @change="ChooseFruit()" class="form-select elementBox">
             <option disabled>Vælg venligst en ingrediens!</option>
@@ -72,22 +59,17 @@
 
 
         <div class="informationBox">
-            <!--"d-flex justify-content-between"-->
             <div class="d-flex justify-content-between">
-                <!--"col-6 row"-->
                 <div class="col-6 row">
-                    <!--"col-6"-->
                     <div class="col-6">
                         <p id="NewestTemp">{{newestTemperature}}&deg;C</p>
                         <p class="tinytext">Temperatur</p>
                     </div>
-                    <!--"col-6"-->
                     <div class="col-6">
                         <p id="NewestHumidity">{{newestHumidity}}%</p>
                         <p class="tinytext">Luftfugtighed</p>
                     </div>
                 </div>
-                <!--"col-6"-->
                 <div class="col-6">
                     <p id="ShelfLife" v-show="chosenFood != undefined">
                         {{spoilTime[0]}} dage og {{spoilTime[1]}} timer
