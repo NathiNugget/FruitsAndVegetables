@@ -49,10 +49,11 @@
 
         </div>
 
+
             <input list="SearchDropdown" name="myBrowser" v-model:="searchFoodString" @change="GetFoodsByName()" placeholder="Vælg venligst en ingrediens!" class="informationBox"/>
             <datalist id="SearchDropdown">
                 <option disabled>Vælg venligst en ingrediens!</option>
-                <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
+                <option v-for="food in foods">
                     {{food.name}}
                 </option>
             </datalist>
