@@ -49,6 +49,14 @@
 
         </div>
 
+            <input list="SearchDropdown" name="myBrowser" v-model:="searchFoodString" @change="GetFoodsByName()" placeholder="Vælg venligst en ingrediens!" class="informationBox"/>
+            <datalist id="SearchDropdown">
+                <option disabled>Vælg venligst en ingrediens!</option>
+                <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
+                    {{food.name}}
+                </option>
+            </datalist>
+
         <!--form-select-->
         <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString"
             @change="ChooseFruit()" class="form-select elementBox">

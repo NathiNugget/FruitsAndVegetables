@@ -42,6 +42,7 @@ const app = Vue.createApp({
       spoilTime: 5,
       chosenFood: undefined,
       chosenFoodString: undefined,
+      searchFoodString: "",
 
     }
   },
@@ -89,6 +90,46 @@ const app = Vue.createApp({
             this.foods.push(currentFood);
           });
           console.log(this.foods);
+
+        }
+      );
+
+    },
+
+
+
+    async GetFoodsByName() {
+
+      let baseURL = FoodsBaseURL;
+      if (!this.fruitCheck && !this.vegetableCheck) {
+        baseURL += `/filtered/?filterFruit=true&filterVegetable=true&filterName=${this.searchFoodString}&offset=0&count=5`
+        console.log(baseURL);
+      }
+      else {
+
+        baseURL += `/filtered/?filterFruit=${this.fruitCheck}&filterVegetable=${this.vegetableCheck}&filterName=${this.searchFoodString}&offset=0&count=5`
+        console.log(baseURL);
+      }
+
+      console.log(baseURL);
+
+
+      const response = await Axios.get(baseURL).then(
+        (response) => {
+          var respData = response.data;
+
+          var foundFoods = [];
+          if (response.data == null || response.data == "") {
+            this.foods = []
+            return
+          }
+          response.data.forEach((element) => {
+            const currentFood = new Food(element.foodTypeId, element.foodTypeName, element.id, element.name, element.apiLink, element.spoilDate, element.spoilHours, element.idealTemperature, element.idealHumidity);
+
+            foundFoods.push(currentFood);
+          });
+          console.log(this.foods);
+          this.foods = foundFoods
 
         }
       );
@@ -172,7 +213,7 @@ const app = Vue.createApp({
 
   mounted() {
     this.SetupInitialData();
-    this.GetFoods();
+    //this.GetFoods();
 
 
 
