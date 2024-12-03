@@ -87,7 +87,7 @@ namespace FruitClassLib
             return foodToReturn;
         }
 
-        public List<Food> GetAll(bool? filterFruit = null, bool? filterVegetable = null)
+        public List<Food> GetAll(int? offset = null, int? count = null)
         {
             string query = "GetFruitsJOIN";
 
@@ -99,8 +99,10 @@ namespace FruitClassLib
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
 
-                cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
-                cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+                cmd.Parameters.AddWithValue("@filterFruit", true);
+                cmd.Parameters.AddWithValue("@filterVegetable", true);
+                cmd.Parameters.AddWithValue("@lowInterval", offset);
+                cmd.Parameters.AddWithValue("@highInterval", count);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -114,6 +116,69 @@ namespace FruitClassLib
             return listOfFood;
         }
 
+        public List<Food> GetAllFiltered(bool? filterFruit = null, bool? filterVegetable = null, string? filterName = null, int? offset = null, int? count = null)
+        {
+            string query = "GetFruitsJOIN";
+
+            List<Food> listOfFood = new List<Food>();
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+
+                cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
+                cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+                cmd.Parameters.AddWithValue("@filterName", filterName);
+                cmd.Parameters.AddWithValue("@lowInterval", offset);
+                cmd.Parameters.AddWithValue("@highInterval", count);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Food foodToReturn = ReadFoodItem(reader);
+                        listOfFood.Add(foodToReturn);
+                    }
+                }
+            }
+            return listOfFood;
+        }
+
+
+
+        public List<string> GetAllNames()
+        {
+            string query = "GetFruitNames";
+            List<string> listOfNames = new List<string>();
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@filterFruit", true);
+                cmd.Parameters.AddWithValue("@filterVegetable", true);
+
+
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string name = reader.GetString(0);
+                        listOfNames.Add(name);
+                    }
+                }
+            }
+            return listOfNames;
+        }
+
+
+
+
+
         public List<string> GetAllNames(bool? filterFruit = null, bool? filterVegetable = null)
         {
             string query = "GetFruitNames";
@@ -126,6 +191,7 @@ namespace FruitClassLib
 
                 cmd.Parameters.AddWithValue("@filterFruit", filterFruit);
                 cmd.Parameters.AddWithValue("@filterVegetable", filterVegetable);
+             
 
 
 
@@ -161,12 +227,16 @@ namespace FruitClassLib
 
         public void Setup()
         {
-            Food food = new Food("Æble", 1, "Apple.link", (byte)2, (byte)20, 23.0, 50.0);
-            Food potato = new Food("Kartoffel", 2, "Potato.link", (byte)2, (byte)20, 23.0, 50.0);
-            Food cucumber = new Food("Agurk", 2, "Cucumber.link", (byte)2, (byte)20, 23.0, 50.0);
+            Food food = new Food("Æble", 1, "apple", (byte)2, (byte)20, 23.0, 50.0);
+            Food potato = new Food("Kartoffel", 2, "potato", (byte)2, (byte)20, 23.0, 50.0);
+            Food cucumber = new Food("Agurk", 2, "cucumber", (byte)2, (byte)20, 23.0, 50.0);
+            Food garlic = new Food("Hvidløg", 2, "garlic", (byte)182, (byte)0, 23.0, 25.0);
+            Food banana = new Food("Banan", 1, "banana", (byte)4, (byte)0, 10.0, 25.0);
             Add(cucumber);
             Add(potato);
             Add(food);
+            Add(garlic);
+            Add(banana);
         }
 
         private Food ReadFoodItem(SqlDataReader reader)

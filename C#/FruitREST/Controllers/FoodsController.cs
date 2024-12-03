@@ -16,7 +16,7 @@ namespace FruitREST.Controllers
         {
             _foodDB = foodDB;
         }
-        [HttpGet]
+        [HttpGet("filtered")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -24,7 +24,7 @@ namespace FruitREST.Controllers
         {
             try
             {
-                List<Food> foods = _foodDB.GetAll(filter.filterFruit, filter.filterVegetable);
+                List<Food> foods = _foodDB.GetAllFiltered(filter.filterFruit, filter.filterVegetable, filter.filterName, offset: filter.offset, count: filter.count);
                 if (foods.Count == 0)
                 {
                     return NoContent();
@@ -40,6 +40,37 @@ namespace FruitREST.Controllers
             }
         
         }
+
+
+
+        [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Get([FromQuery] FoodRangeDTO rangeDTO)
+        {
+            try
+            {
+                List<Food> foods = _foodDB.GetAll(offset: rangeDTO.offset, count: rangeDTO.count);
+                if (foods.Count == 0)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return Ok(foods);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+
+
         [HttpGet("byName={name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -83,7 +114,36 @@ namespace FruitREST.Controllers
             }
         }
 
+
         [HttpGet("Names")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetNames()
+        {
+            try
+            {
+                List<string> names = _foodDB.GetAllNames();
+                if (names.Count == 0)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return Ok(names);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+
+
+        [HttpGet("NamesFiltered")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

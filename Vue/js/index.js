@@ -13,6 +13,13 @@ class Reading {
   }
 }
 
+class Recommendation {
+  constructor(title, link) {
+    this.title = title;
+    this.link = link;
+  }
+}
+
 class Food {
   constructor(foodTypeId, foodTypeName, id, name, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity) {
     this.foodtypeid = foodTypeId;
@@ -97,6 +104,8 @@ const app = Vue.createApp({
     return {
       readings: [],
       foods: [],
+      recommendedRecipes: [],
+
       newestTemperature: NaN,
       newestHumidity: NaN,
       fruitCheck: false,
@@ -104,6 +113,7 @@ const app = Vue.createApp({
       spoilTime: 5,
       chosenFood: undefined,
       chosenFoodString: undefined,
+      chosenFoodImage: undefined, 
 
     }
   },
@@ -127,7 +137,7 @@ const app = Vue.createApp({
 
     async GetFoods() {
 
-      let baseURL = FoodsBaseURL;
+      let baseURL = FoodsBaseURL+"/filtered/";
       if (!this.fruitCheck && !this.vegetableCheck);
       else {
 
@@ -172,7 +182,7 @@ const app = Vue.createApp({
       const map = {
         "Agurk": this.CalculateGenericFood(3, 2, 8),
         "Banan": this.CalculateGenericFood(5, 1, 3),
-
+        "Hvidløg": this.CalculateGenericFood(12, 130, 7), 
         "Kartoffel": this.CalculateGenericFood(15, 3, 4),
         "Æble": this.CalculateGenericFood(10, 1, 3),
 
@@ -197,7 +207,7 @@ const app = Vue.createApp({
       }
 
       if (fruit.spoilhours - penaltyhours < 0) {
-        penaltyhours -= fruits.spoilhours;
+        penaltyhours -= fruit.spoilhours;
         let durabilityHours = 24 - penaltyhours;
         let durabiliyDays = fruit.spoildays - (penaltydays + 1);
 
@@ -210,11 +220,15 @@ const app = Vue.createApp({
       return [durabiliyDays, durabilityHours];
     },
 
-    ChooseFruit() {
+    async ChooseFood() {
       this.chosenFood = this.foods.find((elem) => elem.name == this.chosenFoodString);
+      this.chosenFoodImage = `https://themealdb.com/images/ingredients/${this.chosenFood.apilink}.png`;
+      console.log(this.chosenFoodImage);  
+
       console.log(Vue.toRaw(this.chosenFood));
       const food = this.chosenFood;
       this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name);
+      await this.FetchMealDB(); 
     },
 
     updateChartings() {
@@ -231,8 +245,27 @@ const app = Vue.createApp({
     },
 
 
+    async FetchMealDB() {
+      const baseAPIlink = "www.themealdb.com";
+      this.recommendedRecipes = []; 
+      console.log("https://" + baseAPIlink + `/api/json/v1/1/filter.php?i=${this.chosenFood.apilink}`);
+      const response = await Axios.get("https://" + baseAPIlink + `/api/json/v1/1/filter.php?i=${this.chosenFood.apilink}`).then(
+        (response) => {
+         
+          response.data.meals.every((elem) => {
+            if (this.recommendedRecipes.length == 3){
+              return false; 
+            }
+            const newRecommendation = new Recommendation(elem.strMeal, elem.strMealThumb);
+            
+            this.recommendedRecipes.push(newRecommendation);
+            return true; 
+          });
+          console.log(this.recommendedRecipes);
+        }
+      );
 
-
+    },
   },
 
 
