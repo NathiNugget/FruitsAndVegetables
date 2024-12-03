@@ -42,7 +42,7 @@ const app = Vue.createApp({
       vegetableCheck: true,
       spoilTime: 5,
       chosenFood: undefined,
-      chosenFoodString: undefined,
+      chosenFoodString: "",
       searchFoodString: "",
 
     }
