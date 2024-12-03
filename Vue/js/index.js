@@ -149,14 +149,14 @@ const app = Vue.createApp({
     },
 
     spoilMap(hour, day, foodName) {
-
+      // foodname argument is assumed to be all lowercase
 
       const map = {
-        "Agurk": this.CalculateGenericFood(3, 2, 8),
-        "Banan": this.CalculateGenericFood(5, 1, 3),
+        "agurk": this.CalculateGenericFood(3, 2, 8),
+        "banan": this.CalculateGenericFood(5, 1, 3),
 
-        "Kartoffel": this.CalculateGenericFood(15, 3, 4),
-        "Æble": this.CalculateGenericFood(10, 1, 3),
+        "kartoffel": this.CalculateGenericFood(15, 3, 4),
+        "æble": this.CalculateGenericFood(10, 1, 3),
 
       }
       console.log(map[foodName]);
@@ -193,13 +193,13 @@ const app = Vue.createApp({
     },
 
     ChooseFruit() {
-      this.chosenFood = this.foods.find((elem) => elem.name == this.chosenFoodString);
+      this.chosenFood = this.foods.find((elem) => elem.name.toLowerCase() == this.chosenFoodString.toLowerCase());
       if (this.chosenFood == null || this.chosenFood == "") {
         return
       }
       console.log(Vue.toRaw(this.chosenFood));
       const food = this.chosenFood;
-      this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name);
+      this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name.toLowerCase());
     },
 
     HandleChooseFood(e){
