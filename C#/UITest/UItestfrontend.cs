@@ -10,19 +10,13 @@ namespace UITest
     {
         ChromeOptions options = new();
   
-        IWebDriver driver; 
+        static IWebDriver driver = new ChromeDriver(); 
 
 
         // TODO: Replace URL when running tests
         const string TEST_URL = "http://127.0.0.1:5500";
         const int _maxWaitMillis = 300;
 
-        [ClassInitialize]
-        public void ClassSetup()
-        {
-            //options.AddArgument("--headless=new");
-            driver = new ChromeDriver(options);
-        }
         [TestInitialize]
         public void Setup()
         {
