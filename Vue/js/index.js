@@ -37,6 +37,68 @@ class Food {
 
 }
 
+const chartNumberOne = document.getElementById('tempChart')
+
+let temperatureChart = new Chart(chartNumberOne, {
+  type: 'line',
+  data: {
+    datasets: [{
+      label: 'Temperatur måling',
+      data: [],
+      borderWidth: 2,
+      borderColor: 'magenta',
+      backgroundColor: 'rgb(0,128,0)',
+      pointStyle: 'circle',
+      pointRadius: 7,
+      pointHoverRadius: 10,
+      pointBorderColor: 'gold'
+    }],
+
+  },
+  options: {
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'hour', 
+          tooltipFormat: 'dd/MM/yyyy HH:mm',
+          displayFormats: {
+            hour: 'HH:mm', 
+            minute: 'HH:mm:ss', 
+            
+          }
+        },
+        title: {
+          display: true,
+          text: 'Tids Stamp for målinger ', 
+          
+          color: 'blue'
+        },
+        ticks: {
+          source: 'data',
+          autoSkip: true,
+          maxTicksLimit: 5,
+        }
+        
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Temperature',
+          color: 'blue'
+        }
+      }
+    },
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'temp over time type shit',
+      }
+    },
+  }
+});
+
 const app = Vue.createApp({
   data() {
     return {
@@ -64,10 +126,9 @@ const app = Vue.createApp({
             var toAdd = new Reading(element.temperature, element.humidity, element.id, element.timestamp);
             this.readings.push(toAdd);
 
-          }
-
+          },
           );
-
+          this.updateChartings();
         }
       );
 
@@ -168,6 +229,19 @@ const app = Vue.createApp({
       const food = this.chosenFood;
       this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name);
       await this.FetchMealDB(); 
+    },
+
+    updateChartings() {
+      const chartData = this.readings.map(reading => ({
+        x: reading.timestamp.toISOString(),
+        y: reading.temperature,
+        
+      }));
+      console.log()
+      temperatureChart.data.datasets[0].data = chartData;
+      temperatureChart.update();
+      
+
     },
 
 

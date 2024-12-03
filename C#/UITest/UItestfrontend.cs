@@ -191,6 +191,13 @@ namespace UITest
             IWebElement selectedOption = selectElement.SelectedOption;
             Assert.IsNotNull(selectElement);
         }
+        
+        [TestMethod]
+        public void ChartElementNotNull()
+        {
+            IWebElement TempChart = driver.FindElement(By.Id("tempChart"));
+            Assert.IsNotNull(TempChart);
+        }
 
 
         [TestMethod]
@@ -295,7 +302,6 @@ namespace UITest
         //    Assert.IsNotNull(nameFilter);
         //    Assert.IsNotNull(vegetableFilter);
         //}
-
 
         [TestCleanup]
         public void Cleanup()
