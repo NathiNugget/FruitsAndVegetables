@@ -1,5 +1,6 @@
 import "./bundle.js";
 
+
 const ReadingBaseURL = "https://fruitresttest.azurewebsites.net/api/Readings";
 const FoodsBaseURL = "https://fruitresttest.azurewebsites.net/api/Foods"
 
@@ -197,6 +198,12 @@ const app = Vue.createApp({
       const food = this.chosenFood;
       this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name);
     },
+
+    HandleChooseFood(e){
+      if(e.key == "Enter"){
+        this.ChooseFruit()
+      }
+    }
 
 
 
