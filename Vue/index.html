@@ -45,8 +45,8 @@
                 {{food.name}}
             </option>
         </datalist>
-        <input list="SearchDropdown" name="myBrowser" v-model:="searchFoodString" @click="GetFoodsByName()"
-            @input="GetFoodsByName()" @focus="GetFoodsByName()" placeholder="Vælg venligst en ingrediens!"
+        <input list="SearchDropdown" name="myBrowser" v-model:="searchFoodString"
+            @input="GetFoodsByName()" placeholder="Vælg venligst en ingrediens!"
             class="elementBox d-flex justify-content-between"/>
 
         <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString"

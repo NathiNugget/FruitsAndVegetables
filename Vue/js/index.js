@@ -207,14 +207,13 @@ const app = Vue.createApp({
 
 
 
-
   computed: {
 
   },
 
   mounted() {
     this.SetupInitialData();
-    //this.GetFoods();
+    this.GetFoodsByName();
 
 
 
