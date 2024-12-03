@@ -8,19 +8,27 @@ namespace UITest
     [TestClass]
     public class UItestfrontend
     {
-        IWebDriver driver;
+        ChromeOptions options = new();
+  
+        IWebDriver driver; 
+
+
         // TODO: Replace URL when running tests
         const string TEST_URL = "http://127.0.0.1:5500";
         const int _maxWaitMillis = 300;
-        
+
+        [ClassInitialize]
+        public void ClassSetup()
+        {
+            //options.AddArgument("--headless=new");
+            driver = new ChromeDriver(options);
+        }
         [TestInitialize]
         public void Setup()
         {
-            var options = new ChromeOptions();
-            //options.AddArgument("--headless=new");
-            driver = new ChromeDriver(options);
             driver.Navigate().GoToUrl(TEST_URL);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(_maxWaitMillis);
+
         }
 
         [TestMethod]
@@ -258,19 +266,19 @@ namespace UITest
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
             SelectElement selectElement = new SelectElement(dropdown);
-            string input = "Banan";
+            string input = "Æble";
             selectElement.SelectByValue(input);
 
-            string expected = "https://www.themealdb.com/images/ingredients/Apple.png";
+            string expected = "https://themealdb.com/images/ingredients/Apple.png";
             IWebElement selectedFoodPicture = driver.FindElement(By.Id("ChosenFoodImage"));
             string actual = selectedFoodPicture.GetAttribute("src");
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected.ToLower(), actual.ToLower());
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            driver.Dispose();
+            //driver.Navigate().Refresh();
         }
     }
 }

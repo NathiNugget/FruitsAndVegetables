@@ -51,6 +51,7 @@ const app = Vue.createApp({
       spoilTime: 5,
       chosenFood: undefined,
       chosenFoodString: undefined,
+      chosenFoodImage: undefined, 
 
     }
   },
@@ -158,8 +159,11 @@ const app = Vue.createApp({
       return [durabiliyDays, durabilityHours];
     },
 
-    async ChooseFruit() {
+    async ChooseFood() {
       this.chosenFood = this.foods.find((elem) => elem.name == this.chosenFoodString);
+      this.chosenFoodImage = `https://themealdb.com/images/ingredients/${this.chosenFood.apilink}.png`;
+      console.log(this.chosenFoodImage);  
+
       console.log(Vue.toRaw(this.chosenFood));
       const food = this.chosenFood;
       this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name);
