@@ -13,12 +13,8 @@
 
 <body>
     <div id="app">
-        <!--Bootstrap used in comments-->
-        <!--"p-3"-->
         <header class="header p-3">
-            <!--"row w-100"-->
             <div class="row w-100">
-                <!--"col-12 row"-->
                 <div class="col-12 row">
                     <h1 style="text-align: center;">
                         <i class="fa-solid fa-leaf fa-xl"></i>
@@ -28,57 +24,55 @@
             </div>
         </header>
 
-        <!--"row d-flex justify-content-between"-->
-        <div class="row elementBox d-flex justify-content-between">
-            <!--"col-6 mx-3"-->
+        <div class="col-12 row elementBox d-flex justify-content-between">
             <div class="col-6 checkboxcontainer mx-3">
-                <!--"form-check-label"-->
                 <label for="FruitCheck" class="form-check-label">Frugt</label>
-                <!--"form-check-input"-->
-                <input type="checkbox" id="FruitCheck" v-model="fruitCheck" @change="GetFoods()"
+                <input type="checkbox" id="FruitCheck" v-model="fruitCheck" @change="GetFoodsByName()"
                     class="form-check-input">
             </div>
-            <!--"col-6 mx-3"-->
             <div class="col-6 checkboxcontainer mx-3">
-                <!--"form-check-label"-->
                 <label for="VegetableCheck" class="form-check-label">Grønt</label>
-                <!--"form-check-input"-->
-                <input type="checkbox" id="VegetableCheck" v-model="vegetableCheck" @change="GetFoods()"
+                <input type="checkbox" id="VegetableCheck" v-model="vegetableCheck" @change="GetFoodsByName()"
                     class="form-check-input">
             </div>
-
         </div>
-
-        <!--form-select-->
-        <select id="FoodDropdown" placeholder="Vælg venligst en ingrediens!" v-model="chosenFoodString"
-            @change="ChooseFood()" class="form-select elementBox">
-            <option disabled>Vælg venligst en ingrediens!</option>
-            <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
-                {{food.name}}
-            </option>
-        </select>
+        <div class="col-12 row d-flex elementBox">
+            <div class="col-9">                
+                <datalist id="FoodSuggestions" v-model="chosenFoodString">                
+                    <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
+                    {{food.name}}
+                    </option>
+                </datalist>
+                <input list="FoodSuggestions" id="FoodDropdown" autocomplete="off" v-model:="chosenFoodString"
+                @input="GetFoodsByName()" @keypress="HandleChooseFood" @focusout="ChooseFruit()" placeholder="Vælg ingrediens her!"
+                class="d-flex justify-content-between textInputField"/>
+            </div>
+            <div class="col-3">
+                <button @click="ChooseFruit()" class="btnBox">
+                    &#128269;
+                </button>
+            </div>
+        </div>
 
 
         <div class="informationBox">
-            <!--"d-flex justify-content-between"-->
             <div class="d-flex justify-content-between">
-                <!--"col-6 row"-->
                 <div class="col-6 row">
-                    <!--"col-6"-->
                     <div class="col-6">
                         <p id="NewestTemp" class="readingText">{{newestTemperature}}&deg;C</p>
                         <p class="tinytext">Temperatur</p>
                     </div>
-                    <!--"col-6"-->
                     <div class="col-6">
                         <p id="NewestHumidity" class="readingText">{{newestHumidity}}%</p>
                         <p class="tinytext">Luftfugtighed</p>
                     </div>
                 </div>
-                <!--"col-6"-->
                 <div class="col-6 informationDivider">
-                    <p id="ShelfLife" v-show="chosenFood != undefined" class="readingText">
+                    <p id="ShelfLife" v-if="chosenFood != undefined && spoilTime != undefined && spoilTime.constructor === Array" class="readingText">
                         {{spoilTime[0]}} dage og {{spoilTime[1]}} timer
+                    </p>
+                    <p id="ShelfLife" v-else>
+                        Ukendt
                     </p>
                     <p class="tinytext">
                         Holdbarhed
@@ -118,6 +112,12 @@
         </ul>
 
     </div>
+        <canvas id="tempChart"></canvas>
+    </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script type="module" src="js/index.js"></script>
 
 </body>

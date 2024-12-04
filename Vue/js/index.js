@@ -1,5 +1,6 @@
 import "./bundle.js";
 
+
 const ReadingBaseURL = "https://fruitresttest.azurewebsites.net/api/Readings";
 const FoodsBaseURL = "https://fruitresttest.azurewebsites.net/api/Foods"
 
@@ -37,6 +38,68 @@ class Food {
 
 }
 
+const chartNumberOne = document.getElementById('tempChart')
+
+let temperatureChart = new Chart(chartNumberOne, {
+  type: 'line',
+  data: {
+    datasets: [{
+      label: 'Temperatur måling',
+      data: [],
+      borderWidth: 2,
+      borderColor: 'magenta',
+      backgroundColor: 'rgb(0,128,0)',
+      pointStyle: 'circle',
+      pointRadius: 7,
+      pointHoverRadius: 10,
+      pointBorderColor: 'gold'
+    }],
+
+  },
+  options: {
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'hour', 
+          tooltipFormat: 'dd/MM/yyyy HH:mm',
+          displayFormats: {
+            hour: 'HH:mm', 
+            minute: 'HH:mm:ss', 
+            
+          }
+        },
+        title: {
+          display: true,
+          text: 'Tids Stamp for målinger ', 
+          
+          color: 'blue'
+        },
+        ticks: {
+          source: 'data',
+          autoSkip: true,
+          maxTicksLimit: 5,
+        }
+        
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Temperature',
+          color: 'blue'
+        }
+      }
+    },
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'temp over time type shit',
+      }
+    },
+  }
+});
+
 const app = Vue.createApp({
   data() {
     return {
@@ -46,12 +109,12 @@ const app = Vue.createApp({
 
       newestTemperature: NaN,
       newestHumidity: NaN,
-      fruitCheck: false,
-      vegetableCheck: false,
+      fruitCheck: true,
+      vegetableCheck: true,
       spoilTime: 5,
       chosenFood: undefined,
-      chosenFoodString: undefined,
-      chosenFoodImage: undefined, 
+      chosenFoodString: "",
+      searchFoodString: "",
 
     }
   },
@@ -64,10 +127,9 @@ const app = Vue.createApp({
             var toAdd = new Reading(element.temperature, element.humidity, element.id, element.timestamp);
             this.readings.push(toAdd);
 
-          }
-
+          },
           );
-
+          this.updateChartings();
         }
       );
 
@@ -107,6 +169,47 @@ const app = Vue.createApp({
 
 
 
+    async GetFoodsByName() {
+
+      let baseURL = FoodsBaseURL;
+      if (!this.fruitCheck && !this.vegetableCheck) {
+        baseURL += `/filtered/?filterFruit=true&filterVegetable=true&filterName=${this.chosenFoodString}&offset=0&count=5`
+        console.log(baseURL);
+      }
+      else {
+
+        baseURL += `/filtered/?filterFruit=${this.fruitCheck}&filterVegetable=${this.vegetableCheck}&filterName=${this.chosenFoodString}&offset=0&count=5`
+        console.log(baseURL);
+      }
+
+      console.log(baseURL);
+
+
+      const response = await Axios.get(baseURL).then(
+        (response) => {
+          var respData = response.data;
+
+          var foundFoods = [];
+          if (response.data == null || response.data == "") {
+            this.foods = []
+            return
+          }
+          response.data.forEach((element) => {
+            const currentFood = new Food(element.foodTypeId, element.foodTypeName, element.id, element.name, element.apiLink, element.spoilDate, element.spoilHours, element.idealTemperature, element.idealHumidity);
+
+            foundFoods.push(currentFood);
+          });
+          
+          this.foods = foundFoods
+          console.log(this.foods);  
+
+        }
+      );
+
+    },
+
+
+
     async SetupInitialData() {
 
       await this.GetLatest();
@@ -116,14 +219,14 @@ const app = Vue.createApp({
     },
 
     spoilMap(hour, day, foodName) {
-
+      // foodname argument is assumed to be all lowercase
 
       const map = {
-        "Agurk": this.CalculateGenericFood(3, 2, 8),
-        "Banan": this.CalculateGenericFood(5, 1, 3),
-        "Hvidløg": this.CalculateGenericFood(12, 130, 7), 
-        "Kartoffel": this.CalculateGenericFood(15, 3, 4),
-        "Æble": this.CalculateGenericFood(10, 1, 3),
+        "agurk": this.CalculateGenericFood(3, 2, 8),
+        "banan": this.CalculateGenericFood(5, 1, 3),
+        "hvidløg": this.CalculateGenericFood(12, 130, 7),
+        "kartoffel": this.CalculateGenericFood(15, 3, 4),
+        "æble": this.CalculateGenericFood(10, 1, 3),
 
       }
       console.log(map[foodName]);
@@ -159,17 +262,37 @@ const app = Vue.createApp({
       return [durabiliyDays, durabilityHours];
     },
 
-    async ChooseFood() {
-      this.chosenFood = this.foods.find((elem) => elem.name == this.chosenFoodString);
+    async ChooseFruit() {
+      this.chosenFood = this.foods.find((elem) => elem.name.toLowerCase() == this.chosenFoodString.toLowerCase());
+      if (this.chosenFood == null || this.chosenFood == "") {
+        return
+      }
       this.chosenFoodImage = `https://themealdb.com/images/ingredients/${this.chosenFood.apilink}.png`;
       console.log(this.chosenFoodImage);  
-
       console.log(Vue.toRaw(this.chosenFood));
       const food = this.chosenFood;
-      this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name);
+      this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name.toLowerCase());
       await this.FetchMealDB(); 
     },
 
+    HandleChooseFood(e){
+      if(e.key == "Enter"){
+        this.ChooseFruit()
+      }
+    },
+
+    updateChartings() {
+      const chartData = this.readings.map(reading => ({
+        x: reading.timestamp.toISOString(),
+        y: reading.temperature,
+        
+      }));
+      console.log()
+      temperatureChart.data.datasets[0].data = chartData;
+      temperatureChart.update();
+      
+
+    },
 
     async FetchMealDB() {
       const baseAPIlink = "www.themealdb.com";
@@ -199,13 +322,14 @@ const app = Vue.createApp({
 
 
 
+
   computed: {
 
   },
 
   mounted() {
     this.SetupInitialData();
-    this.GetFoods();
+    this.GetFoodsByName();
 
 
 
