@@ -74,14 +74,14 @@ body {
 }
 
 .btnBox:active{
-    background-color: var(--white);
-    color: var(--box);
+    background-color: var(--main);
+    color: var(--accent);
     box-shadow: 0px 0px 15px  var(--accent);
 }
 
 
 .informationBox {
-    background-color: var(--white);
+    background-color: var(--main);
     border-radius: 40px;
     min-height: 40px;
     margin: 1rem auto;
