@@ -14,6 +14,13 @@ class Reading {
   }
 }
 
+class Recommendation {
+  constructor(title, link) {
+    this.title = title;
+    this.link = link;
+  }
+}
+
 class Food {
   constructor(foodTypeId, foodTypeName, id, name, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity) {
     this.foodtypeid = foodTypeId;
@@ -31,11 +38,75 @@ class Food {
 
 }
 
+const chartNumberOne = document.getElementById('tempChart')
+
+let temperatureChart = new Chart(chartNumberOne, {
+  type: 'line',
+  data: {
+    datasets: [{
+      label: 'Temperatur måling',
+      data: [],
+      borderWidth: 2,
+      borderColor: 'magenta',
+      backgroundColor: 'rgb(0,128,0)',
+      pointStyle: 'circle',
+      pointRadius: 7,
+      pointHoverRadius: 10,
+      pointBorderColor: 'gold'
+    }],
+
+  },
+  options: {
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'hour', 
+          tooltipFormat: 'dd/MM/yyyy HH:mm',
+          displayFormats: {
+            hour: 'HH:mm', 
+            minute: 'HH:mm:ss', 
+            
+          }
+        },
+        title: {
+          display: true,
+          text: 'Tids Stamp for målinger ', 
+          
+          color: 'blue'
+        },
+        ticks: {
+          source: 'data',
+          autoSkip: true,
+          maxTicksLimit: 5,
+        }
+        
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Temperature',
+          color: 'blue'
+        }
+      }
+    },
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'temp over time type shit',
+      }
+    },
+  }
+});
+
 const app = Vue.createApp({
   data() {
     return {
       readings: [],
       foods: [],
+      recommendedRecipes: [],
+
       newestTemperature: NaN,
       newestHumidity: NaN,
       fruitCheck: true,
@@ -56,10 +127,9 @@ const app = Vue.createApp({
             var toAdd = new Reading(element.temperature, element.humidity, element.id, element.timestamp);
             this.readings.push(toAdd);
 
-          }
-
+          },
           );
-
+          this.updateChartings();
         }
       );
 
@@ -68,7 +138,7 @@ const app = Vue.createApp({
 
     async GetFoods() {
 
-      let baseURL = FoodsBaseURL;
+      let baseURL = FoodsBaseURL+"/filtered/";
       if (!this.fruitCheck && !this.vegetableCheck);
       else {
 
@@ -154,7 +224,7 @@ const app = Vue.createApp({
       const map = {
         "agurk": this.CalculateGenericFood(3, 2, 8),
         "banan": this.CalculateGenericFood(5, 1, 3),
-
+        "hvidløg": this.CalculateGenericFood(12, 130, 7),
         "kartoffel": this.CalculateGenericFood(15, 3, 4),
         "æble": this.CalculateGenericFood(10, 1, 3),
 
@@ -192,14 +262,17 @@ const app = Vue.createApp({
       return [durabiliyDays, durabilityHours];
     },
 
-    ChooseFruit() {
+    async ChooseFruit() {
       this.chosenFood = this.foods.find((elem) => elem.name.toLowerCase() == this.chosenFoodString.toLowerCase());
       if (this.chosenFood == null || this.chosenFood == "") {
         return
       }
+      this.chosenFoodImage = `https://themealdb.com/images/ingredients/${this.chosenFood.apilink}.png`;
+      console.log(this.chosenFoodImage);  
       console.log(Vue.toRaw(this.chosenFood));
       const food = this.chosenFood;
       this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name.toLowerCase());
+      await this.FetchMealDB(); 
     },
 
     HandleChooseFood(e){
@@ -208,8 +281,41 @@ const app = Vue.createApp({
       }
     }
 
+    updateChartings() {
+      const chartData = this.readings.map(reading => ({
+        x: reading.timestamp.toISOString(),
+        y: reading.temperature,
+        
+      }));
+      console.log()
+      temperatureChart.data.datasets[0].data = chartData;
+      temperatureChart.update();
+      
 
+    },
 
+    async FetchMealDB() {
+      const baseAPIlink = "www.themealdb.com";
+      this.recommendedRecipes = []; 
+      console.log("https://" + baseAPIlink + `/api/json/v1/1/filter.php?i=${this.chosenFood.apilink}`);
+      const response = await Axios.get("https://" + baseAPIlink + `/api/json/v1/1/filter.php?i=${this.chosenFood.apilink}`).then(
+        (response) => {
+         
+          response.data.meals.every((elem) => {
+            if (this.recommendedRecipes.length == 3){
+              return false; 
+            }
+            const newRecommendation = new Recommendation(elem.strMeal, elem.strMealThumb);
+            
+            this.recommendedRecipes.push(newRecommendation);
+            return true; 
+          });
+          console.log(this.recommendedRecipes);
+        }
+      );
+
+    },
+  },
 
   },
 
