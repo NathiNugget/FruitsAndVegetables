@@ -59,16 +59,16 @@
             <div class="d-flex justify-content-between">
                 <div class="col-6 row">
                     <div class="col-6">
-                        <p id="NewestTemp">{{newestTemperature}}&deg;C</p>
+                        <p id="NewestTemp" class="readingText">{{newestTemperature}}&deg;C</p>
                         <p class="tinytext">Temperatur</p>
                     </div>
                     <div class="col-6">
-                        <p id="NewestHumidity">{{newestHumidity}}%</p>
+                        <p id="NewestHumidity" class="readingText">{{newestHumidity}}%</p>
                         <p class="tinytext">Luftfugtighed</p>
                     </div>
                 </div>
-                <div class="col-6">
-                    <p id="ShelfLife" v-if="chosenFood != undefined && spoilTime != undefined && spoilTime.constructor === Array" >
+                <div class="col-6 informationDivider">
+                    <p id="ShelfLife" v-if="chosenFood != undefined && spoilTime != undefined && spoilTime.constructor === Array" class="readingText">
                         {{spoilTime[0]}} dage og {{spoilTime[1]}} timer
                     </p>
                     <p id="ShelfLife" v-else>
@@ -79,22 +79,32 @@
                     </p>
                 </div>
             </div>
+            <div class="d-flex justify-content-between selectedFruit">
+                <div class="col-6 d-flex align-items-center">
+                    <img v-if="chosenFoodString != undefined" :src="chosenFoodImage" id="ChosenFoodImage" class="fitImageInContainer">
+                </div>
+                <div class="col-6 informationDivider">
+                    <span>Opskrift forslag:</span>
+                    <div id="RecipeDiv" v-if="recommendedRecipes.length > 0" class="col-12 d-flex">
+
+                        <div id="RecommendedRecipes" class="recipeScroll row">
+                            <div v-for="(recommendation, index) in recommendedRecipes" :key="index" class="recipeCard">
+                                <img :src="recommendation.link" class="RecipeImage" :id="recommendation.title + '.img'">
+                                <p class="RecipeText">{{recommendation.title}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else-if="recommendedRecipes.length == 0 && chosenFoodString != undefined">
+                        <p id="NoRecipeFound">Ingen opskrifter fundet, find selv på noget! :P</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="RecipeDiv" v-if="recommendedRecipes.length > 0">
-            <ul id="RecommendedRecipes">
-                <li v-for="(recommendation, index) in recommendedRecipes" :key="index">
-                    <p class="RecipeText">{{recommendation.title}}</p>, <img :src="recommendation.link" class="RecipeImage" :id="recommendation.title + '.img'">
-                </li>
-            </ul>
-        </div>
-        <div v-else-if="recommendedRecipes.length == 0 && chosenFoodString != undefined">
-            <p id="NoRecipeFound">Ingen opskrifter fundet, find selv på noget! :P</p>
-        </div>
+
         <!-- IMAGE FOR SHOWING THE SELECTED FOOD HERE -->
          <!-- Please don't use in-line style -->
-        <img v-if="chosenFoodString != undefined" :src="chosenFoodImage" id="ChosenFoodImage"  style="height: 2000px;">
-        {{}}
+        
         <ul>
             <li v-for="(reading, index) in readings" :key="index">
                 {{reading.temperature}}, {{reading.humidity}}, {{reading.id}}, {{reading.timestamp}}

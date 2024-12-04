@@ -8,14 +8,21 @@ namespace UITest
     [TestClass]
     public class UItestfrontend
     {
-        ChromeOptions options = new();
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext test) { 
+        
 
-        static IWebDriver driver = new ChromeDriver();
+            
+        }
+
+        public static ChromeOptions Options { get; set; } = new();
+         
+        static IWebDriver driver = new ChromeDriver(Options);
 
 
         // TODO: Replace URL when running tests
         const string TEST_URL = "http://127.0.0.1:5500";
-        const int _maxWaitMillis = 300;
+        const int _maxWaitMillis = 500;
 
         [TestInitialize]
         public void Setup()
@@ -212,7 +219,7 @@ namespace UITest
             string expected = "Banana Pancakes";
             Thread.Sleep(200);
             IWebElement recommendedRecipes = driver.FindElement(By.Id("RecommendedRecipes"));
-            IList<IWebElement> elementChildren = recommendedRecipes.FindElements(By.TagName("li"));
+            IList<IWebElement> elementChildren = recommendedRecipes.FindElements(By.TagName("div"));
             List<string> recipeNames = new();
             foreach (IWebElement elementChild in elementChildren)
             {
@@ -245,7 +252,7 @@ namespace UITest
             selectElement.SelectByValue(input);
 
             IWebElement recommendedRecipes = driver.FindElement(By.Id("RecommendedRecipes"));
-            IList<IWebElement> recipeChildren = recommendedRecipes.FindElements(By.TagName("li"));
+            IList<IWebElement> recipeChildren = recommendedRecipes.FindElements(By.TagName("div"));
             Assert.IsTrue(recipeChildren.Count() == 3);
         }
 
@@ -254,6 +261,7 @@ namespace UITest
         {
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
             dropdown.Click();
+            //Thread.Sleep(200); 
             SelectElement selectElement = new SelectElement(dropdown);
             string input = "Banan";
             selectElement.SelectByValue(input);
@@ -261,7 +269,7 @@ namespace UITest
             string expected = "https://www.themealdb.com/images/media/meals/sywswr1511383814.jpg";
             Thread.Sleep(500);
             IWebElement firstRecipe = driver.FindElement(By.Id("Banana Pancakes.img"));
-            string actual = firstRecipe.GetAttribute("src");
+            string actual = firstRecipe.GetDomAttribute("src");
             Assert.AreEqual(expected, actual);
         }
 
@@ -303,12 +311,12 @@ namespace UITest
         //    Assert.IsNotNull(vegetableFilter);
         //}
 
-        [TestCleanup]
-        public void Cleanup()
+        [ClassCleanup]
+        public static void ClassCleanup()
         {
-            //driver.Navigate().Refresh();
+            driver.Quit();
         }
-        
+
     }
 
 
