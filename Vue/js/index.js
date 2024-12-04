@@ -44,7 +44,7 @@ let temperatureChart = new Chart(chartNumberOne, {
   type: 'line',
   data: {
     datasets: [{
-      label: 'Temperatur måling',
+      label: 'Temperatur over tid',
       data: [],
       borderWidth: 2,
       borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent'),
@@ -72,8 +72,8 @@ let temperatureChart = new Chart(chartNumberOne, {
         },
         title: {
           display: true,
-          text: 'Tids Stamp for målinger ',          
-          color: getComputedStyle(document.documentElement).getPropertyValue('--chartHeadline')
+          text: 'Tidsinterval for målinger ',          
+          color: getComputedStyle(document.documentElement).getPropertyValue('--chartHeadline'),
           font: {
             size: 12,
             weight: 'bold',
@@ -90,8 +90,8 @@ let temperatureChart = new Chart(chartNumberOne, {
       y: {
         title: {
           display: true,
-          text: 'Temperature',
-          color: getComputedStyle(document.documentElement).getPropertyValue('--chartHeadline')
+          text: 'Temperatur',
+          color: getComputedStyle(document.documentElement).getPropertyValue('--chartHeadline'),
           font: {
             size: 12,
             weight: 'bold',
@@ -106,11 +106,8 @@ let temperatureChart = new Chart(chartNumberOne, {
       }
     },
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
-      title: {
-        display: true,
-        text: 'temp over time',
-      }
       legend: {
         labels: {
             // This more specific font property overrides the global property
