@@ -71,3 +71,25 @@ body {
 .selectedFruit {
     border-top: 0.1rem solid lightgray;
 }
+
+.textInputField{
+    background-color: var(--box);
+    border: transparent 2px;
+    border-radius: 25px;
+    text-align: center;
+    width: 100%;
+    padding-top: 5px;
+
+}
+
+.btnBox{
+    border: solid 2px var(--accent);
+    background-color: var(--main);
+    text-align: center;
+    border-radius: 25px;
+    width: 100%;
+}
+.btnBox:active{
+    background-color: var(--accent);
+    box-shadow: 0px 0px 15px  var(--accent);
+}
