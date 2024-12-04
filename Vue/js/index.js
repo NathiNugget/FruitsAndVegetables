@@ -47,12 +47,11 @@ let temperatureChart = new Chart(chartNumberOne, {
       label: 'Temperatur måling',
       data: [],
       borderWidth: 2,
-      borderColor: 'magenta',
-      backgroundColor: 'rgb(0,128,0)',
+      borderColor: 'rgb(0,128,0)',
+      backgroundColor: 'lightgreen',
       pointStyle: 'circle',
       pointRadius: 7,
       pointHoverRadius: 10,
-      pointBorderColor: 'gold'
     }],
 
   },
@@ -73,7 +72,12 @@ let temperatureChart = new Chart(chartNumberOne, {
           display: true,
           text: 'Tids Stamp for målinger ', 
           
-          color: 'blue'
+          color: 'black',
+          font: {
+            size: 12,
+            weight: 'bold',
+            family: "Montserrat Alternates",
+        }
         },
         ticks: {
           source: 'data',
@@ -85,17 +89,34 @@ let temperatureChart = new Chart(chartNumberOne, {
       y: {
         title: {
           display: true,
-          text: 'Temperature',
-          color: 'blue'
+          text: 'Temperatur',
+          color: 'black',
+          font: {
+            size: 12,
+            weight: 'bold',
+            family: "Montserrat Alternates",
         }
+        }
+      }
+    },
+    layout: {
+      padding: {
+          right: 25
       }
     },
     responsive: true,
     plugins: {
-      title: {
-        display: true,
-        text: 'temp over time type shit',
-      }
+      legend: {
+        labels: {
+            // This more specific font property overrides the global property
+            font: {
+                size: 18,
+                weight: 'bold',
+                family: "Montserrat Alternates",
+                color: 'black'
+            }
+        }
+    }
     },
   }
 });
