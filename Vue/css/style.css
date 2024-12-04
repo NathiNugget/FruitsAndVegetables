@@ -24,6 +24,7 @@ body {
     --textaccent: white;
     --box: lightgrey;
     --main: white;
+    --chartHeadline: #0269A9;
 }
 
 .header {
@@ -51,6 +52,33 @@ body {
     width: auto;
     font-size: 1.2rem;
 }
+
+.textInputField{
+    background-color: var(--box);
+    border: transparent 2px;
+    border-radius: 25px;
+    text-align: center;
+    width: 95%;
+    margin: auto;
+    padding-top: 5px;
+}
+
+.btnBox{
+    border: solid 2px var(--accent);
+    background-color: var(--accent);
+    text-align: center;
+    border-radius: 25px;
+    width: 55px;
+    color: var(--main);
+    float: right;
+}
+
+.btnBox:active{
+    background-color: var(--white);
+    color: var(--box);
+    box-shadow: 0px 0px 15px  var(--accent);
+}
+
 
 .informationBox {
     background-color: var(--white);
@@ -116,24 +144,26 @@ body {
     font-size: 0.8rem;
 }
 
-.textInputField{
-    background-color: var(--box);
-    border: transparent 2px;
-    border-radius: 25px;
-    text-align: center;
-    width: 100%;
-    padding-top: 5px;
 
+.temperaturBox{
+    width: 90%;
+    margin: 2rem auto 2rem auto;
 }
 
-.btnBox{
-    border: solid 2px var(--accent);
-    background-color: var(--main);
-    text-align: center;
-    border-radius: 25px;
-    width: 100%;
-}
-.btnBox:active{
+
+footer{
     background-color: var(--accent);
-    box-shadow: 0px 0px 15px  var(--accent);
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    position: fixed;
+    height: 3rem;
+    justify-content: center;
+    text-align: center;
+    color: var(--main);
+}
+
+.copyright{
+    margin-top: 0.7rem;
+    font-weight: 500;
 }
