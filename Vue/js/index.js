@@ -279,7 +279,7 @@ const app = Vue.createApp({
       if(e.key == "Enter"){
         this.ChooseFruit()
       }
-    }
+    },
 
     updateChartings() {
       const chartData = this.readings.map(reading => ({
@@ -317,7 +317,7 @@ const app = Vue.createApp({
     },
   },
 
-  },
+
 
 
 
