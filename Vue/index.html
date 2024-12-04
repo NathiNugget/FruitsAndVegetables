@@ -24,6 +24,7 @@
             </div>
         </header>
 
+        
         <div class="col-12 row elementBox d-flex justify-content-between">
             <div class="col-6 checkboxcontainer mx-3">
                 <label for="FruitCheck" class="form-check-label">Frugt</label>
@@ -37,7 +38,7 @@
             </div>
         </div>
         <div class="col-12 row d-flex elementBox">
-            <div class="col-9">                
+            <div class="col-10">                
                 <datalist id="FoodSuggestions" v-model="chosenFoodString">                
                     <option v-for="(food, index) in foods" :key="index" :value="foods[index].name" :id="foods[index].name">
                     {{food.name}}
@@ -47,9 +48,9 @@
                 @input="GetFoodsByName()" @keypress="HandleChooseFood" @focusout="ChooseFruit()" placeholder="Vælg ingrediens her!"
                 class="d-flex justify-content-between textInputField"/>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <button @click="ChooseFruit()" class="btnBox">
-                    &#128269;
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
         </div>
@@ -105,11 +106,11 @@
         <!-- IMAGE FOR SHOWING THE SELECTED FOOD HERE -->
          <!-- Please don't use in-line style -->
         
-        <ul>
+        <!-- <ul>
             <li v-for="(reading, index) in readings" :key="index">
                 {{reading.temperature}}, {{reading.humidity}}, {{reading.id}}, {{reading.timestamp}}
             </li>
-        </ul>
+        </ul> -->
     </div>
 
     <div class="temperaturBox justify-content-between">        
@@ -121,7 +122,9 @@
     <script type="module" src="js/index.js"></script>
 
     <footer>
-        
+        <div class="copyright">            
+            &copy; Frugt&Grønt
+        </div>
     </footer>
 </body>
 
