@@ -47,12 +47,12 @@ let temperatureChart = new Chart(chartNumberOne, {
       label: 'Temperatur måling',
       data: [],
       borderWidth: 2,
-      borderColor: 'magenta',
-      backgroundColor: 'rgb(0,128,0)',
+      borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent'),
+      backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--box'),
       pointStyle: 'circle',
       pointRadius: 7,
       pointHoverRadius: 10,
-      pointBorderColor: 'gold'
+      pointBorderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent')
     }],
 
   },
@@ -71,9 +71,8 @@ let temperatureChart = new Chart(chartNumberOne, {
         },
         title: {
           display: true,
-          text: 'Tids Stamp for målinger ', 
-          
-          color: 'blue'
+          text: 'Tids Stamp for målinger ',          
+          color: getComputedStyle(document.documentElement).getPropertyValue('--chartHeadline')
         },
         ticks: {
           source: 'data',
@@ -86,7 +85,7 @@ let temperatureChart = new Chart(chartNumberOne, {
         title: {
           display: true,
           text: 'Temperature',
-          color: 'blue'
+          color: getComputedStyle(document.documentElement).getPropertyValue('--chartHeadline')
         }
       }
     },
@@ -94,7 +93,7 @@ let temperatureChart = new Chart(chartNumberOne, {
     plugins: {
       title: {
         display: true,
-        text: 'temp over time type shit',
+        text: 'temp over time',
       }
     },
   }
