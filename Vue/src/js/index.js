@@ -1,5 +1,22 @@
-import "./bundle.js";
+import axios from 'axios'; 
+import {BarController,
+  BarElement,
+  CategoryScale,
+  Chart,
+  LineController,
+  LineElement,
+  LinearScale,
+  PointElement,
+  TimeScale,
+  Title,
+  _adapters,
+  _detectPlatform,
+  } from 'chart.js' 
 
+
+Chart.register(BarController, BarElement, LinearScale, LineElement, LineController,CategoryScale, PointElement, Title, TimeScale);
+
+import 'chartjs-adapter-date-fns'
 
 const ReadingBaseURL = "https://fruitresttest.azurewebsites.net/api/Readings";
 const FoodsBaseURL = "https://fruitresttest.azurewebsites.net/api/Foods"
@@ -143,7 +160,7 @@ const app = Vue.createApp({
   },
   methods: {
     async GetLatest() {
-      const response = await Axios.get(ReadingBaseURL + '?offset=0&count=5').then(
+      const response = await axios.get(ReadingBaseURL + '?offset=0&count=5').then(
         (response) => {
 
           response.data.forEach((element) => {
@@ -173,7 +190,7 @@ const app = Vue.createApp({
       console.log(baseURL);
 
 
-      const response = await Axios.get(baseURL).then(
+      const response = await axios.get(baseURL).then(
         (response) => {
           var respData = response.data;
 
@@ -208,7 +225,7 @@ const app = Vue.createApp({
       console.log(baseURL);
 
 
-      const response = await Axios.get(baseURL).then(
+      const response = await axios.get(baseURL).then(
         (response) => {
           var respData = response.data;
 
@@ -263,24 +280,24 @@ const app = Vue.createApp({
       console.log("Hour:" + penaltyhours);
       console.log("day:" + penaltydays);
 
-      const fruit = this.chosenFood;
+      const food = this.chosenFood;
 
-      const isIdeal = (this.newestHumidity >= fruit.idealhumidity - range && this.newestHumidity <= fruit.idealHumidity + range && this.newestTemperature >= fruit.idealTemperature - range && this.newestTemperature <= fruit.idealTemperature + range);
+      const isIdeal = (this.newestHumidity >= food.idealhumidity - range && this.newestHumidity <= food.idealHumidity + range && this.newestTemperature >= food.idealTemperature - range && this.newestTemperature <= food.idealTemperature + range);
       if (isIdeal) {
-        console.log(fruit.spoildays, fruit.spoilhours)
-        return [fruit.spoildays, fruit.spoilhours];
+        console.log(food.spoildays, food.spoilhours)
+        return [food.spoildays, food.spoilhours];
       }
 
-      if (fruit.spoilhours - penaltyhours < 0) {
-        penaltyhours -= fruit.spoilhours;
+      if (food.spoilhours - penaltyhours < 0) {
+        penaltyhours -= food.spoilhours;
         let durabilityHours = 24 - penaltyhours;
-        let durabiliyDays = fruit.spoildays - (penaltydays + 1);
+        let durabiliyDays = food.spoildays - (penaltydays + 1);
 
         return [durabiliyDays, durabilityHours];
       }
 
-      let durabilityHours = fruit.spoilhours - penaltyhours;
-      let durabiliyDays = fruit.spoildays - penaltydays;
+      let durabilityHours = food.spoilhours - penaltyhours;
+      let durabiliyDays = food.spoildays - penaltydays;
 
       return [durabiliyDays, durabilityHours];
     },
@@ -301,6 +318,10 @@ const app = Vue.createApp({
     HandleChooseFood(e){
       if(e.key == "Enter"){
         this.ChooseFruit()
+        console.log(this.chosenFoodImage)
+      }
+      else if (e.keyCode == "114"){
+        console.log("shit fam");
       }
     },
 
@@ -321,7 +342,7 @@ const app = Vue.createApp({
       const baseAPIlink = "www.themealdb.com";
       this.recommendedRecipes = []; 
       console.log("https://" + baseAPIlink + `/api/json/v1/1/filter.php?i=${this.chosenFood.apilink}`);
-      const response = await Axios.get("https://" + baseAPIlink + `/api/json/v1/1/filter.php?i=${this.chosenFood.apilink}`).then(
+      const response = await axios.get("https://" + baseAPIlink + `/api/json/v1/1/filter.php?i=${this.chosenFood.apilink}`).then(
         (response) => {
          
           response.data.meals.every((elem) => {
