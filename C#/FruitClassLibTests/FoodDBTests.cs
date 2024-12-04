@@ -99,7 +99,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllFilterNamesTestEmptyString_ReturnsAll()
         {
-            var expected = 3;
+            var expected = 5;
             var actual = _repo.GetAllFiltered(filterName: "");
 
             Assert.AreEqual(expected, actual.Count);
@@ -115,7 +115,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllFilterNamesTestNull_ReturnsAll()
         {
-            var expected = 3;
+            var expected = 5;
             var actual = _repo.GetAllFiltered(filterName: null);
             Assert.AreEqual(expected, actual.Count);
         }
@@ -140,7 +140,7 @@ namespace FruitClassLib.Tests
         [TestMethod()]
         public void GetAllPagnationTest_GetAll()
         {
-            var expected = 3;
+            var expected = 5;
             var actual = _repo.GetAll(offset: 0);
 
             Assert.AreEqual(expected, actual.Count);
