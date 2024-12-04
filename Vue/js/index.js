@@ -53,6 +53,7 @@ let temperatureChart = new Chart(chartNumberOne, {
       pointRadius: 7,
       pointHoverRadius: 10,
       pointBorderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent')
+
     }],
 
   },
@@ -73,6 +74,11 @@ let temperatureChart = new Chart(chartNumberOne, {
           display: true,
           text: 'Tids Stamp for målinger ',          
           color: getComputedStyle(document.documentElement).getPropertyValue('--chartHeadline')
+          font: {
+            size: 12,
+            weight: 'bold',
+            family: "Montserrat Alternates",
+        }
         },
         ticks: {
           source: 'data',
@@ -86,7 +92,17 @@ let temperatureChart = new Chart(chartNumberOne, {
           display: true,
           text: 'Temperature',
           color: getComputedStyle(document.documentElement).getPropertyValue('--chartHeadline')
+          font: {
+            size: 12,
+            weight: 'bold',
+            family: "Montserrat Alternates",
         }
+        }
+      }
+    },
+    layout: {
+      padding: {
+          right: 25
       }
     },
     responsive: true,
@@ -95,6 +111,17 @@ let temperatureChart = new Chart(chartNumberOne, {
         display: true,
         text: 'temp over time',
       }
+      legend: {
+        labels: {
+            // This more specific font property overrides the global property
+            font: {
+                size: 18,
+                weight: 'bold',
+                family: "Montserrat Alternates",
+                color: 'black'
+            }
+        }
+    }
     },
   }
 });
