@@ -17,7 +17,7 @@
             <div class="row w-100">
                 <div class="col-12 row">
                     <h1 style="text-align: center;">
-                        <i class="fa-solid fa-leaf fa-xl"></i>
+                        <i class="fa-solid fa-leaf"></i>
                         Frugt og grønt
                     </h1>
                 </div>
@@ -25,16 +25,16 @@
         </header>
 
         
-        <div class="col-12 row elementBox d-flex justify-content-between">
-            <div class="col-6 checkboxcontainer mx-3">
+        <div class="col-12 row elementBox d-flex justify-content-around">
+            <div class="col-5 checkboxcontainer">
                 <label for="FruitCheck" class="form-check-label">Frugt</label>
                 <input type="checkbox" id="FruitCheck" v-model="fruitCheck" @change="GetFoodsByName()"
-                    class="form-check-input">
+                    class="form-check-input greenCheck">
             </div>
-            <div class="col-6 checkboxcontainer mx-3">
+            <div class="col-5 checkboxcontainer">
                 <label for="VegetableCheck" class="form-check-label">Grønt</label>
                 <input type="checkbox" id="VegetableCheck" v-model="vegetableCheck" @change="GetFoodsByName()"
-                    class="form-check-input">
+                    class="form-check-input greenCheck">
             </div>
         </div>
         <div class="col-12 row d-flex elementBox">
@@ -112,9 +112,7 @@
             </li>
         </ul> -->
     </div>
-       
-        <canvas id="tempChart"></canvas>
-
+        <canvas id="tempChart" class="buffer"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script type="module" src="js/index.js"></script>

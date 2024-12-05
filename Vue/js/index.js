@@ -48,7 +48,7 @@ let temperatureChart = new Chart(chartNumberOne, {
       data: [],
       borderWidth: 2,
       borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent'),
-      backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--box'),
+      backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--secondaryaccent'),
       pointStyle: 'circle',
       pointRadius: 7,
       pointHoverRadius: 10,
@@ -103,6 +103,7 @@ let temperatureChart = new Chart(chartNumberOne, {
     layout: {
       padding: {
           right: 25
+          
       }
     },
     responsive: true,

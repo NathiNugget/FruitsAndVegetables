@@ -22,9 +22,10 @@ body {
     --colorgaming: goldenrod;
     --accent: green;
     --textaccent: white;
-    --box: lightgrey;
+    --secondaryaccent: rgb(178, 232, 178);
+    --box: lightgray;
     --main: white;
-    --chartHeadline: #0269A9;
+    --chartHeadline: #0f3114;
 }
 
 .header {
@@ -39,7 +40,7 @@ body {
 
 
 .elementBox {
-    background-color: var(--box);
+    background-color: var(--secondaryaccent);
     border: 2px solid var(--accent);
     border-radius: 40px;
     min-height: 40px;
@@ -52,15 +53,28 @@ body {
     width: auto;
     font-size: 1.2rem;
 }
+.greenCheck{
+    margin-left: 1.5rem;
+}
+
+.greenCheck:checked{
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
 
 .textInputField{
-    background-color: var(--box);
+    background-color: var(--secondaryaccent);
+    color:var(--chartHeadline);
     border: transparent 2px;
     border-radius: 25px;
     text-align: center;
     width: 95%;
     margin: auto;
     padding-top: 5px;
+}
+
+.textInputField::placeholder{
+    color:var(--accent);
 }
 
 .btnBox{
@@ -110,7 +124,9 @@ body {
 
 .fitImageInContainer{
     width:100%;
-    height: fit-content;
+    aspect-ratio: 1;
+    padding:5%
+    /* height: 100%; */
 }
 
 .recipeScroll{
@@ -151,6 +167,9 @@ body {
     margin: 2rem auto 2rem auto;
 }
 
+.buffer{
+    margin:1.5rem 5% 4rem 5%
+}
 
 footer{
     background-color: var(--accent);
@@ -160,11 +179,11 @@ footer{
     position: fixed;
     height: 3rem;
     justify-content: center;
+    align-content: center;
     text-align: center;
     color: var(--main);
 }
 
 .copyright{
-    margin-top: 0.7rem;
     font-weight: 500;
 }
