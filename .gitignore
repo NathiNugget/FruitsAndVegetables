@@ -283,7 +283,7 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-/Vue/node_js/
+
 
 # Visual Studio 6 build log
 *.plg
@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /C#/FruitClassLib/Secret/SecretKey.cs
 /C#/FruitREST/.config/dotnet-tools.json
+/Vue/node_modules/
