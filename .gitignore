@@ -363,3 +363,4 @@ FodyWeavers.xsd
 /C#/FruitClassLib/Secret/SecretKey.cs
 /C#/FruitREST/.config/dotnet-tools.json
 
+/Vue/node_modules/
