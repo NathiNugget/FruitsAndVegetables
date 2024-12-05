@@ -3,6 +3,7 @@ from socket import *
 import time
 import json
 
+
 serverName = '<broadcast>'
 serverPort = 727
 
@@ -13,8 +14,8 @@ s = SenseHat()
 interval = 3600
 
 while True: 
-  temp = s.temp
-  humidity = s.humidity
+  temp = round(s.temp, 1)
+  humidity = round(s.humidity,1)
   reading = {'temperature': temp,'humidity': humidity}
   jsonpack = json.dumps(reading)
   clientSocket.sendto(jsonpack.encode(), (serverName, serverPort))
