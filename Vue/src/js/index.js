@@ -3,18 +3,20 @@ import {BarController,
   BarElement,
   CategoryScale,
   Chart,
+  Legend,
   LineController,
   LineElement,
   LinearScale,
   PointElement,
   TimeScale,
   Title,
+  Tooltip,
   _adapters,
-  _detectPlatform,
+  _detectPlatform
   } from 'chart.js' 
 
 
-Chart.register(BarController, BarElement, LinearScale, LineElement, LineController,CategoryScale, PointElement, Title, TimeScale);
+Chart.register(BarController, BarElement, Legend, LinearScale, LineElement, LineController,CategoryScale, PointElement, Title, Tooltip, TimeScale);
 
 import 'chartjs-adapter-date-fns'
 
@@ -128,6 +130,7 @@ let temperatureChart = new Chart(chartNumberOne, {
     plugins: {
       legend: {
         labels: {
+          boxWidth:10,
             // This more specific font property overrides the global property
             font: {
                 size: 18,
