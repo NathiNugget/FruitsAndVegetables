@@ -22,7 +22,7 @@ body {
     --colorgaming: goldenrod;
     --accent: green;
     --textaccent: white;
-    --secondaryaccent: rgb(178, 232, 178);
+    --secondaryaccent: rgb(211, 240, 211);
     --box: lightgray;
     --main: white;
     --chartHeadline: #0f3114;
@@ -168,7 +168,9 @@ body {
 }
 
 .buffer{
-    margin:1.5rem 5% 4rem 5%
+    margin: 2rem 5% 4rem;
+    box-shadow: 0 0 10px;
+    border-radius: 40px;
 }
 
 footer{
