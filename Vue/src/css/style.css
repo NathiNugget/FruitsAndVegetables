@@ -13,9 +13,10 @@ html {
 
 body {
     font-family: "Montserrat Alternates";
-
-
-
+    background: linear-gradient(180deg, var(--accent) 8%, var(--main) 20%, var(--main) 80%, var(--accent) 92%);
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
 }
 
 :root {
