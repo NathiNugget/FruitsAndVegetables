@@ -102,5 +102,25 @@ namespace FruitREST.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("setuppp")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [EnableCors("PrivilegedPolicy")]
+        public IActionResult CocaineSwaaag()
+        {
+            if (TestMode.TestModeIsDev)
+            {
+                _repo.Setup();
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(401);
+            }
+        }
+
+
+
     }
 }
