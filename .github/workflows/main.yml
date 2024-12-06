@@ -1,5 +1,11 @@
 name: Build and Push to ACR
 on:
+  pull_request:
+    types:
+    - closed
+    branches:
+    - master
+
   push:
     branches:
       - 'main'
