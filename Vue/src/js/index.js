@@ -160,6 +160,7 @@ const app = Vue.createApp({
       chosenFood: undefined,
       chosenFoodString: "",
       searchFoodString: "",
+      isFetchingMealDB: false
 
     }
   },
@@ -310,6 +311,7 @@ const app = Vue.createApp({
     async ChooseFruit() {
       this.chosenFood = this.foods.find((elem) => elem.name.toLowerCase() == this.chosenFoodString.toLowerCase());
       if (this.chosenFood == null || this.chosenFood == "") {
+        this.recommendedRecipes = [];
         return
       }
       this.chosenFoodImage = `https://themealdb.com/images/ingredients/${this.chosenFood.apilink}.png`;
@@ -344,8 +346,13 @@ const app = Vue.createApp({
     },
 
     async FetchMealDB() {
-      const baseAPIlink = "www.themealdb.com";
       this.recommendedRecipes = []; 
+      if (this.isFetchingMealDB) {
+        return
+      }
+      this.isFetchingMealDB = true
+      const baseAPIlink = "www.themealdb.com";
+      
       console.log("https://" + baseAPIlink + `/api/json/v1/1/filter.php?i=${this.chosenFood.apilink}`);
       const response = await axios.get("https://" + baseAPIlink + `/api/json/v1/1/filter.php?i=${this.chosenFood.apilink}`).then(
         (response) => {
@@ -361,7 +368,12 @@ const app = Vue.createApp({
           });
           console.log(this.recommendedRecipes);
         }
-      );
+      ).catch(function(error) {
+
+
+      });
+
+      this.isFetchingMealDB = false
 
     },
   },
