@@ -20,8 +20,7 @@ Chart.register(BarController, BarElement, Legend, LinearScale, LineElement, Line
 
 import 'chartjs-adapter-date-fns'
 
-const ReadingBaseURL = "https://fruitresttest.azurewebsites.net/api/Readings";
-const FoodsBaseURL = "https://fruitresttest.azurewebsites.net/api/Foods"
+
 
 class Reading {
   constructor(temperature, humidity, id, timestamp) {
@@ -150,7 +149,9 @@ const app = Vue.createApp({
       readings: [],
       foods: [],
       recommendedRecipes: [],
-
+      baseURL: "",
+      ReadingBaseURL: "" ,
+      FoodsBaseURL: "",
       newestTemperature: NaN,
       newestHumidity: NaN,
       fruitCheck: true,
@@ -164,7 +165,7 @@ const app = Vue.createApp({
   },
   methods: {
     async GetLatest() {
-      const response = await axios.get(ReadingBaseURL + '?offset=0&count=5').then(
+      const response = await axios.get(this.readingBaseURL + '?offset=0&count=5').then(
         (response) => {
 
           response.data.forEach((element) => {
@@ -182,7 +183,7 @@ const app = Vue.createApp({
 
     async GetFoods() {
 
-      let baseURL = FoodsBaseURL+"/filtered/";
+      let baseURL = this.foodsBaseURL+"/filtered/";
       if (!this.fruitCheck && !this.vegetableCheck);
       else {
 
@@ -215,7 +216,7 @@ const app = Vue.createApp({
 
     async GetFoodsByName() {
 
-      let baseURL = FoodsBaseURL;
+      let baseURL = this.foodsBaseURL;
       if (!this.fruitCheck && !this.vegetableCheck) {
         baseURL += `/filtered/?filterFruit=true&filterVegetable=true&filterName=${this.chosenFoodString}&offset=0&count=5`
         console.log(baseURL);
@@ -376,8 +377,12 @@ const app = Vue.createApp({
   },
 
   mounted() {
+    this.baseURL = import.meta.env.VITE_BASE_URL
+    this.readingBaseURL = this.baseURL + "api/Readings";
+    this.foodsBaseURL = this.baseURL +"api/Foods"
     this.SetupInitialData();
     this.GetFoodsByName();
+    
 
 
 
