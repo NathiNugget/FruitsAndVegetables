@@ -32,6 +32,8 @@ while True:
             raise KeyError("temperature was not included in the JSON, or has an invalid value")
         elif "humidity" not in messageAsDictionary or (type(messageAsDictionary["humidity"]) is not float and type(messageAsDictionary["humidity"]) is not int):
             raise KeyError("humidity was not included in the JSON, or has an invalid value")
+        elif "image" not in messageAsDictionary or (type(messageAsDictionary["image"]) is not str):
+            raise KeyError("image was not included in the JSON, or has an invalid value")
         # TODO: Remove "verify=False" if we can make it work without
         response = requests.post(destinationURL, data=messageAsString, headers=headers, verify=False)
         if response.status_code != 201:
