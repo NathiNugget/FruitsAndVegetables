@@ -1,0 +1,36 @@
+on:
+  push:
+    branches:
+    - sicko
+env:
+  DOTNET_CORE_VERSION: 7.0.x
+  CONTAINER_APP_NAME: fruitrest-container-app
+  CONTAINER_APP_ENVIRONMENT_NAME: swaaaaag
+  RESOURCE_GROUP: ContainerRegistryGroup
+  CONTAINER_REGISTRY_NAME: fruitrestcontainerregistry
+  CONTAINER_REGISTRY_LOGIN_SERVER: fruitrestcontainerregistry.azurecr.io
+jobs:
+  BuildAndDeployContainerApp:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.swaaaaag_SPN }}
+    - name: Container App deploy
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        appSourcePath: ${{ github.workspace }}
+        acrName: ${{ env.CONTAINER_REGISTRY_NAME }}
+        acrUsername: ${{ secrets.FruitRESTContainerRegistry_USERNAME_9B2C }}
+        acrPassword: ${{ secrets.FruitRESTContainerRegistry_PASSWORD_9B2C }}
+        imageToBuild: ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_APP_NAME }}:${{ github.sha }}
+        containerAppName: ${{ env.CONTAINER_APP_NAME }}
+        containerAppEnvironment: ${{ env.CONTAINER_APP_ENVIRONMENT_NAME }}
+        resourceGroup: ${{ env.RESOURCE_GROUP }}
