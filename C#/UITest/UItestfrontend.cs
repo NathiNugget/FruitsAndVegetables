@@ -24,7 +24,7 @@ namespace UITest
 
 
         // TODO: Replace URL when running tests
-        const string TEST_URL = "http://127.0.0.1:5173";
+        const string TEST_URL = "http://localhost:5173";
         const int _maxWaitMillis = 2000;
 
         [TestInitialize]
