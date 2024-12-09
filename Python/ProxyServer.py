@@ -9,7 +9,7 @@ headers = {"Content-Type": "application/json"}
 serverPort = 727
 
 #TODO: Change placeholder to real destination IP addr
-destinationURL = "https://Fruitcontainerproduction.azurewebsite.net/api/readings"
+destinationURL = "https://fruitcontainerproduction.azurewebsites.net/api/Readings"
 
 serverName = "0.0.0.0"
 
