@@ -27,7 +27,7 @@ namespace FruitClassLib
         {
 
 
-            string query = "DECLARE @TypeName  NVARCHAR(20) SELECT @TypeName = TypeName  FROM FoodTypes WHERE FoodTypes.FoodId = @foodTypeId    INSERT INTO Fruits (DanishName, FoodTypeId, ApiMapping, SpoilDays, SpoilHours, IdealTemperature, IdealHumidity) \r\n\r\n     OUTPUT inserted.Id, inserted.DanishName, inserted.FoodTypeId, inserted.ApiMapping, inserted.SpoilDays, inserted.SpoilHours, inserted.IdealTemperature, inserted.IdealHumidity, @TypeName AS TypeName     VALUES (@name, @foodTypeId, @apiLink, @spoilDate, @spoilHours, @temperature, @humidity)";
+            string query = "DECLARE @TypeName  NVARCHAR(20) SELECT @TypeName = TypeName  FROM FoodTypes WHERE FoodTypes.FoodId = @foodTypeId    INSERT INTO Fruits (DanishName, FoodTypeId, ApiMapping, SpoilDays, SpoilHours, IdealTemperature, IdealHumidity, Q10Factor, MaxTemp, MinTemp) \r\n\r\n     OUTPUT inserted.*, @TypeName AS TypeName     VALUES (@name, @foodTypeId, @apiLink, @spoilDate, @spoilHours, @temperature, @humidity, @q10Factor, @maxTemp, @minTemp)";
 
 
 
@@ -47,6 +47,10 @@ namespace FruitClassLib
                 cmd.Parameters.AddWithValue("@spoilHours", food.SpoilHours);
                 cmd.Parameters.AddWithValue("@temperature", food.IdealTemperature);
                 cmd.Parameters.AddWithValue("@humidity", food.IdealHumidity);
+                cmd.Parameters.AddWithValue("@q10Factor", food.Q10Factor);
+                cmd.Parameters.AddWithValue("@maxTemp", food.MaxTemp);
+                cmd.Parameters.AddWithValue("@minTemp", food.MinTemp);
+
 
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -66,7 +70,7 @@ namespace FruitClassLib
 
         public Food FindByName(string name)
         {
-            string query = "SELECT Fruits.Id AS FruitId, Fruits.DanishName, Fruits.FoodTypeId, Fruits.ApiMapping, Fruits.SpoilDays, Fruits.SpoilHours, Fruits.IdealTemperature, Fruits.IdealHumidity, FoodTypes.TypeName FROM Fruits JOIN FoodTypes ON Fruits.FoodTypeId = FoodTypes.FoodId WHERE DanishName = @Name";
+            string query = "SELECT Fruits.*, FoodTypes.TypeName FROM Fruits JOIN FoodTypes ON Fruits.FoodTypeId = FoodTypes.FoodId WHERE DanishName = @Name";
             Food foodToReturn = null;
             using (SqlConnection conn = new SqlConnection(_connectionstring))
             {
@@ -249,8 +253,12 @@ namespace FruitClassLib
             byte spoilHours = reader.GetByte(5);
             double idealTemperature = reader.GetDouble(6);
             double idealHumidity = reader.GetDouble(7);
-            string foodTypeName = reader.GetString(8);
-            return new Food(name, foodTypeId, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id, foodTypeName);
+            byte q10Factor = reader.GetByte(8);
+            double maxTemp = reader.GetDouble(9);
+            double minTemp = reader.GetDouble(10);
+            string foodTypeName = reader.GetString(11);
+            
+            return new Food(name, foodTypeId, apiLink, spoilDays, spoilHours, idealTemperature, idealHumidity, id, foodTypeName, q10Factor, maxTemp, minTemp);
         }
     }
 }

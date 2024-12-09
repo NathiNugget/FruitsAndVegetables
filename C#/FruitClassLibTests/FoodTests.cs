@@ -116,5 +116,72 @@ namespace FruitClassLib.Tests
         }
 
 
+
+        [TestMethod]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0, -50)]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, 85)]
+        public void MinTempValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, double minTemp)
+        {
+            Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, minTemp: minTemp);
+            double expected = idealTemperature;
+            double actual = mockFood.IdealTemperature;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0, -51)]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, 86)]
+        public void MinTempNotValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, double minTemp)
+        {
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, minTemp: minTemp));
+        }
+
+
+
+        [TestMethod]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0, -50)]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, 85)]
+        public void MaxTempValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, double maxTemp)
+        {
+            Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, maxTemp: maxTemp);
+            double expected = idealTemperature;
+            double actual = mockFood.IdealTemperature;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0, -51)]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, 86)]
+        public void MaxTempNotValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, double maxTemp)
+        {
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, maxTemp: maxTemp));
+        }
+
+
+
+
+        [TestMethod]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0,(byte)2)]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, (byte)255)]
+        public void Q10ValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, byte q10)
+        {
+            Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, q10Factor: q10);
+            double expected = idealTemperature;
+            double actual = mockFood.IdealTemperature;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0, (byte)0)]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, (byte)1)]
+        public void Q10NotValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, byte q10)
+        {
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, q10Factor: q10));
+        }
+
+
+
+
+
     }
 }
