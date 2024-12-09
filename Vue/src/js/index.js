@@ -295,7 +295,13 @@ const app = Vue.createApp({
     CalculateQ10SpoilTime(foodItem) {
       const temperatureDifference = this.newestTemperature - foodItem.idealtemp
       const spoilOnlyHours = this.SpoilDaysToHours(foodItem.spoildays,foodItem.spoilhours)
-      const calculatedSpoilRate = spoilOnlyHours/Math.pow(foodItem.q10factor,temperatureDifference/10)
+
+      const humidityDifference = Math.abs(this.newestHumidity - foodItem.idealhumidity)
+      let humidityFactor = 1
+      if(humidityDifference > 20) {
+        humidityFactor = 0.85
+      }
+      const calculatedSpoilRate = spoilOnlyHours/Math.pow(foodItem.q10factor,temperatureDifference/10)*humidityFactor
       return Math.round(calculatedSpoilRate)
     },
 
