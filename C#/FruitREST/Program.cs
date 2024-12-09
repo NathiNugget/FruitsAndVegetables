@@ -32,7 +32,7 @@ builder.Services.AddCors(opts =>
     // Policy
     opts.AddPolicy("PrivilegedPolicy", newpol =>
     {
-        newpol.AllowAnyHeader().WithMethods("GET", "PATCH", "DELETE", "OPTIONS").AllowAnyOrigin(); 
+        newpol.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
     });
 }); 
 

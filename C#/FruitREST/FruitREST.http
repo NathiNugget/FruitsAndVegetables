@@ -1,4 +1,4 @@
-@FruitREST_HostAddress = https://localhost:7165
+@FruitREST_HostAddress = https://0.0.0.0:7165
 
 GET {{FruitREST_HostAddress}}/Readings/
 Accept: application/json
