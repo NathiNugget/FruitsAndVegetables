@@ -17,8 +17,6 @@ namespace FruitREST.Controllers
         public IActionResult Get()
         {
             byte[] file = System.IO.File.ReadAllBytes("./somefile.jpg");
-
-
             return File(file, "image/jpeg");
         }
 
@@ -27,7 +25,6 @@ namespace FruitREST.Controllers
         {
             try
             {
-
                 string input = dto.bytes.TrimStart('b').Trim('\'');
                 Console.WriteLine(input);
                 byte[] bytes = Convert.FromBase64String(input);
