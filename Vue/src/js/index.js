@@ -267,8 +267,8 @@ const app = Vue.createApp({
       this.newestTemperature = readingObj.temperature;
     },
 
-    spoilMap(hour, day, foodName) {
-      // foodname argument is assumed to be all lowercase
+/*     spoilMap(hour, day, foodName) {
+      // foodname argument is assumed to be all lowercase. this method is no longer in use.
 
       const map = {
         "agurk": this.CalculateGenericFood(3, 2, 8),
@@ -280,7 +280,7 @@ const app = Vue.createApp({
       }
       console.log(map[foodName]);
       return map[foodName];
-    },
+    }, */
 
     SpoilDaysToHours(spoilDays, spoilHours){
       return (spoilDays*24)+spoilHours
@@ -306,7 +306,7 @@ const app = Vue.createApp({
     },
 
 
-    CalculateGenericFood(range, penaltydays, penaltyhours) {
+    /* CalculateGenericFood(range, penaltydays, penaltyhours) { // this method is no longer in use.
       console.log("Hour:" + penaltyhours);
       console.log("day:" + penaltydays);
 
@@ -330,7 +330,7 @@ const app = Vue.createApp({
       let durabiliyDays = food.spoildays - penaltydays;
 
       return [durabiliyDays, durabilityHours];
-    },
+    }, */
 
     async ChooseFruit() {
       this.chosenFood = this.foods.find((elem) => elem.name.toLowerCase() == this.chosenFoodString.toLowerCase());
