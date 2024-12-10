@@ -16,7 +16,7 @@ namespace FruitREST.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            byte[] file = System.IO.File.ReadAllBytes("./newest_image.jpg");
+            byte[] file = System.IO.File.ReadAllBytes("newest_image.jpg");
             return File(file, "image/jpeg");
         }
 
