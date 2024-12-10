@@ -136,7 +136,7 @@ namespace UITest
             input.SendKeys(selectedFood);
             input.SendKeys(Keys.Return);
             IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
-            string expected = "12 timer";
+            string expected = "4 timer";
             string actual = shelflife.Text;
             Assert.IsTrue(actual.Contains(expected));
         }

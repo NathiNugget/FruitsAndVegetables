@@ -40,7 +40,7 @@ class Recommendation {
 }
 
 class Food {
-  constructor(foodTypeId, foodTypeName, id, name, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity) {
+  constructor(foodTypeId, foodTypeName, id, name, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, q10Factor, maxTemp, minTemp) {
     this.foodtypeid = foodTypeId;
     this.foodtypename = foodTypeName;
     this.id = id;
@@ -50,6 +50,9 @@ class Food {
     this.spoilhours = spoilHours;
     this.idealtemp = idealTemperature;
     this.idealhumidity = idealHumidity;
+    this.q10factor = q10Factor;
+    this.maxtemp = maxTemp;
+    this.mintemp = minTemp;
   }
 
 
@@ -202,7 +205,7 @@ const app = Vue.createApp({
 
           this.foods = [];
           response.data.forEach((element) => {
-            const currentFood = new Food(element.foodTypeId, element.foodTypeName, element.id, element.name, element.apiLink, element.spoilDate, element.spoilHours, element.idealTemperature, element.idealHumidity);
+            const currentFood = new Food(element.foodTypeId, element.foodTypeName, element.id, element.name, element.apiLink, element.spoilDate, element.spoilHours, element.idealTemperature, element.idealHumidity,element.q10Factor, element.maxTemp, element.minTemp);
 
             this.foods.push(currentFood);
           });
@@ -241,7 +244,7 @@ const app = Vue.createApp({
             return
           }
           response.data.forEach((element) => {
-            const currentFood = new Food(element.foodTypeId, element.foodTypeName, element.id, element.name, element.apiLink, element.spoilDate, element.spoilHours, element.idealTemperature, element.idealHumidity);
+            const currentFood = new Food(element.foodTypeId, element.foodTypeName, element.id, element.name, element.apiLink, element.spoilDate, element.spoilHours, element.idealTemperature, element.idealHumidity, element.q10Factor, element.maxTemp, element.minTemp);
 
             foundFoods.push(currentFood);
           });
@@ -264,8 +267,8 @@ const app = Vue.createApp({
       this.newestTemperature = readingObj.temperature;
     },
 
-    spoilMap(hour, day, foodName) {
-      // foodname argument is assumed to be all lowercase
+/*     spoilMap(hour, day, foodName) {
+      // foodname argument is assumed to be all lowercase. this method is no longer in use.
 
       const map = {
         "agurk": this.CalculateGenericFood(3, 2, 8),
@@ -277,12 +280,33 @@ const app = Vue.createApp({
       }
       console.log(map[foodName]);
       return map[foodName];
+    }, */
+
+    SpoilDaysToHours(spoilDays, spoilHours){
+      return (spoilDays*24)+spoilHours
+    },
+
+    SpoilHoursToDays(spoilHours){
+      const newSpoilDays = Math.floor(spoilHours/24);
+      const newSpoilHours = spoilHours%24;
+      return [newSpoilDays,newSpoilHours]
+    },
+
+    CalculateQ10SpoilTime(foodItem) {
+      const temperatureDifference = this.newestTemperature - foodItem.idealtemp
+      const spoilOnlyHours = this.SpoilDaysToHours(foodItem.spoildays,foodItem.spoilhours)
+
+      const humidityDifference = Math.abs(this.newestHumidity - foodItem.idealhumidity)
+      let humidityFactor = 1
+      if(humidityDifference > 20) {
+        humidityFactor = 0.85
+      }
+      const calculatedSpoilRate = spoilOnlyHours/Math.pow(foodItem.q10factor,temperatureDifference/10)*humidityFactor
+      return Math.round(calculatedSpoilRate)
     },
 
 
-
-
-    CalculateGenericFood(range, penaltydays, penaltyhours) {
+    /* CalculateGenericFood(range, penaltydays, penaltyhours) { // this method is no longer in use.
       console.log("Hour:" + penaltyhours);
       console.log("day:" + penaltydays);
 
@@ -306,7 +330,7 @@ const app = Vue.createApp({
       let durabiliyDays = food.spoildays - penaltydays;
 
       return [durabiliyDays, durabilityHours];
-    },
+    }, */
 
     async ChooseFruit() {
       this.chosenFood = this.foods.find((elem) => elem.name.toLowerCase() == this.chosenFoodString.toLowerCase());
@@ -318,7 +342,10 @@ const app = Vue.createApp({
       console.log(this.chosenFoodImage);  
       console.log(Vue.toRaw(this.chosenFood));
       const food = this.chosenFood;
-      this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name.toLowerCase());
+      console.log(this.CalculateQ10SpoilTime(food));
+      const foodSpoilTime = this.CalculateQ10SpoilTime(food);
+/*       this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name.toLowerCase()); */
+      this.spoilTime = this.SpoilHoursToDays(foodSpoilTime);
       await this.FetchMealDB(); 
     },
 

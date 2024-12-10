@@ -368,3 +368,4 @@ FodyWeavers.xsd
 
 # built vite files
 /Vue/dist/
+/Python/proxylog.txt

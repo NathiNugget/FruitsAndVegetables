@@ -31,11 +31,11 @@ namespace FruitClassLib.Tests
         }
 
         [TestMethod()]
-        [DataRow( "TestFood", 1, "TestLink", (byte)2, (byte)5, 50.0, 50.0)]
+        [DataRow( "TestFood", 1, "TestLink", (byte)2, (byte)5, 50.0, 50.0, (byte)4, 60, -20)]
 
-        public void AddFoodDBTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity)
+        public void AddFoodDBTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, byte q10Factor, double maxTemp, double minTemp)
         {
-            Food expected = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity);
+            Food expected = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, q10Factor:q10Factor, maxTemp: maxTemp, minTemp: minTemp);
             Food actual = _repo.Add(expected);
 
 

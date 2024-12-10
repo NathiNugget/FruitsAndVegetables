@@ -10,20 +10,29 @@ namespace FruitClassLib
 {
     public class Food
     {
+
+        const double MAX_POSSIBLE_TEMPERATURE = 85;
+
+        const double MIN_POSSIBLE_TEMPERATURE = -50;
+
         private int _id;
         private string _name;
         private string _apiLink;
         private byte _spoilDate;
         private byte _spoilHours;
+        private byte _q10Factor;
+        private double _maxTemp;
+        private double _minTemp;
         private double _idealTemperature;
         private double _idealHumidity;
         private int _foodTypeId;
         private string _foodTypeName;
 
-        public Food(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, int id = 1, string foodTypeName = "")
+        public Food(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, int id = 1, string foodTypeName = "", byte q10Factor = 3, double maxTemp = 40, double minTemp = -15   )
         {
             FoodTypeId = foodTypeId;
             FoodTypeName = foodTypeName;
+            MaxTemp = maxTemp;
             Id = id;
             Name = name;
             ApiLink = apiLink;
@@ -31,6 +40,9 @@ namespace FruitClassLib
             SpoilHours = spoilHours;
             IdealTemperature = idealTemperature;
             IdealHumidity = idealHumidity;
+            Q10Factor = q10Factor;
+            MaxTemp = maxTemp;
+            MinTemp = minTemp;
         }
 
         public int FoodTypeId
@@ -52,6 +64,35 @@ namespace FruitClassLib
                 _foodTypeName = value;
             }
         }
+
+        public double MaxTemp {
+            get => _maxTemp;
+            set
+            {
+                if (value > MAX_POSSIBLE_TEMPERATURE || value < MIN_POSSIBLE_TEMPERATURE)
+                {
+                    throw new ArgumentOutOfRangeException($"Max temperature has to be between {MIN_POSSIBLE_TEMPERATURE} and {MAX_POSSIBLE_TEMPERATURE}. Passed: {value}");
+                }
+                _maxTemp = value;
+            }
+        }
+
+
+        public double MinTemp
+        {
+            get => _minTemp;
+            set
+            {
+                if (value > MAX_POSSIBLE_TEMPERATURE || value < MIN_POSSIBLE_TEMPERATURE)
+                {
+                    throw new ArgumentOutOfRangeException($"Max temperature has to be between {MIN_POSSIBLE_TEMPERATURE} and {MAX_POSSIBLE_TEMPERATURE}. Passed: {value}");
+                }
+                _minTemp = value;
+            }
+        }
+
+
+
 
         public int Id { get => _id;
 
@@ -98,7 +139,7 @@ namespace FruitClassLib
 
             set
             {
-                if (value < -50 || value > 85)
+                if (value < MIN_POSSIBLE_TEMPERATURE || value > MAX_POSSIBLE_TEMPERATURE)
                 {
                     throw new ArgumentOutOfRangeException($"Temperature has to be between -50 and 85. Passed: {value}");
                 }
@@ -117,6 +158,20 @@ namespace FruitClassLib
                 _idealHumidity = value;
             }
 
+        }
+
+        public byte Q10Factor
+        {
+            get => _q10Factor;
+
+            set
+            {
+                if (value < 2)
+                {
+                    throw new ArgumentOutOfRangeException($"Q10 has to be above 1. Passed: {value}");
+                }
+                _q10Factor = value;
+            }
         }
     }
 }
