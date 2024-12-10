@@ -88,5 +88,14 @@ namespace FruitClassLibTests
             User actual = new User(name, password, id);
         }
 
+        [TestMethod]
+        [DataTestMethod]
+        [DataRow(1, "Bo", "fdsfdfgdhh", null)]
+        [DataRow(1, "Bo", "fdsfdfgdhh", "6F9619FF-8B86-D011-B42D-00C04FC964FF")]
+        public void UserAllowedSessionCookie(int id, string name, string password, string sessionCookie)
+        {
+            User actual = new User(name, password, id);
+        }
+
     }
 }

@@ -20,16 +20,19 @@ namespace FruitClassLib
 
         const int MIN_PASSWORD_LENGTH = 5;
 
-        public User(string name, string password, int id = 1)
+        public User(string name, string password, int id = 1, string? sessionToken = null)
         {
             Name = name;
             Password = password;
             Id = id;
+            SessionToken = sessionToken;
         }
         private string _name;
 
         private string _password;
 
+
+        public string? SessionToken { get; set; }
 
         public int Id { get; set; }
 
