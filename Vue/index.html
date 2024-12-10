@@ -14,16 +14,33 @@
 <body>
     <div id="app">
         <header class="header p-3">
-            <div class="row w-100">
-                <div class="col-12 row">
+            <div class="w-100 d-flex justify-content-between">
+                <div class="col-1"></div>
+                <div class="col-10 row">
                     <h1 style="text-align: center;">
                         <i class="fa-solid fa-leaf"></i>
                         Frugt og grønt
                     </h1>
+                    
                 </div>
+                <div class="col-1 row">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin"><i class="fas fa-bars"></i></button>
+            </div>
             </div>
         </header>
 
+        <div class="offcanvas offcanvas-end offcanvasBackground" id="admin">
+            <div class="offcanvas-header">
+              <h1 class="offcanvas-title">Admin funktionalitet</h1>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+              <input type="text" class="form-control" placeholder="Brugernavn">
+              <input type="text" class="form-control" placeholder="Adgangskode">
+              <br>
+              <button class="btn btn-secondary" type="button">Log ind</button><button class="btn btn-light" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+            </div>
+          </div>
         
         <div class="col-12 row elementBox d-flex justify-content-around">
             <div class="col-5 checkboxcontainer">

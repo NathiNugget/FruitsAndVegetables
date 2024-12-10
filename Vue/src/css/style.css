@@ -38,6 +38,9 @@ body {
     justify-content: center;
 }
 
+.offcanvasBackground{
+    background-color: var(--secondaryaccent);
+}
 
 .elementBox {
     background-color: var(--secondaryaccent);

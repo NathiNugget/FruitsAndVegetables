@@ -15,6 +15,7 @@ import {BarController,
   _detectPlatform
   } from 'chart.js' 
 
+  import {Offcanvas} from 'bootstrap';
 
 Chart.register(BarController, BarElement, Legend, LinearScale, LineElement, LineController,CategoryScale, PointElement, Title, Tooltip, TimeScale);
 
