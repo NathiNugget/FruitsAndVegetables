@@ -5,7 +5,6 @@ WORKDIR /app
 EXPOSE 8081
 EXPOSE 8080
 
-
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Debug
@@ -13,8 +12,6 @@ WORKDIR /src
 COPY ["FruitREST/FruitREST.csproj", "FruitREST/"]
 RUN dotnet restore "./FruitREST/FruitREST.csproj"
 COPY . .
-
-
 
 # Install libgdiplus and other dependencies for image processing support
 RUN apt-get update && \
