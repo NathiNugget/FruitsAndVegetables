@@ -16,7 +16,7 @@ namespace FruitREST.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            byte[] file = System.IO.File.ReadAllBytes("./somefile.jpg");
+            byte[] file = System.IO.File.ReadAllBytes("./newest_image.jpg");
             return File(file, "image/jpeg");
         }
 
@@ -26,18 +26,14 @@ namespace FruitREST.Controllers
             try
             {
                 string input = dto.bytes.TrimStart('b').Trim('\'');
-                Console.WriteLine(input);
                 byte[] bytes = Convert.FromBase64String(input);
                 Image image = Image.Load<Rgba32>(bytes);
-                image.SaveAsJpeg("somefile.jpg");
-
-                Console.WriteLine("END");
+                image.SaveAsJpeg("newest_image.jpg"); 
                 return Ok(dto.bytes);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
 
