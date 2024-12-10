@@ -38,6 +38,7 @@ namespace FruitClassLibTests
         [DataRow(1, "   ", "Psarqer46735")]
         [DataRow(1, "\n", "Psarqer46735")]
         [DataRow(1, "\t", "Psarqer46735")]
+        [DataRow(1, "G", "Psarqer46735")]
         [DataRow(1, "-marius", "Psarqer46735")]
         [DataRow(1, ",marius", "Psarqer46735")]
         [DataRow(1, "´marius", "Psarqer46735")]
