@@ -1,5 +1,6 @@
 using FruitClassLib;
 using FruitREST;
+using Microsoft.AspNetCore.Mvc;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,11 @@ builder.Services.AddSwaggerGen();
 #if DEBUG
 TestMode.TestModeIsDev = true;
 #endif
+
+
+builder.Services.AddMvc().ConfigureApiBehaviorOptions(options => {
+    options.SuppressInferBindingSourcesForParameters = true;
+}).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 
 // TODO: Add singleton and create interface
