@@ -156,6 +156,7 @@ const app = Vue.createApp({
       baseURL: "",
       ReadingBaseURL: "" ,
       FoodsBaseURL: "",
+      UserBaseURL: "",
       newestTemperature: NaN,
       newestHumidity: NaN,
       fruitCheck: true,
@@ -164,8 +165,11 @@ const app = Vue.createApp({
       chosenFood: undefined,
       chosenFoodString: "",
       searchFoodString: "",
-      isFetchingMealDB: false
-
+      isFetchingMealDB: false,
+      loginName: null,
+      loginPassword: null,
+      sessionToken: null,
+      loginWarning: null
     }
   },
   methods: {
@@ -404,6 +408,30 @@ const app = Vue.createApp({
       this.isFetchingMealDB = false
 
     },
+    AdminLogin() {
+      document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      this.loginWarning = null
+      if(this.loginName == null || this.loginPassword == null) {
+        this.loginWarning = "Husk brugernavn og password"
+      } else {
+        document.cookie="sessiontoken=itworkssssss"
+        /* axios.put(this.userBaseURL,{
+          headers: {
+            'username':this.loginName,
+            'password':this.loginPassword
+          }
+        }).then(
+          (response) => {
+            console.log(response.data)
+          }
+        ) */
+      }
+    },
+    CheckSessionToken() {
+      const cookie = document.cookie;
+      let token = "sessiontoken="
+      console.log(cookie.substring(token.length, cookie.length))
+    }
   },
 
 
@@ -420,6 +448,7 @@ const app = Vue.createApp({
     this.baseURL = import.meta.env.VITE_BASE_URL
     this.readingBaseURL = this.baseURL + "api/Readings";
     this.foodsBaseURL = this.baseURL +"api/Foods"
+    this.userBaseURL = this.baseURL + "api/Users";
     this.SetupInitialData();
     this.GetFoodsByName();
     

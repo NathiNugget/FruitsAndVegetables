@@ -309,14 +309,25 @@ namespace UITest
         //    Assert.IsNotNull(vegetableFilter);
         //}
 
-        //[TestMethod]
-        //public void AdminLogin()
-        //{
-        //    User before = _userRepo.Get("admin", "vegestable");
-        //    IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
-        //    toggle.Click();
-        //    IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
-        //}
+        [TestMethod]
+        public void AdminLogin()
+        {
+            string usernameInput = "admin";
+            string passwordInput = "vegestable";
+            User before = _userRepo.Get(usernameInput, passwordInput);
+            IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
+            toggle.Click();
+            IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
+            IWebElement passwordField = driver.FindElement(By.Id("AdminPassword"));
+            IWebElement loginButton = driver.FindElement(By.Id("LoginButton"));
+
+            nameField.SendKeys(usernameInput);
+            passwordField.SendKeys(passwordInput);
+            loginButton.Click();
+            Thread.Sleep(500);
+            User after = _userRepo.Get(usernameInput, passwordInput);
+            Assert.AreNotEqual(before.SessionToken, after.SessionToken);
+        }
 
         [ClassCleanup]
         public static void ClassCleanup()
