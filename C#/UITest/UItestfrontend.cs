@@ -12,8 +12,9 @@ namespace UITest
         [ClassInitialize]
         public static void ClassInitialize(TestContext test) {
             _repo.Nuke(); 
-            _repo.Setup(); 
-
+            _repo.Setup();
+            _userRepo.Nuke();
+            _userRepo.SetUp();
 
             
         }
