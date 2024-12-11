@@ -334,6 +334,7 @@ namespace UITest
         {
             string usernameInput = "Jacob";
             string passwordInput = "Hahaxd";
+
             IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
             toggle.Click();
             IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
@@ -344,10 +345,12 @@ namespace UITest
             passwordField.SendKeys(passwordInput);
             loginButton.Click();
             Thread.Sleep(500);
+            User before = _userRepo.Get(usernameInput, passwordInput);
             IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
             logoutButton.Click();
-            User testUser = _userRepo.Get(usernameInput, passwordInput);
-            Assert.IsNull(testUser.SessionToken);
+            Thread.Sleep(500);
+            User after = _userRepo.Get(usernameInput, passwordInput);
+            Assert.AreNotEqual(before.SessionToken, after.SessionToken);
         }
 
         [ClassCleanup]

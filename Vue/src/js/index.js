@@ -168,7 +168,7 @@ const app = Vue.createApp({
       isFetchingMealDB: false,
       loginName: null,
       loginPassword: null,
-      sessionToken: null,
+      sessionActive: false,
       loginWarning: null
     }
   },
@@ -424,14 +424,39 @@ const app = Vue.createApp({
         }).then(
           (response) => {
             document.cookie = "sessiontoken=" + response.data
+            this.sessionActive = true
           }
         ) 
       }
     },
-    CheckSessionToken() {
+    GetTokenFromCookie() {
       const cookie = document.cookie;
       const finder = "sessiontoken="
       const token = cookie.substring(finder.length, cookie.length)
+      return token
+    },
+    AdminLogout() {
+      const token = this.GetTokenFromCookie()
+      axios.put(this.userBaseURL+"/logout",null,{
+        headers: {
+          'token':token
+        }
+      }).then(
+        () => {
+        document.cookie = "sessiontoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC"
+        this.sessionActive = false
+      }
+      ).catch(
+        (error) => {
+          if(error.status = 401) {
+            this.loginWarning = "Du er blevet logget ud automatisk"
+            this.sessionActive = false
+          }
+        }
+      )
+    },
+    CheckSessionToken() {
+      const token = this.GetTokenFromCookie()
       axios.get(this.userBaseURL+"/validatetoken",{
         headers: {
           'token':token
@@ -439,12 +464,12 @@ const app = Vue.createApp({
       }).then(
         (response) => {
           if (response.status = 200) {
-            return true
+            this.sessionActive = true
           }
         }
       ).catch(
         (error) => {
-          return false
+          this.sessionActive = false
         }
       )
     }
