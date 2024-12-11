@@ -1,4 +1,6 @@
-﻿namespace FruitREST.Model
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace FruitREST.Model
 {
-    public record UserCredsDTO(string username, string password);
+    public record UserCredsDTO([FromHeader] string Username, [FromHeader] string Password);
 }

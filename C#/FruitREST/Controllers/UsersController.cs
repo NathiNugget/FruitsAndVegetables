@@ -58,7 +58,7 @@ namespace FruitREST.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetByCreds([FromHeader] UserCredsDTO credsDTO)
         {
-            User? user = _repo.Get(credsDTO.username, credsDTO.password);
+            User? user = _repo.Get(credsDTO.Username, credsDTO.Password);
             if (user == null)
             {
                 return StatusCode(401);
@@ -73,9 +73,9 @@ namespace FruitREST.Controllers
         [HttpGet("getnewsessiontoken")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetSessionTokenByCreds([FromHeader] UserCredsDTO credsDTO)
+        public IActionResult GetSessionTokenByCreds([FromHeader] string username, [FromHeader] string password)
         {
-            string? token = _repo.GetNewSessionToken(credsDTO.username, credsDTO.password);
+            string? token = _repo.GetNewSessionToken(username, password);
             if (token == null)
             {
                 return StatusCode(401);
