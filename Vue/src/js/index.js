@@ -426,10 +426,11 @@ const app = Vue.createApp({
     }
   },
 
-
-
-
-
+  //TODO tænker det noget i den still no?
+  async logout()  {
+    this.sessionToken = null
+    console.log("session null")
+  },
 
 
   computed: {
