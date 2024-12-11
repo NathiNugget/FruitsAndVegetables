@@ -94,6 +94,7 @@ body {
     color: var(--allert);
     border: 2px solid var(--allert);
     box-shadow: 0px 0px 6px var(--allert);
+    float: right;
 }
 
 .offcanvasInput {
