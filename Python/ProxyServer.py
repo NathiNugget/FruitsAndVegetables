@@ -5,6 +5,8 @@ import requests
 import datetime
 import paramiko
 import os
+from pathlib import Path
+home = Path.home()
 
 
 headers = {"Content-Type": "application/json"}
@@ -46,7 +48,8 @@ while True:
         client = paramiko.SSHClient()
         #client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-        client.load_host_keys(os.getcwd()+"\\known_hosts")
+        print(os.listdir(home/".ssh"))
+        client.load_host_keys(home/".ssh"/"known_hosts")
         print(client.get_host_keys().keys())
         client.connect(f'{returnAddress[0]}', port=22, username='pi', password='raspberry')
         print(client.get_host_keys())
