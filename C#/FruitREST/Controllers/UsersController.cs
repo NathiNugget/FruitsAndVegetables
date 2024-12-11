@@ -103,7 +103,7 @@ namespace FruitREST.Controllers
             }
         }
 
-        [HttpGet("logout")]
+        [HttpPut("logout")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult LogOutWithToken([FromHeader] string token)
