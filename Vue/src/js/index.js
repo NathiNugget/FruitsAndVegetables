@@ -479,7 +479,7 @@ const app = Vue.createApp({
           response.data.maxTemp,
           response.data.minTemp
         ));
-        this.newFood = { // Reset the form
+        this.newFood = { 
           name: '',
           foodTypeId: null,
           foodTypeName: '',
@@ -491,10 +491,9 @@ const app = Vue.createApp({
           maxTemp: 0,
           minTemp: 0
         };
-        this.addFoodError = null;
-        alert('Food added successfully!');
+        
+        console.log('Food added successfully!');
       } catch (error) {
-        this.addFoodError = 'Failed to add food. Please try again.';
         console.error(error);
       }
     }

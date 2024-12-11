@@ -50,23 +50,23 @@
                             <option value="fruitCheck">Frugt</option>
                             <option value="greenCheck">Grønt</option>
                         </select>
-                        <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="Navnet" v-model='name'>            
-                        <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="API Linket" v-model='apiLink'>
+                        <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="Navnet" v-model="name">            
+                        <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="API Linket" v-model="apiLink">
                     </div>
                     <div class="offcanvasInputBox">
                         <label class="col-12">Holdbarhed</label>
                         <div class="d-flex flex-wrap">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Dage" v-model='spoilDays'>
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Timer" v-model='spoilHours'>
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Q10" v-model='q10Factor'>
+                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Dage" v-model="spoilDays">
+                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Timer" v-model="spoilHours">
+                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Q10" v-model="q10Factor">
                         </div>
                     </div>
                     <div class="offcanvasInputBox">
                         <label class="col-12">Temperatur</label>
                         <div class="d-flex flex-wrap">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min" v-model='minTemp'>
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max" v-model='maxTemp'>
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal" v-model='idealTemperature'>
+                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min" v-model="minTemp">
+                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max" v-model="maxTemp">
+                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal" v-model="idealTemperature">
                         </div>
                     </div>
                     <div class="offcanvasInputBox">
@@ -74,7 +74,7 @@
                         <div class="d-flex flex-wrap">
                             <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min">
                             <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal" v-model='idealHumidity'>
+                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal" v-model="idealHumidity">
                         </div>
                     </div>
                     <div class="offcanvasInputBox d-flex justify-content-between">
