@@ -367,7 +367,7 @@ FodyWeavers.xsd
 
 
 # built vite files
-/Vue/dist/**
+/Vue/dist/*
 /Python/proxylog.txt
 /Python/known_hosts
 /Python/newest_image.jpg
