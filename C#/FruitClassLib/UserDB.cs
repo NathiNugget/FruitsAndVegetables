@@ -41,6 +41,7 @@ namespace FruitClassLib
 
                 cmd.Parameters.AddWithValue("@name", user.Name);
                 cmd.Parameters.AddWithValue("@password", user.Password);
+                cmd.Parameters.AddWithValue("@sessionToken", user.SessionToken);
 
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -133,6 +134,49 @@ namespace FruitClassLib
             throw new Exception("Error, something went wrong");
         }
 
+
+
+
+        public bool ResetSessionToken(string sessionToken)
+        {
+            if (sessionToken is null)
+            {
+                return false;
+            }
+            string procedure = "LogOut";
+
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+
+
+                SqlCommand cmd = new SqlCommand(procedure, conn);
+
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@sessiontoken", sessionToken);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return true;
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+
+            }
+            throw new Exception("Error, something went wrong");
+        }
+
+
+
+
         public void Nuke()
         {
 #if !DEBUG
@@ -154,7 +198,7 @@ namespace FruitClassLib
         {
             Add(new User("Marius", "hehehehe"));
             Add(new User("Jacob", "Hahaxd"));
-            Add(new User("Isak", "isakooo"));
+            Add(new User("Isak", "isakooo", sessionToken: "9884ac55-ad12-4b2e-a569-e74367298e5e"));
             Add(new User("Nathaniel", "maaguyyy"));
         }
 

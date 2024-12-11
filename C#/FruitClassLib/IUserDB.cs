@@ -12,5 +12,7 @@
         public void Nuke();
 
         public User Add(User user);
+
+        public bool ResetSessionToken(string sessionToken);
     }
 }

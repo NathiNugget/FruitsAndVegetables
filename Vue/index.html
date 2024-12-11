@@ -24,7 +24,7 @@
                     
                 </div>
                 <div class="col-1 row">
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin"><i class="fas fa-bars"></i></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin" id="AdminPanelToggle" @click="CheckSessionToken"><i class="fas fa-bars"></i></button>
             </div>
             </div>
         </header>
@@ -36,37 +36,11 @@
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
             </div>
             <div class="offcanvas-body">
-                <div class="informationBox justify-content-around">
-                    <input type="text" class="form-control offcanvasInputfield" placeholder="Brugernavn" v-model="loginUsername">
-                    <input type="text" class="form-control offcanvasInputfield" placeholder="Adgangskode" v-model="loginPassword">
-                    <div class="d-flex justify-content-between">
-                        <button class="offcanvasLoginBtn" type="button" @click="login">Log ind</button>
-                        <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
-                    </div>
-                </div>                 
-                <div v-show="sessionToken"  class="informationBox justify-content-between">
-                    <label class="col-12">Lav ny grøntsage eller frugt</label>
-                    <select class="col-3">
-                        <option>Frugt</option>
-                        <option>Grønt</option>
-                    </select>
-                    <input type="text" class="col-9 offcanvasInput" placeholder="Navn På Frugten/grøntsagen">
-                   
-
-                    <input type="text" class="col-12 offcanvasInput" placeholder="API Linket">
-                    <label class="col-12">Holdbarhed</label>
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Dage">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Timer">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Q10">
-                    <label class="col-12">Temperatur</label>
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Ideal">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Max">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Min">
-                    <label class="col-12">Luftfugtighed</label>
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Ideal">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Max">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Min">
-                </div>
+              <input type="text" class="form-control" placeholder="Brugernavn" id="AdminUsername" v-model="loginName">
+              <input type="text" class="form-control" placeholder="Adgangskode" id="AdminPassword" v-model = "loginPassword">
+              <span>{{loginWarning}}</span>
+              <br>
+              <button class="btn btn-secondary" type="button" id="LoginButton" @click="AdminLogin()">Log ind</button><button class="btn btn-light" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
             </div>
         </div>
         

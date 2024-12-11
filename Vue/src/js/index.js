@@ -156,6 +156,7 @@ const app = Vue.createApp({
       baseURL: "",
       ReadingBaseURL: "" ,
       FoodsBaseURL: "",
+      UserBaseURL: "",
       newestTemperature: NaN,
       newestHumidity: NaN,
       fruitCheck: true,
@@ -165,10 +166,10 @@ const app = Vue.createApp({
       chosenFoodString: "",
       searchFoodString: "",
       isFetchingMealDB: false,
-      loginUsername: "",
-      loginPassword: "",
-      sessionToken: "", // maybe use??
-
+      loginName: null,
+      loginPassword: null,
+      sessionToken: null,
+      loginWarning: null
     }
   },
   methods: {
@@ -407,30 +408,52 @@ const app = Vue.createApp({
       this.isFetchingMealDB = false
 
     },
-    async login() {
-      const response = await axios.post(baseURL, {
-        name: this.loginUsername,
-        password: this.loginPassword
-      })
-      
-      if (response.status === 200 && response.data.SessionToken){
-        this.sessionToken = response.data.SessionToken
+    AdminLogin() {
+      document.cookie = "sessiontoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      this.loginWarning = null
+      if(this.loginName == null || this.loginPassword == null) {
+        this.loginWarning = "Husk brugernavn og password"
+      } else {
+/*         document.cookie="sessiontoken=itworkssssss" */
+        
+         axios.put(this.userBaseURL+"/getnewsessiontoken",null,{
+          headers: {
+            'username':this.loginName,
+            'password':this.loginPassword
+          } // axios uses third parameter for headers, so data parameter is kept null. we don't ask questions, if it works it works
+        }).then(
+          (response) => {
+            document.cookie = "sessiontoken=" + response.data
+          }
+        ) 
       }
-      else {
-        console.error('Forkert brugernavn eller adgangskode', error)
-        alert('En fejl skete under login')
-      }
-    }, catch(error) {
-      console.error('fejl', error);
-      console.log('en fejl skete under login ');
+    },
+    CheckSessionToken() {
+      const cookie = document.cookie;
+      const finder = "sessiontoken="
+      const token = cookie.substring(finder.length, cookie.length)
+      axios.get(this.userBaseURL+"/validatetoken",{
+        headers: {
+          'token':token
+        }
+      }).then(
+        (response) => {
+          if (response.status = 200) {
+            return true
+          }
+        }
+      ).catch(
+        (error) => {
+          return false
+        }
+      )
     }
   },
 
-  //TODO tænker det noget i den still no?
-  async logout()  {
-    this.sessionToken = null
-    console.log("session null")
-  },
+
+
+
+
 
 
   computed: {
@@ -441,6 +464,7 @@ const app = Vue.createApp({
     this.baseURL = import.meta.env.VITE_BASE_URL
     this.readingBaseURL = this.baseURL + "api/Readings";
     this.foodsBaseURL = this.baseURL +"api/Foods"
+    this.userBaseURL = this.baseURL + "api/Users";
     this.SetupInitialData();
     this.GetFoodsByName();
     

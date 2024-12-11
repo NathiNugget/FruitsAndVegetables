@@ -56,9 +56,9 @@ namespace FruitREST.Controllers
         [HttpGet("getbycredentials")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetByCreds([FromHeader] UserCredsDTO credsDTO)
+        public IActionResult GetByCreds(UserCredsObject userCreds)
         {
-            User? user = _repo.Get(credsDTO.username, credsDTO.password);
+            User? user = _repo.Get(userCreds.Username, userCreds.Password);
             if (user == null)
             {
                 return StatusCode(401);
@@ -70,12 +70,13 @@ namespace FruitREST.Controllers
 
         }
 
-        [HttpGet("getnewsessiontoken")]
+        [HttpPut("getnewsessiontoken")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetSessionTokenByCreds([FromHeader] UserCredsDTO credsDTO)
+        [EnableCors("PrivilegedPolicy")]
+        public IActionResult GetSessionTokenByCreds(UserCredsObject userCreds)
         {
-            string? token = _repo.GetNewSessionToken(credsDTO.username, credsDTO.password);
+            string? token = _repo.GetNewSessionToken(userCreds.Username, userCreds.Password);
             if (token == null)
             {
                 return StatusCode(401);
@@ -86,31 +87,31 @@ namespace FruitREST.Controllers
             }
 
         }
-
-        [HttpGet("getnewsessiontoken")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetSessionTokenByCreds([FromHeader] UserCredsDTO credsDTO)
-        {
-            string? token = _repo.GetNewSessionToken(credsDTO.username, credsDTO.password);
-            if (token == null)
-            {
-                return StatusCode(401);
-            }
-            else
-            {
-                return Ok(token);
-            }
-        }
-
 
         [HttpGet("validatetoken")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetSessionTokenByCreds([FromHeader] UserCredsDTO credsDTO)
+        public IActionResult GetSessionTokenByCreds([FromHeader] string token)
         {
-            string? token = _repo.GetNewSessionToken(credsDTO.username, credsDTO.password);
-            if (token == null)
+            bool validated = _repo.Validate(token);
+            if (!validated)
+            {
+                return StatusCode(401);
+            }
+            else
+            {
+                return Ok(token);
+            }
+        }
+
+        [HttpPut("logout")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [EnableCors("PrivilegedPolicy")]
+        public IActionResult LogOutWithToken([FromHeader] string token)
+        {
+            bool validated = _repo.ResetSessionToken(token);
+            if (!validated)
             {
                 return StatusCode(401);
             }
