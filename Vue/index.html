@@ -29,18 +29,19 @@
             </div>
         </header>
 
-        <div class="offcanvas offcanvas-end offcanvasBackground" id="admin">
-            <div class="offcanvas-header">
+        <div  class="offcanvas offcanvas-end offcanvasBackground" id="admin">
+            <h1 class="offcanvas-title">Admin login</h1>
+            <div v-if="sessionToken" class="offcanvas-header">
               <h1 class="offcanvas-title">Admin funktionalitet</h1>
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
             </div>
-            <div class="offcanvas-body">
-              <input type="text" class="form-control" placeholder="Brugernavn">
-              <input type="text" class="form-control" placeholder="Adgangskode">
+            <div v-else="sessionToken" class="offcanvas-body">
+              <input type="text" class="form-control" placeholder="Brugernavn" v-model="loginUsername">
+              <input type="text" class="form-control" placeholder="Adgangskode" v-model="loginPassword">
               <br>
-              <button class="btn btn-secondary" type="button">Log ind</button><button class="btn btn-light" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+              <button class="btn btn-secondary" type="button" @click="login">Log ind</button><button class="btn btn-light" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
             </div>
-          </div>
+        </div>
         
         <div class="col-12 row elementBox d-flex justify-content-around">
             <div class="col-5 checkboxcontainer">

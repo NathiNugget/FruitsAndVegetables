@@ -1,4 +1,4 @@
-import axios from 'axios'; 
+import axios, { Axios } from 'axios'; 
 import {BarController,
   BarElement,
   CategoryScale,
@@ -164,7 +164,10 @@ const app = Vue.createApp({
       chosenFood: undefined,
       chosenFoodString: "",
       searchFoodString: "",
-      isFetchingMealDB: false
+      isFetchingMealDB: false,
+      loginUsername: "",
+      loginPassword: "",
+      sessionToken: "", // maybe use??
 
     }
   },
@@ -404,6 +407,23 @@ const app = Vue.createApp({
       this.isFetchingMealDB = false
 
     },
+    async login() {
+      const response = await axios.post(baseURL, {
+        name: this.loginUsername,
+        password: this.loginPassword
+      })
+      
+      if (response.status === 200 && response.data.SessionToken){
+        this.sessionToken = response.data.SessionToken
+      }
+      else {
+        console.error('Forkert brugernavn eller adgangskode', error)
+        alert('En fejl skete under login')
+      }
+    }, catch(error) {
+      console.error('fejl', error);
+      console.log('en fejl skete under login ');
+    }
   },
 
 
