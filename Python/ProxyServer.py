@@ -1,10 +1,9 @@
 from socket import *
-import threading
 import json
 import requests
-import datetime
+from datetime import datetime
 import paramiko
-import os
+import base64
 from pathlib import Path
 home = Path.home()
 
@@ -12,6 +11,7 @@ home = Path.home()
 headers = {"Content-Type": "application/json"}
 
 serverPort = 727
+image_name = "newest_image.jpg"
 
 #TODO: Change placeholder to real destination IP addr
 destinationReadingURL = "https://fruitcontainerproduction.azurewebsites.net/api/Readings"
@@ -27,7 +27,11 @@ def writeLogEntry(timeStamp, prefix, text):
     with open("./proxylog.txt", "a") as file:
         file.write(f"[{timeStamp.date()} {timeStamp.hour}:{timeStamp.minute}:{timeStamp.second}] {prefix}: {text}\n")
 
-
+def GetDataToSend(image_filename: str) -> dict: 
+            with open(image_filename, "rb") as image_file:
+                data = base64.b64encode(image_file.read())
+                dataDict = {"bytes": str(data)}
+                return dataDict
 
 while True:
     try:
@@ -43,32 +47,24 @@ while True:
         
 
         response = requests.post(destinationReadingURL, data=messageAsString, headers=headers)
-        
+        if response.status_code != 201:
+            writeLogEntry(datetime.now(), "WRONG STATUS CODE", "Status code was " + str(response.status_code) + " RESPONSE TEXT: " + response.text )
         
         client = paramiko.SSHClient()
-        #client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-        print(os.listdir(home/".ssh"))
         client.load_host_keys(home/".ssh"/"known_hosts")
-        print(client.get_host_keys().keys())
         client.connect(f'{returnAddress[0]}', port=22, username='pi', password='raspberry')
-        print(client.get_host_keys())
         SFTP = client.open_sftp()
-        SFTP.get("/home/pi/Nathaniel/newest_image.jpg", "newest_image.jpg")
+        SFTP.get("/home/pi/Nathaniel/"+image_name, image_name)
         SFTP.close()
-        client.close()    
-            
+        client.close()
 
+        dataDict = GetDataToSend(image_name)
+        response = requests.post(url=destinationImageURL, json=dataDict)
+        if response.status_code not in (200, 201, 204):
+             writeLogEntry(datetime.now(), "Sending image data went wrong", f"Status code: {response.status_code}")
+ 
 
-
-
-
-        if response.status_code != 201:
-            writeLogEntry(datetime.datetime.now(), "WRONG STATUS CODE", "Status code was " + str(response.status_code) + " RESPONSE TEXT: " + response.text )
-
-    except Exception as e:
-        # do stuff if there is an error
-        writeLogEntry(datetime.datetime.now(), "SENSOR PEER ERROR", repr(e) )
-        print("Something went wrong, Nath!")
+    except Exception as e:  
+        writeLogEntry(datetime.now(), "SENSOR PEER ERROR", repr(e) )
         continue
     
