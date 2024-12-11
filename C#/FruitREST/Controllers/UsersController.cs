@@ -1,4 +1,5 @@
 ﻿using FruitClassLib;
+using FruitREST.Model;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,5 +52,75 @@ namespace FruitREST.Controllers
                 return StatusCode(401);
             }
         }
+
+        [HttpGet("getbycredentials")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetByCreds([FromHeader] UserCredsDTO credsDTO)
+        {
+            User? user = _repo.Get(credsDTO.username, credsDTO.password);
+            if (user == null)
+            {
+                return StatusCode(401);
+            }
+            else
+            {
+                return Ok(user);
+            }
+
+        }
+
+        [HttpGet("getnewsessiontoken")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetSessionTokenByCreds([FromHeader] UserCredsDTO credsDTO)
+        {
+            string? token = _repo.GetNewSessionToken(credsDTO.username, credsDTO.password);
+            if (token == null)
+            {
+                return StatusCode(401);
+            }
+            else
+            {
+                return Ok(token);
+            }
+
+        }
+
+        [HttpGet("getnewsessiontoken")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetSessionTokenByCreds([FromHeader] UserCredsDTO credsDTO)
+        {
+            string? token = _repo.GetNewSessionToken(credsDTO.username, credsDTO.password);
+            if (token == null)
+            {
+                return StatusCode(401);
+            }
+            else
+            {
+                return Ok(token);
+            }
+        }
+
+
+        [HttpGet("validatetoken")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult GetSessionTokenByCreds([FromHeader] UserCredsDTO credsDTO)
+        {
+            string? token = _repo.GetNewSessionToken(credsDTO.username, credsDTO.password);
+            if (token == null)
+            {
+                return StatusCode(401);
+            }
+            else
+            {
+                return Ok(token);
+            }
+
+        }
+
+
     }
 }

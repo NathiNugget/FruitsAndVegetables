@@ -35,11 +35,39 @@
               <h1 class="offcanvas-title">Admin funktionalitet</h1>
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
             </div>
-            <div v-else="sessionToken" class="offcanvas-body">
-              <input type="text" class="form-control" placeholder="Brugernavn" v-model="loginUsername">
-              <input type="text" class="form-control" placeholder="Adgangskode" v-model="loginPassword">
-              <br>
-              <button class="btn btn-secondary" type="button" @click="login">Log ind</button><button class="btn btn-light" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+            <div class="offcanvas-body">
+                <div class="informationBox justify-content-around">
+                    <input type="text" class="form-control offcanvasInputfield" placeholder="Brugernavn">
+                    <input type="text" class="form-control offcanvasInputfield" placeholder="Adgangskode">
+                    <div class="d-flex justify-content-between">
+                        <button class="offcanvasLoginBtn" type="button">Log ind</button>
+                        <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+                    </div>
+                </div>
+
+                <div class="informationBox justify-content-between">
+                    <label class="col-12">Lav ny grøntsage eller frugt</label>
+                    <select class="col-3">
+                        <option>Frugt</option>
+                        <option>Grønt</option>
+                    </select>
+                    <input type="text" class="col-9 offcanvasInput" placeholder="Navn På Frugten/grøntsagen">
+                   
+
+                    <input type="text" class="col-12 offcanvasInput" placeholder="API Linket">
+                    <label class="col-12">Holdbarhed</label>
+                    <input type="number" class="col-4 offcanvasInput" placeholder="Dage">
+                    <input type="number" class="col-4 offcanvasInput" placeholder="Timer">
+                    <input type="number" class="col-4 offcanvasInput" placeholder="Q10">
+                    <label class="col-12">Temperatur</label>
+                    <input type="number" class="col-4 offcanvasInput" placeholder="Ideal">
+                    <input type="number" class="col-4 offcanvasInput" placeholder="Max">
+                    <input type="number" class="col-4 offcanvasInput" placeholder="Min">
+                    <label class="col-12">Luftfugtighed</label>
+                    <input type="number" class="col-4 offcanvasInput" placeholder="Ideal">
+                    <input type="number" class="col-4 offcanvasInput" placeholder="Max">
+                    <input type="number" class="col-4 offcanvasInput" placeholder="Min">
+                </div>
             </div>
         </div>
         
