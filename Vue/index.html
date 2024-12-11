@@ -56,7 +56,7 @@
                     <div class="offcanvasInputBox">
                         <label class="col-12">Holdbarhed</label>
                         <div class="d-flex flex-wrap">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Dage" v-model="newFood.spoilDays">
+                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Dage" v-model="newFood.spoilDate">
                             <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Timer" v-model="newFood.spoilHours">
                             <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Q10" v-model="newFood.q10Factor">
                         </div>
@@ -72,8 +72,6 @@
                     <div class="offcanvasInputBox">
                         <label class="col-12">Luftfugtighed</label>
                         <div class="d-flex flex-wrap">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max">
                             <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal" v-model="newFood.idealHumidity">
                         </div>
                     </div>

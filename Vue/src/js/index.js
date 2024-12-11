@@ -175,7 +175,7 @@ const app = Vue.createApp({
         apiLink:'',
         foodTypeId: null,
         foodTypeName: '',
-        spoilDays: null,
+        spoilDate: null,
         spoilHours: null,
         idealTemperature: null,
         idealHumidity: null,
@@ -463,14 +463,14 @@ const app = Vue.createApp({
     },
     async AddFood() {
       try {
-        console.log(new)
+        console.log(this.newFood);
         const response = await axios.post(this.foodsBaseURL, this.newFood);
         console.log('Food added successfully!', response.data);
         this.newFood = { 
           name: '',
           foodTypeId: null,
           foodTypeName: '',
-          spoilDays: 0,
+          spoilDate: 0,
           spoilHours: 0,
           idealTemperature: 0,
           idealHumidity: 0,
