@@ -44,53 +44,63 @@
                         <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
                     </div>
                 </div>
+                
+                <div v-else>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn offcanvasLogOutBtn" type="button" id="LogoutButton" @click="AdminLogout()">Log ud</button>
+                    </div>
 
-                <div class="informationBox" v-else>                
-                    <h3 class="col-12">Lav Frugt eller Grønt</h3>
-                    <div class="offcanvasInputBox">
-                        <label class="col-12">Type og Navn</label>
-                        <div class="d-flex flex-wrap justify-content-around">
-                            <select class="flex-grow-1 m-2 offcanvasInput">
-                                <option value="" disabled selected>Vælg Type</option>
-                                <option value="fruitCheck">Frugt</option>
-                                <option value="greenCheck">Grønt</option>
-                            </select>
-                            <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="Navnet">            
-                            <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="API Linket">
+                    <div class="informationBox">                
+                        <h3 class="col-12">Lav Frugt eller Grønt</h3>
+
+                        <div class="offcanvasInputBox">
+                            <label class="col-12">Type og Navn</label>
+                            <div class="d-flex flex-wrap justify-content-around">
+                                <select class="flex-grow-1 m-2 offcanvasInput">
+                                    <option value="" disabled selected>Vælg Type</option>
+                                    <option value="fruitCheck">Frugt</option>
+                                    <option value="greenCheck">Grønt</option>
+                                </select>
+                                <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="Navnet">            
+                                <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="API Linket">
+                            </div>
+                        </div>
+
+                        <div class="offcanvasInputBox">
+                            <label class="col-12">Holdbarhed</label>
+                            <div class="d-flex flex-wrap">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Dage">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Timer">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Q10">
+                            </div>
+                        </div>
+
+                        <div class="offcanvasInputBox">
+                            <label class="col-12">Temperatur</label>
+                            <div class="d-flex flex-wrap">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal">
+                            </div>
+                        </div>
+
+                        <div class="offcanvasInputBox">
+                            <label class="col-12">Luftfugtighed</label>
+                            <div class="d-flex flex-wrap">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal">
+                            </div>
+                        </div>
+
+                        <div class="offcanvasInputBox d-flex justify-content-between">
+                            <button class="offcanvasLoginBtn" type="button">Opret</button>
+                            <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
                         </div>
                     </div>
-                    <div class="offcanvasInputBox">
-                        <label class="col-12">Holdbarhed</label>
-                        <div class="d-flex flex-wrap">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Dage">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Timer">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Q10">
-                        </div>
-                    </div>
-                    <div class="offcanvasInputBox">
-                        <label class="col-12">Temperatur</label>
-                        <div class="d-flex flex-wrap">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal">
-                        </div>
-                    </div>
-                    <div class="offcanvasInputBox">
-                        <label class="col-12">Luftfugtighed</label>
-                        <div class="d-flex flex-wrap">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max">
-                            <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal">
-                        </div>
-                    </div>
-                    <div class="offcanvasInputBox d-flex justify-content-between">
-                        <button class="offcanvasLoginBtn" type="button">Opret</button>
-                        <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
-                        <button class="btn btn-secondary" type="button" id="LogoutButton" @click="AdminLogout()">Log ud</button>
-                    </div>
-                </div>
+                </div>                
             </div>
-          </div>
+        </div>
         
         <div class="col-12 row elementBox d-flex justify-content-around">
             <div class="col-5 checkboxcontainer">

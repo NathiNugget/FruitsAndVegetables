@@ -81,6 +81,21 @@ body {
     box-shadow: 0px 0px 6px var(--allert);
 }
 
+.offcanvasLogOutBtn{
+    background-color: var(--allert);
+    border-radius: 10px;
+    color: var(--main);
+    border: 2px solid var(--allert);
+    padding: 0.2rem 1rem 0.1rem 1rem;
+    margin: 0 auto 0 auto;
+}
+.offcanvasLogOutBtn:active{
+    background-color: var(--main);
+    color: var(--allert);
+    border: 2px solid var(--allert);
+    box-shadow: 0px 0px 6px var(--allert);
+}
+
 .offcanvasInput {
     margin: 0.5rem auto;
     border: 2px solid var(--box);
