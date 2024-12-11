@@ -73,6 +73,7 @@ namespace FruitREST.Controllers
         [HttpPut("getnewsessiontoken")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [EnableCors("PrivilegedPolicy")]
         public IActionResult GetSessionTokenByCreds(UserCredsObject userCreds)
         {
             string? token = _repo.GetNewSessionToken(userCreds.Username, userCreds.Password);

@@ -414,17 +414,18 @@ const app = Vue.createApp({
       if(this.loginName == null || this.loginPassword == null) {
         this.loginWarning = "Husk brugernavn og password"
       } else {
-        document.cookie="sessiontoken=itworkssssss"
-        /* axios.put(this.userBaseURL,{
+/*         document.cookie="sessiontoken=itworkssssss" */
+        
+         axios.put(this.userBaseURL+"/getnewsessiontoken",null,{
           headers: {
             'username':this.loginName,
             'password':this.loginPassword
-          }
+          } // axios uses third parameter for headers, so data parameter is kept null. we don't ask questions, if it works it works
         }).then(
           (response) => {
             console.log(response.data)
           }
-        ) */
+        ) 
       }
     },
     CheckSessionToken() {

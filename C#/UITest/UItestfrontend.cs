@@ -312,8 +312,8 @@ namespace UITest
         [TestMethod]
         public void AdminLogin()
         {
-            string usernameInput = "admin";
-            string passwordInput = "vegestable";
+            string usernameInput = "Jacob";
+            string passwordInput = "Hahaxd";
             User before = _userRepo.Get(usernameInput, passwordInput);
             IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
             toggle.Click();
