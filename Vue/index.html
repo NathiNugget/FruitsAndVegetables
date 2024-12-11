@@ -24,7 +24,7 @@
                     
                 </div>
                 <div class="col-1 row">
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin"><i class="fas fa-bars"></i></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin" id="AdminPanelToggle" @click="CheckSessionToken"><i class="fas fa-bars"></i></button>
             </div>
             </div>
         </header>
@@ -35,10 +35,11 @@
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
             </div>
             <div class="offcanvas-body">
-              <input type="text" class="form-control" placeholder="Brugernavn">
-              <input type="text" class="form-control" placeholder="Adgangskode">
+              <input type="text" class="form-control" placeholder="Brugernavn" id="AdminUsername" v-model="loginName">
+              <input type="text" class="form-control" placeholder="Adgangskode" id="AdminPassword" v-model = "loginPassword">
+              <span>{{loginWarning}}</span>
               <br>
-              <button class="btn btn-secondary" type="button">Log ind</button><button class="btn btn-light" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+              <button class="btn btn-secondary" type="button" id="LoginButton" @click="AdminLogin()">Log ind</button><button class="btn btn-light" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
             </div>
           </div>
         
