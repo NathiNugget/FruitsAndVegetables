@@ -41,6 +41,7 @@ namespace FruitClassLib
 
                 cmd.Parameters.AddWithValue("@name", user.Name);
                 cmd.Parameters.AddWithValue("@password", user.Password);
+                cmd.Parameters.AddWithValue("@sessionToken", user.SessionToken);
 
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -197,7 +198,7 @@ namespace FruitClassLib
         {
             Add(new User("Marius", "hehehehe"));
             Add(new User("Jacob", "Hahaxd"));
-            Add(new User("Isak", "isakooo"));
+            Add(new User("Isak", "isakooo", sessionToken: "9884ac55-ad12-4b2e-a569-e74367298e5e"));
             Add(new User("Nathaniel", "maaguyyy"));
         }
 
