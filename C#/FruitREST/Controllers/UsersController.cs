@@ -101,6 +101,22 @@ namespace FruitREST.Controllers
             {
                 return Ok(token);
             }
+        }
+
+        [HttpGet("logout")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult LogOutWithToken([FromHeader] string token)
+        {
+            bool validated = _repo.ResetSessionToken(token);
+            if (!validated)
+            {
+                return StatusCode(401);
+            }
+            else
+            {
+                return Ok(token);
+            }
 
         }
 
