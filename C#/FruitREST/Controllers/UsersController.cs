@@ -107,6 +107,7 @@ namespace FruitREST.Controllers
         [HttpPut("logout")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [EnableCors("PrivilegedPolicy")]
         public IActionResult LogOutWithToken([FromHeader] string token)
         {
             bool validated = _repo.ResetSessionToken(token);
