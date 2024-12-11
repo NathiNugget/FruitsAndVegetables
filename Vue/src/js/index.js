@@ -409,7 +409,7 @@ const app = Vue.createApp({
 
     },
     AdminLogin() {
-      document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      document.cookie = "sessiontoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
       this.loginWarning = null
       if(this.loginName == null || this.loginPassword == null) {
         this.loginWarning = "Husk brugernavn og password"
@@ -423,15 +423,30 @@ const app = Vue.createApp({
           } // axios uses third parameter for headers, so data parameter is kept null. we don't ask questions, if it works it works
         }).then(
           (response) => {
-            console.log(response.data)
+            document.cookie = "sessiontoken=" + response.data
           }
         ) 
       }
     },
     CheckSessionToken() {
       const cookie = document.cookie;
-      let token = "sessiontoken="
-      console.log(cookie.substring(token.length, cookie.length))
+      const finder = "sessiontoken="
+      const token = cookie.substring(finder.length, cookie.length)
+      axios.get(this.userBaseURL+"/validatetoken",{
+        headers: {
+          'token':token
+        }
+      }).then(
+        (response) => {
+          if (response.status = 200) {
+            return true
+          }
+        }
+      ).catch(
+        (error) => {
+          return false
+        }
+      )
     }
   },
 

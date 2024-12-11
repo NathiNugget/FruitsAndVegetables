@@ -329,6 +329,27 @@ namespace UITest
             Assert.AreNotEqual(before.SessionToken, after.SessionToken);
         }
 
+        [TestMethod]
+        public void AdminLogout()
+        {
+            string usernameInput = "Jacob";
+            string passwordInput = "Hahaxd";
+            IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
+            toggle.Click();
+            IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
+            IWebElement passwordField = driver.FindElement(By.Id("AdminPassword"));
+            IWebElement loginButton = driver.FindElement(By.Id("LoginButton"));
+
+            nameField.SendKeys(usernameInput);
+            passwordField.SendKeys(passwordInput);
+            loginButton.Click();
+            Thread.Sleep(500);
+            IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
+            logoutButton.Click();
+            User testUser = _userRepo.Get(usernameInput, passwordInput);
+            Assert.IsNull(testUser.SessionToken);
+        }
+
         [ClassCleanup]
         public static void ClassCleanup()
         {
