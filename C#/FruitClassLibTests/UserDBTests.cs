@@ -51,6 +51,8 @@ namespace FruitClassLib.Tests
         [DataTestMethod]
         [DataRow("Mariu", "hehehehe")]
         [DataRow("Nathaniel", "maagyyy")]
+        [DataRow(null, "maagyyy")]
+        [DataRow("Nathaniel", null)]
         public void UserDB_GetTest_NotFoundUser(string name, string password)
         {
             User? actual = _repo.Get(name, password);
@@ -74,6 +76,8 @@ namespace FruitClassLib.Tests
         [DataTestMethod]
         [DataRow("Mariu", "hehehehe")]
         [DataRow("Nathaniel", "maagyyy")]
+        [DataRow(null, "maagyyy")]
+        [DataRow("Nathaniel", null)]
         public void UserDB_GetNewSessionTokenTest_NotFoundUser(string name, string password)
         {
             string? actual = _repo.GetNewSessionToken(name, password);
@@ -95,6 +99,8 @@ namespace FruitClassLib.Tests
         [DataTestMethod]
         [DataRow("Nathniel", "maaguyyy")]
         [DataRow("Jacob", "Hahxd")]
+        [DataRow(null, "Hahxd")]
+        [DataRow("Jacob", null)]
 
         public void ValidateTest_NotFound(string name, string password)
         {
@@ -112,6 +118,38 @@ namespace FruitClassLib.Tests
         {
             bool actual = _repo.Validate(token);
             Assert.IsFalse(actual);
+        }
+
+
+
+
+        [TestMethod()]
+        [DataTestMethod]
+        [DataRow("Nathaniela", "maaguyyy")]
+        [DataRow("Jacoba", "Hahaxd")]
+
+        public void ResetSessionTokenTest_FoundAndReset(string name, string password)
+        {
+            User expected = new User(name, password);
+            _repo.Add(expected);
+            string? newToken = _repo.GetNewSessionToken(name, password);
+
+            bool found = _repo.ResetSessionToken(newToken);
+
+            Assert.IsTrue(found);
+            Assert.IsNotNull(newToken);
+        }
+
+        [TestMethod()]
+        [DataTestMethod]
+        [DataRow("fdsfsgfdfg")]
+        [DataRow("")]
+        [DataRow(null)]
+        [DataRow("fdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfgfdsfsgfdfg")]
+        public void ResetSessionTokenTest_NotFound(string token)
+        {
+            bool found = _repo.ResetSessionToken(token);
+            Assert.IsFalse(found);
         }
 
 

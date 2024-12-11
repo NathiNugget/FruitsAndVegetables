@@ -133,6 +133,49 @@ namespace FruitClassLib
             throw new Exception("Error, something went wrong");
         }
 
+
+
+
+        public bool ResetSessionToken(string sessionToken)
+        {
+            if (sessionToken is null)
+            {
+                return false;
+            }
+            string procedure = "LogOut";
+
+            using (SqlConnection conn = new SqlConnection(_connectionstring))
+            {
+                conn.Open();
+
+
+                SqlCommand cmd = new SqlCommand(procedure, conn);
+
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@sessiontoken", sessionToken);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return true;
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+
+            }
+            throw new Exception("Error, something went wrong");
+        }
+
+
+
+
         public void Nuke()
         {
 #if !DEBUG
