@@ -169,7 +169,20 @@ const app = Vue.createApp({
       loginName: null,
       loginPassword: null,
       sessionToken: null,
-      loginWarning: null
+      loginWarning: null,
+      newFood: {
+        name: '',
+        apiLink:'',
+        foodTypeId: null,
+        foodTypeName: '',
+        spoilDays: 0,
+        spoilHours: 0,
+        idealTemperature: 0,
+        idealHumidity: 0,
+        q10Factor: 0,
+        maxTemp: 0,
+        minTemp: 0
+      },
     }
   },
   methods: {
@@ -447,8 +460,46 @@ const app = Vue.createApp({
           return false
         }
       )
+    },
+    async AddFood() {
+      try {
+
+        const response = await axios.post(this.foodsBaseURL, this.newFood);
+        this.foods.push(new Food(
+          response.data.foodTypeId,
+          response.data.foodTypeName,
+          response.data.id,
+          response.data.name,
+          response.data.apiLink,
+          response.data.spoilDate,
+          response.data.spoilHours,
+          response.data.idealTemperature,
+          response.data.idealHumidity,
+          response.data.q10Factor,
+          response.data.maxTemp,
+          response.data.minTemp
+        ));
+        this.newFood = { // Reset the form
+          name: '',
+          foodTypeId: null,
+          foodTypeName: '',
+          spoilDays: 0,
+          spoilHours: 0,
+          idealTemperature: 0,
+          idealHumidity: 0,
+          q10Factor: 0,
+          maxTemp: 0,
+          minTemp: 0
+        };
+        this.addFoodError = null;
+        alert('Food added successfully!');
+      } catch (error) {
+        this.addFoodError = 'Failed to add food. Please try again.';
+        console.error(error);
+      }
     }
   },
+  
 
 
 
