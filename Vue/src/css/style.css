@@ -88,13 +88,12 @@ body {
     border: 2px solid var(--allert);
     padding: 0.2rem 1rem 0.1rem 1rem;
     margin: 0 auto 0 auto;
+    float: right;
 }
 .offcanvasLogOutBtn:active{
     background-color: var(--main);
     color: var(--allert);
-    border: 2px solid var(--allert);
     box-shadow: 0px 0px 6px var(--allert);
-    float: right;
 }
 
 .offcanvasInput {
