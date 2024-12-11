@@ -37,7 +37,7 @@
             <div class="offcanvas-body">
                 <div class="informationBox justify-content-around"  v-if="!sessionActive">
                     <input type="text" class="form-control offcanvasInputfield" placeholder="Brugernavn" id="AdminUsername" v-model="loginName">
-                    <input type="text" class="form-control offcanvasInputfield" placeholder="Adgangskode" id="AdminPassword" v-model = "loginPassword">
+                    <input type="password" class="form-control offcanvasInputfield" placeholder="Adgangskode" id="AdminPassword" v-model = "loginPassword">
                     <span>{{loginWarning}}</span>
                     <div class="d-flex justify-content-between">
                         <button class="offcanvasLoginBtn" type="button" id="LoginButton" @click="AdminLogin()">Log ind</button>

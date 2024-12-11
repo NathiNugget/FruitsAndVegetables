@@ -326,6 +326,9 @@ namespace UITest
             loginButton.Click();
             Thread.Sleep(500);
             User after = _userRepo.Get(usernameInput, passwordInput);
+            Thread.Sleep(500);
+            IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
+            logoutButton.Click();
             Assert.AreNotEqual(before.SessionToken, after.SessionToken);
         }
 
