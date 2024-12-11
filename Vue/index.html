@@ -35,10 +35,14 @@
               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
             </div>
             <div class="offcanvas-body">
-              <input type="text" class="form-control" placeholder="Brugernavn">
-              <input type="text" class="form-control" placeholder="Adgangskode">
-              <br>
-              <button class="btn btn-secondary" type="button">Log ind</button><button class="btn btn-light" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+                <div class="informationBox justify-content-around">
+                    <input type="text" class="form-control offcanvasInputfield" placeholder="Brugernavn">
+                    <input type="text" class="form-control offcanvasInputfield" placeholder="Adgangskode">
+                    <div class="d-flex justify-content-between">
+                        <button class="offcanvasLoginBtn" type="button">Log ind</button>
+                        <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+                    </div>
+                </div>
             </div>
           </div>
         

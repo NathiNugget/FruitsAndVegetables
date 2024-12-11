@@ -26,6 +26,7 @@ body {
     --box: lightgray;
     --main: white;
     --chartHeadline: #0f3114;
+    --allert: rgba(255, 0, 0, 0.603);
 }
 
 .header {
@@ -40,6 +41,45 @@ body {
 
 .offcanvasBackground{
     background-color: var(--secondaryaccent);
+}
+
+.offcanvasInputfield{
+    border: 2px solid var(--box);
+    border-radius: 10px;
+    background-color: var(--box);
+    width: 96%;  
+    margin: 0.5rem auto 1rem auto;    
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    box-shadow: 0px 0px 6px;
+}
+
+.offcanvasLoginBtn{
+    border-radius: 10px;
+    background-color: var(--accent);
+    color: var(--main);
+    border: 2px solid var(--accent);
+    padding: 0.2rem 1rem 0.1rem 1rem;
+    margin: 0 auto 0 auto;
+}
+.offcanvasLoginBtn:active{
+    background-color: var(--main);
+    color: var(--accent);
+    box-shadow: 0px 0px 6px var(--accent);
+}
+
+.offcanvasCancelBtn{
+    background-color: var(--main);
+    border-radius: 10px;
+    color: var(--allert);
+    border: 2px solid var(--allert);
+    padding: 0.2rem 1rem 0.1rem 1rem;
+    margin: 0 auto 0 auto;
+}
+.offcanvasCancelBtn:active{
+    background-color: var(--allert);
+    color: var(--allert);
+    border: 2px solid var(--allert);
+    box-shadow: 0px 0px 6px var(--allert);
 }
 
 .elementBox {
