@@ -3,8 +3,6 @@ html {
     color: white;
     background-color: rgb(61, 61, 61);
     background-color: white;
-    height: 100%;
-    margin: 0;
 }
 
 @font-face {
@@ -13,18 +11,9 @@ html {
 
 }
 
-.content {
-    min-height: 100vh;
-    padding-bottom: 20px;
-}
 
 body {
     font-family: "Montserrat Alternates";
-    background: linear-gradient(180deg, var(--main)50%, var(--secondaryaccent)60%, var(--accent)90%);
-    min-height: 100vh;
-    min-width: 100vw;
-    margin: 0;
-    background-attachment: fixed;
 }
 
 :root {
