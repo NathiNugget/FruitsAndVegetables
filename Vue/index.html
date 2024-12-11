@@ -44,28 +44,40 @@
                     </div>
                 </div>
 
-                <div class="informationBox justify-content-between">
-                    <label class="col-12">Lav ny grøntsage eller frugt</label>
-                    <select class="col-3">
-                        <option>Frugt</option>
-                        <option>Grønt</option>
-                    </select>
-                    <input type="text" class="col-9 offcanvasInput" placeholder="Navn På Frugten/grøntsagen">
-                   
-
-                    <input type="text" class="col-12 offcanvasInput" placeholder="API Linket">
+                <div class="informationBox">                
+                    <h3 class="col-12">Lav Frugt eller Grønt</h3>
+                    <label class="col-12">Type og Navn</label>
+                    <div class="d-flex flex-wrap justify-content-around">
+                        <select class="flex-grow-1 m-2 offcanvasInput">
+                            <option value="" disabled selected>Vælg Type</option>
+                            <option value="fruitCheck">Frugt</option>
+                            <option value="greenCheck">Grønt</option>
+                        </select>
+                        <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="Navnet">            
+                        <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="API Linket">
+                    </div>
                     <label class="col-12">Holdbarhed</label>
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Dage">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Timer">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Q10">
+                    <div class="d-flex flex-wrap">
+                        <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Dage">
+                        <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Timer">
+                        <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Q10">
+                    </div>
                     <label class="col-12">Temperatur</label>
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Ideal">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Max">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Min">
+                    <div class="d-flex flex-wrap">
+                        <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min">
+                        <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max">
+                        <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal">
+                    </div>
                     <label class="col-12">Luftfugtighed</label>
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Ideal">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Max">
-                    <input type="number" class="col-4 offcanvasInput" placeholder="Min">
+                    <div class="d-flex flex-wrap">
+                        <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min">
+                        <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max">
+                        <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button class="offcanvasLoginBtn" type="button">Opret</button>
+                        <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+                    </div>
                 </div>
             </div>
           </div>
