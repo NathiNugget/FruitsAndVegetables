@@ -467,8 +467,6 @@ const app = Vue.createApp({
         const response = await axios.post(this.foodsBaseURL, this.newFood);
         this.foods.push(new Food(
           response.data.foodTypeId,
-          response.data.foodTypeName,
-          response.data.id,
           response.data.name,
           response.data.apiLink,
           response.data.spoilDate,
