@@ -18,6 +18,7 @@ namespace UITest
             
         }
         static FoodDB _repo = new(true); 
+        static UserDB _userRepo = new(true);
         public static ChromeOptions Options { get; set; } = new();
          
         static IWebDriver driver = new ChromeDriver(Options);
@@ -306,6 +307,15 @@ namespace UITest
 
         //    Assert.IsNotNull(nameFilter);
         //    Assert.IsNotNull(vegetableFilter);
+        //}
+
+        //[TestMethod]
+        //public void AdminLogin()
+        //{
+        //    User before = _userRepo.Get("admin", "vegestable");
+        //    IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
+        //    toggle.Click();
+        //    IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
         //}
 
         [ClassCleanup]
