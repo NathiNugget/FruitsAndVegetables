@@ -21,10 +21,6 @@ TestMode.TestModeIsDev = true;
 #endif
 
 
-builder.Services.AddMvc().ConfigureApiBehaviorOptions(options => {
-    options.SuppressInferBindingSourcesForParameters = true;
-}).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
 
 // TODO: Add singleton and create interface
 builder.Services.AddSingleton<IReadingsRepository>(new ReadingsDB(TestMode.TestModeIsDev));
