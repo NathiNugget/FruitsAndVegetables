@@ -463,7 +463,7 @@ const app = Vue.createApp({
     },
     async AddFood() {
       try {
-
+        console.log(new)
         const response = await axios.post(this.foodsBaseURL, this.newFood);
         console.log('Food added successfully!', response.data);
         this.newFood = { 
