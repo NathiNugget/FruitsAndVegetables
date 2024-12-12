@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace UITest
 {
@@ -387,7 +388,7 @@ namespace UITest
             double newmintemp = 5;
             double newmaxtemp = 40;
             double newidealtemperature = 20;
-            double newidealhumididty = 20;
+            double newidealhumidity = 20;
 
 
             IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
@@ -400,10 +401,8 @@ namespace UITest
             passwordField.SendKeys(passwordInput);
             loginButton.Click();
             Thread.Sleep(500);
-            Thread.Sleep(500);
-            Thread.Sleep(500);
-            Thread.Sleep(500);
-            IWebElement foodtypeid = driver.FindElement(By.Id("value1"));
+            IWebElement foodtypeid = driver.FindElement(By.Id("newfoodTypeId"));
+            SelectElement selectElement = new SelectElement(foodtypeid);
             IWebElement foodname = driver.FindElement(By.Id("newfoodname"));
             IWebElement foodapi = driver.FindElement(By.Id("newfoodapi"));
             IWebElement spoildate = driver.FindElement(By.Id("newspoildate"));
@@ -412,10 +411,10 @@ namespace UITest
             IWebElement mintemp = driver.FindElement(By.Id("mintemp"));
             IWebElement maxtemp = driver.FindElement(By.Id("maxtemp"));
             IWebElement idealtemperature = driver.FindElement(By.Id("idealtemperature"));
-            IWebElement idealhumidity = driver.FindElement(By.Id("idaelhumidity"));
+            IWebElement idealhumidity = driver.FindElement(By.Id("idealhumidity"));
             IWebElement value1 = driver.FindElement(By.Id("value1"));
 
-            foodtypeid.SendKeys("1");
+            selectElement.SelectByValue("1");
             foodname.SendKeys(newfoodname);
             foodapi.SendKeys(newfoodapi.ToString());
             spoildate.SendKeys(newspoildate.ToString());
@@ -424,15 +423,19 @@ namespace UITest
             mintemp.SendKeys(newmintemp.ToString());
             maxtemp.SendKeys(newmaxtemp.ToString());
             idealtemperature.SendKeys(newidealtemperature.ToString());
-            idealhumidity.SendKeys(idealhumidity.ToString());
+            idealhumidity.SendKeys(newidealhumidity.ToString());
 
 
             IWebElement addfoodbutton = driver.FindElement(By.Id("addfoodbutton"));
             addfoodbutton.Click();
-
+            Thread.Sleep(1000);
+            IWebElement exit = driver.FindElement(By.Id("exitButton"));
+            exit.Click();
+            Thread.Sleep(500);
             IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
-            dropdown.Click();
-
+            dropdown.SendKeys(newfoodname);
+            Thread.Sleep(500);
+            dropdown.SendKeys(Keys.Enter);
             IWebElement selectedFood = driver.FindElement(By.Id("pære"));
             Assert.IsNotNull(selectedFood);
 

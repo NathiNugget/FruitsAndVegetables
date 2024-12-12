@@ -59,7 +59,7 @@
                                 <select id="newfoodTypeId" class="flex-grow-1 m-2 offcanvasInput" v-model="newFood.foodTypeId">
                                     <option value="" disabled selected>Vælg Type</option>
                                     <option id="value1" value="1">Frugt</option>
-                                    <option value="value2">Grønt</option>
+                                    <option id="value2" value="2">Grønt</option>
                                 </select>
                                 <input type="text" class="flex-grow-1 m-2 offcanvasInput" id="newfoodname" placeholder="Navnet" v-model="newFood.name">            
                                 <input type="text" class="flex-grow-1 m-2 offcanvasInput" id="newfoodapi" placeholder="API Linket" v-model="newFood.apiLink">
@@ -93,7 +93,7 @@
 
                         <div class="offcanvasInputBox d-flex justify-content-between">
                             <button class="offcanvasLoginBtn" type="button" id="addfoodbutton" @click="AddFood">Opret</button>
-                            <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+                            <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas" id="exitButton">Fortryd</button>
                         </div>
                     </div>
                 </div>                
