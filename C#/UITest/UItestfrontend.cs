@@ -11,14 +11,12 @@ namespace UITest
     {
         [ClassInitialize]
         public static void ClassInitialize(TestContext test) {
-
             _foodRepo.Nuke(); 
             _foodRepo.Setup();
             _userRepo.Nuke();
             _userRepo.SetUp();
             _readingRepo.Nuke();
             _readingRepo.Setup();
-
         }
         static FoodDB _foodRepo = new(true); 
         static UserDB _userRepo = new(true);
