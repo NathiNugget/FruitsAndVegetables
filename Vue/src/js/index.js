@@ -557,7 +557,22 @@ const app = Vue.createApp({
       } else {
           this.humidityWarning = '';
       }
-  }
+  },
+  debouncedValidateSpoilDate: this.debounce(function() {
+      this.validateSpoilDate();
+  }, 300),
+  debouncedValidateSpoilHours: this.debounce(function() {
+      this.validateSpoilHours();
+  }, 300),
+  debouncedValidateQ10Factor: this.debounce(function() {
+      this.validateQ10Factor();
+  }, 300),
+  debouncedValidateTemp: this.debounce(function(field, min, max) {
+      this.validateTemp(field, min, max);
+  }, 300),
+  debouncedValidateHumidity: this.debounce(function() {
+      this.validateHumidity();
+  }, 300),
   },
 
 
