@@ -55,9 +55,6 @@ class Food {
     this.maxtemp = maxTemp;
     this.mintemp = minTemp;
   }
-
-
-
 }
 
 const chartNumberOne = document.getElementById('tempChart')
@@ -530,7 +527,42 @@ const app = Vue.createApp({
         }
         
       }
-    }
+    }, 
+    validateSpoilDate() {
+      if (this.newFood.spoilDate < 0 || this.newFood.spoilDate > 255) {
+          this.spoilDateWarning = 'Dage skal være mellem 0 og 255.';
+      } else {
+          this.spoilDateWarning = '';
+      }
+    },
+    validateSpoilHours() {
+      if (this.newFood.spoilHours < 0 || this.newFood.spoilHours > 24) {
+          this.spoilHoursWarning = 'Timer skal være mellem 0 og 24.';
+      } else {
+          this.spoilHoursWarning = '';
+      }
+    },
+    validateQ10Factor() {
+      if (this.newFood.q10Factor < 1) {
+          this.q10FactorWarning = 'Q10 skal være mindst 1.';
+      } else {
+          this.q10FactorWarning = '';
+      }
+    },
+    validateTemp(field, min, max) {
+      if (this.newFood[field] < min || this.newFood[field] > max) {
+          this.tempWarning = `${field} skal være mellem ${min} og ${max} grader.`;
+      } else {
+          this.tempWarning = '';
+      }
+    },
+    validateHumidity() {
+      if (this.newFood.idealHumidity < 0 || this.newFood.idealHumidity > 100) {
+          this.humidityWarning = 'Luftfugtighed skal være mellem 0 og 100.';
+      } else {
+          this.humidityWarning = '';
+      }
+    },
   },
 
 
