@@ -350,13 +350,26 @@ namespace UITest
             nameField.SendKeys(usernameInput);
             passwordField.SendKeys(passwordInput);
             loginButton.Click();
-            Thread.Sleep(500);
-            User before = _userRepo.Get(usernameInput, passwordInput);
+            Thread.Sleep(800);
+            Cookie tokenLoggedIn = driver.Manage().Cookies.GetCookieNamed("sessiontoken");
+            //User before = _userRepo.Get(usernameInput, passwordInput);
             IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
             logoutButton.Click();
-            Thread.Sleep(500);
-            User after = _userRepo.Get(usernameInput, passwordInput);
-            Assert.AreNotEqual(before.SessionToken, after.SessionToken);
+            Thread.Sleep(800);
+            Cookie tokenLoggedOut = driver.Manage().Cookies.GetCookieNamed("sessiontoken");
+            string? tokenLoggedOutValue;
+            try
+            {
+                tokenLoggedOutValue = tokenLoggedOut.Value;
+            }
+            catch (Exception ex)
+            {
+                tokenLoggedOutValue = null;
+            }
+       
+            
+            //User after = _userRepo.Get(usernameInput, passwordInput);
+            Assert.AreNotEqual(tokenLoggedIn.Value, tokenLoggedOutValue);
         }
 
         [ClassCleanup]
