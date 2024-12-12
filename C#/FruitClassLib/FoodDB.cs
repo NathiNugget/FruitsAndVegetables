@@ -11,8 +11,11 @@ namespace FruitClassLib
     public class FoodDB : IFoodDB
     {
         private string _connectionstring;
+        private IUserDB _userDB;
+        private bool _isTest;
         public FoodDB(bool isTest)
         {
+            _userDB = new UserDB(isTest);
             if (isTest)
             {
                 _connectionstring = Secret.SecretKey.ConnectionStringTest;
@@ -21,11 +24,17 @@ namespace FruitClassLib
             {
                 _connectionstring = Secret.SecretKey.ConnectionStringProduction;
             }
+            _isTest = isTest; 
         }
 
-        public Food Add(Food food)
+        public Food Add(Food food, string? token = null)
         {
-
+            // If not running in test mode, AND the token is invalid, throw exception
+            if (!_isTest && !_userDB.Validate(token))
+            {
+                throw new UnauthorizedAccessException("Invalid session token");
+            }
+            
 
             string query = "DECLARE @TypeName  NVARCHAR(20) SELECT @TypeName = TypeName  FROM FoodTypes WHERE FoodTypes.FoodId = @foodTypeId    INSERT INTO Fruits (DanishName, FoodTypeId, ApiMapping, SpoilDays, SpoilHours, IdealTemperature, IdealHumidity, Q10Factor, MaxTemp, MinTemp) \r\n\r\n     OUTPUT inserted.*, @TypeName AS TypeName     VALUES (@name, @foodTypeId, @apiLink, @spoilDate, @spoilHours, @temperature, @humidity, @q10Factor, @maxTemp, @minTemp)";
 

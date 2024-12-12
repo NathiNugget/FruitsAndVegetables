@@ -15,6 +15,7 @@ import {BarController,
   _detectPlatform
   } from 'chart.js' 
 
+  import {Offcanvas} from 'bootstrap';
 
 Chart.register(BarController, BarElement, Legend, LinearScale, LineElement, LineController,CategoryScale, PointElement, Title, Tooltip, TimeScale);
 
@@ -155,6 +156,7 @@ const app = Vue.createApp({
       baseURL: "",
       ReadingBaseURL: "" ,
       FoodsBaseURL: "",
+      UserBaseURL: "",
       newestTemperature: NaN,
       newestHumidity: NaN,
       fruitCheck: true,
@@ -163,8 +165,24 @@ const app = Vue.createApp({
       chosenFood: undefined,
       chosenFoodString: "",
       searchFoodString: "",
-      isFetchingMealDB: false
-
+      isFetchingMealDB: false,
+      loginName: null,
+      loginPassword: null,
+      newFood: {
+        name: '',
+        apiLink:'',
+        foodTypeId: null,
+        foodTypeName: '',
+        spoilDate: null,
+        spoilHours: null,
+        idealTemperature: null,
+        idealHumidity: null,
+        q10Factor: null,
+        maxTemp: null,
+        minTemp: null
+      },
+      sessionActive: false,
+      loginWarning: null
     }
   },
   methods: {
@@ -403,6 +421,108 @@ const app = Vue.createApp({
       this.isFetchingMealDB = false
 
     },
+    AdminLogin() {
+      document.cookie = "sessiontoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      this.loginWarning = null
+      if(this.loginName == null || this.loginPassword == null) {
+        this.loginWarning = "Husk brugernavn og password"
+      } else {
+/*         document.cookie="sessiontoken=itworkssssss" */
+        
+         axios.put(this.userBaseURL+"/getnewsessiontoken",null,{
+          headers: {
+            'username':this.loginName,
+            'password':this.loginPassword
+          } // axios uses third parameter for headers, so data parameter is kept null. we don't ask questions, if it works it works
+        }).then(
+          (response) => {
+            document.cookie = "sessiontoken=" + response.data
+            this.sessionActive = true
+          }
+        ) 
+      }
+    },
+    GetTokenFromCookie() {
+      const cookie = document.cookie;
+      const finder = "sessiontoken="
+      const token = cookie.substring(finder.length, cookie.length)
+      return token
+    },
+    AdminLogout() {
+      const token = this.GetTokenFromCookie()
+      axios.put(this.userBaseURL+"/logout",null,{
+        headers: {
+          'token':token
+        }
+      }).then(
+        () => {
+        document.cookie = "sessiontoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC"
+        this.loginWarning = "Du er nu logget ud"
+        this.sessionActive = false
+      }
+      ).catch(
+        (error) => {
+          if(error.status = 401) {
+            this.loginWarning = "Du er blevet logget ud automatisk"
+            this.sessionActive = false
+          }
+        }
+      )
+    },
+    CheckSessionToken() {
+      const token = this.GetTokenFromCookie()
+      axios.get(this.userBaseURL+"/validatetoken",{
+        headers: {
+          'token':token
+        }
+      }).then(
+        (response) => {
+          if (response.status = 200) {
+            this.sessionActive = true
+          }
+        }
+      ).catch(
+        (error) => {
+          this.sessionActive = false
+        }
+      )
+    },
+    async AddFood() {
+      const token = this.GetTokenFromCookie()
+      try {
+        console.log(this.newFood);
+        const response = await axios.post(this.foodsBaseURL, this.newFood,{
+          headers: {
+            'token':token
+          }
+        });
+        console.log('Food added successfully!', response.data);
+        this.newFood = { 
+          name: '',
+          foodTypeId: null,
+          foodTypeName: '',
+          spoilDate: 0,
+          spoilHours: 0,
+          idealTemperature: 0,
+          idealHumidity: 0,
+          q10Factor: 0,
+          maxTemp: 0,
+          minTemp: 0
+        };
+        
+        console.log('Food added successfully!');
+      } catch (error) {
+        console.error(error);
+        if(error.status == 401) {
+          this.CheckSessionToken()
+          this.loginWarning = "Du er blevet automatisk logget ud"
+        } else {
+          this.CheckSessionToken()
+          this.loginWarning = "Noget gik galt. " + error.response.data
+        }
+        
+      }
+    }
   },
 
 
@@ -419,6 +539,7 @@ const app = Vue.createApp({
     this.baseURL = import.meta.env.VITE_BASE_URL
     this.readingBaseURL = this.baseURL + "api/Readings";
     this.foodsBaseURL = this.baseURL +"api/Foods"
+    this.userBaseURL = this.baseURL + "api/Users";
     this.SetupInitialData();
     this.GetFoodsByName();
     
