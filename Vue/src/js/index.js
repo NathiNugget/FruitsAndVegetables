@@ -534,35 +534,51 @@ const app = Vue.createApp({
       } else {
           this.spoilDateWarning = '';
       }
-    },
-    validateSpoilHours() {
+  },
+  validateSpoilHours() {
       if (this.newFood.spoilHours < 0 || this.newFood.spoilHours > 24) {
           this.spoilHoursWarning = 'Timer skal være mellem 0 og 24.';
       } else {
           this.spoilHoursWarning = '';
       }
-    },
-    validateQ10Factor() {
+  },
+  validateQ10Factor() {
       if (this.newFood.q10Factor < 1) {
           this.q10FactorWarning = 'Q10 skal være mindst 1.';
       } else {
           this.q10FactorWarning = '';
       }
-    },
-    validateTemp(field, min, max) {
+  },
+  validateTemp(field, min, max) {
       if (this.newFood[field] < min || this.newFood[field] > max) {
           this.tempWarning = `${field} skal være mellem ${min} og ${max} grader.`;
       } else {
           this.tempWarning = '';
       }
-    },
-    validateHumidity() {
+  },
+  validateHumidity() {
       if (this.newFood.idealHumidity < 0 || this.newFood.idealHumidity > 100) {
           this.humidityWarning = 'Luftfugtighed skal være mellem 0 og 100.';
       } else {
           this.humidityWarning = '';
       }
-    }
+  },
+  // Use arrow functions to maintain the correct context
+  debouncedValidateSpoilDate: debounce(function() {
+      this.validateSpoilDate();
+  }, 300),
+  debouncedValidateSpoilHours: debounce(function() {
+      this.validateSpoilHours();
+  }, 300),
+  debouncedValidateQ10Factor: debounce(function() {
+      this.validateQ10Factor();
+  }, 300),
+  debouncedValidateTemp: debounce(function(field, min, max) {
+      this.validateTemp(field, min, max);
+  }, 300),
+  debouncedValidateHumidity: debounce(function() {
+      this.validateHumidity();
+  }, 300)
   },
 
 
