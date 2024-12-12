@@ -156,6 +156,8 @@ const app = Vue.createApp({
       baseURL: "",
       ReadingBaseURL: "" ,
       FoodsBaseURL: "",
+      ImageBaseURL: "", 
+      ImageResponseCode: NaN, 
       UserBaseURL: "",
       newestTemperature: NaN,
       newestHumidity: NaN,
@@ -275,6 +277,12 @@ const app = Vue.createApp({
 
     },
 
+    async GetImageResponseCode(){
+      const response = axios.get(this.ImageBaseURL).then((response) => {
+          this.ImageResponseCode = response.status; 
+      }); 
+    },
+
 
 
     async SetupInitialData() {
@@ -283,6 +291,7 @@ const app = Vue.createApp({
       const readingObj = Vue.toRaw(this.readings[0]);
       this.newestHumidity = readingObj.humidity;
       this.newestTemperature = readingObj.temperature;
+      await this.GetImageResponseCode(); 
     },
 
 /*     spoilMap(hour, day, foodName) {
@@ -532,7 +541,7 @@ const app = Vue.createApp({
 
 
   computed: {
-
+    
   },
 
   mounted() {

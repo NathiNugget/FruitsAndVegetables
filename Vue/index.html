@@ -176,7 +176,11 @@
                 </div>
             </div>
         </div>
-
+        <div class="informationBox" v-show="ImageResponseCode == 200 || ImageResponseCode == 500">
+            <h5>Seneste hentede billede</h1>
+            <img v-if="ImageResponseCode == 200" :src="ImageBaseURL" class="LatestImage" id="LatestImage">
+            <p v-else>Seneste billede ikke fundet, kontakt udvikleren!</p>
+        </div>  
 
         <!-- IMAGE FOR SHOWING THE SELECTED FOOD HERE -->
          <!-- Please don't use in-line style -->
@@ -189,6 +193,8 @@
     </div>
         <canvas id="tempChart" class="buffer"></canvas>
     <script type="module" src="src/js/index.js"></script>
+    
+
 
     <footer>
         <div class="copyright">            
