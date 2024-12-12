@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace UITest
 {
@@ -113,7 +112,6 @@ namespace UITest
             input.SendKeys(selectedFood);
             input.SendKeys(Keys.Return);
             IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
-            string expected = "0 dage";
             string actual = shelflife.Text;
             Assert.IsNotNull(actual);
         }
