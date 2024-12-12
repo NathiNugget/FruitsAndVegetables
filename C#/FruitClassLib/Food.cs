@@ -1,12 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FruitClassLib
+﻿namespace FruitClassLib
 {
     public class Food
     {
@@ -20,7 +12,7 @@ namespace FruitClassLib
         private string _apiLink;
         private byte _spoilDate;
         private byte _spoilHours;
-        private byte _q10Factor;
+        private double _q10Factor;
         private double _maxTemp;
         private double _minTemp;
         private double _idealTemperature;
@@ -28,7 +20,7 @@ namespace FruitClassLib
         private int _foodTypeId;
         private string _foodTypeName;
 
-        public Food(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, int id = 1, string foodTypeName = "", byte q10Factor = 3, double maxTemp = 40, double minTemp = -15   )
+        public Food(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, int id = 1, string foodTypeName = "", double q10Factor = 3, double maxTemp = 40, double minTemp = -15   )
         {
             FoodTypeId = foodTypeId;
             FoodTypeName = foodTypeName;
@@ -131,9 +123,17 @@ namespace FruitClassLib
             }
         }
 
-        public byte SpoilDate { get => _spoilDate; set => _spoilDate = value; }
+        public byte SpoilDate { get => _spoilDate; set =>  _spoilDate = value; }
 
-        public byte SpoilHours { get => _spoilHours; set => _spoilHours = value; }
+        public byte SpoilHours { get => _spoilHours; set
+            {
+                if (value > 23)
+                {
+                    throw new ArgumentOutOfRangeException("SpoilHors must not be larger than 23");
+                }
+                _spoilHours = value;
+            }
+        }
 
         public double IdealTemperature { get => _idealTemperature;
 
@@ -160,13 +160,13 @@ namespace FruitClassLib
 
         }
 
-        public byte Q10Factor
+        public double Q10Factor
         {
             get => _q10Factor;
 
             set
             {
-                if (value < 2)
+                if (value < 1)
                 {
                     throw new ArgumentOutOfRangeException($"Q10 has to be above 1. Passed: {value}");
                 }

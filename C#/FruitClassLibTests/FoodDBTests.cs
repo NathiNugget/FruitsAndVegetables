@@ -1,13 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FruitClassLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
-
-namespace FruitClassLib.Tests
+﻿namespace FruitClassLib.Tests
 {
     [TestClass()]
     public class FoodDBTests
@@ -31,9 +22,9 @@ namespace FruitClassLib.Tests
         }
 
         [TestMethod()]
-        [DataRow( "TestFood", 1, "TestLink", (byte)2, (byte)5, 50.0, 50.0, (byte)4, 60, -20)]
+        [DataRow( "TestFood", 1, "TestLink", (byte)2, (byte)5, 50.0, 50.0, 4, 60, -20)]
 
-        public void AddFoodDBTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, byte q10Factor, double maxTemp, double minTemp)
+        public void AddFoodDBTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, double q10Factor, double maxTemp, double minTemp)
         {
             Food expected = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, q10Factor:q10Factor, maxTemp: maxTemp, minTemp: minTemp);
             Food actual = _repo.Add(expected);
