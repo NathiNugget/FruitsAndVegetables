@@ -14,16 +14,91 @@
 <body>
     <div id="app">
         <header class="header p-3">
-            <div class="row w-100">
-                <div class="col-12 row">
+            <div class="w-100 d-flex justify-content-between">
+                <div class="col-1"></div>
+                <div class="col-10 row">
                     <h1 style="text-align: center;">
                         <i class="fa-solid fa-leaf"></i>
                         Frugt og grønt
                     </h1>
+                    
                 </div>
+                <div class="col-1 row">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin" id="AdminPanelToggle" @click="CheckSessionToken"><i class="fas fa-bars"></i></button>
+            </div>
             </div>
         </header>
 
+        <div class="offcanvas offcanvas-end offcanvasBackground" id="admin">
+            <div class="offcanvas-header">
+              <h1 class="offcanvas-title">Admin funktionalitet</h1>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="informationBox justify-content-around"  v-if="!sessionActive">
+                    <input type="text" class="form-control offcanvasInputfield" placeholder="Brugernavn" id="AdminUsername" v-model="loginName">
+                    <input type="password" class="form-control offcanvasInputfield" placeholder="Adgangskode" id="AdminPassword" v-model = "loginPassword">
+                    <span>{{loginWarning}}</span>
+                    <div class="d-flex justify-content-between">
+                        <button class="offcanvasLoginBtn" type="button" id="LoginButton" @click="AdminLogin()">Log ind</button>
+                        <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+                    </div>
+                </div>
+                
+                <div v-else>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn offcanvasLogOutBtn" type="button" id="LogoutButton" @click="AdminLogout()">Log ud</button>
+                    </div>
+                    <span>{{loginWarning}}</span>
+                    <div class="informationBox">                
+                        <h3 class="col-12">Lav Frugt eller Grønt</h3>
+
+                        <div class="offcanvasInputBox">
+                            <label class="col-12">Type og Navn</label>
+                            <div class="d-flex flex-wrap justify-content-around">
+                                <select class="flex-grow-1 m-2 offcanvasInput" v-model="newFood.foodTypeId">
+                                    <option value="" disabled selected>Vælg Type</option>
+                                    <option value="1">Frugt</option>
+                                    <option value="2">Grønt</option>
+                                </select>
+                                <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="Navnet" v-model="newFood.name">            
+                                <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="API Linket" v-model="newFood.apiLink">
+                            </div>
+                        </div>
+
+                        <div class="offcanvasInputBox">
+                            <label class="col-12">Holdbarhed</label>
+                            <div class="d-flex flex-wrap">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Dage" v-model="newFood.spoilDate">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Timer"  v-model="newFood.spoilHours">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Q10"  v-model="newFood.q10Factor">
+                            </div>
+                        </div>
+
+                        <div class="offcanvasInputBox">
+                            <label class="col-12">Temperatur</label>
+                            <div class="d-flex flex-wrap">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min" v-model="newFood.minTemp">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max"  v-model="newFood.maxTemp">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal" v-model="newFood.idealTemperature" >
+                            </div>
+                        </div>
+
+                        <div class="offcanvasInputBox">
+                            <label class="col-12">Luftfugtighed</label>
+                            <div class="d-flex flex-wrap">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal"  v-model="newFood.idealHumidity">
+                            </div>
+                        </div>
+
+                        <div class="offcanvasInputBox d-flex justify-content-between">
+                            <button class="offcanvasLoginBtn" type="button"  @click="AddFood">Opret</button>
+                            <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
         
         <div class="col-12 row elementBox d-flex justify-content-around">
             <div class="col-5 checkboxcontainer">

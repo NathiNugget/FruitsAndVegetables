@@ -11,13 +11,17 @@ namespace UITest
     {
         [ClassInitialize]
         public static void ClassInitialize(TestContext test) {
-            _repo.Nuke();
-            _repo.Setup();
-
-
-
+            _foodRepo.Nuke(); 
+            _foodRepo.Setup();
+            _userRepo.Nuke();
+            _userRepo.SetUp();
+            _readingRepo.Nuke();
+            _readingRepo.Setup();
+            
         }
-        static FoodDB _repo = new(true); 
+        static FoodDB _foodRepo = new(true); 
+        static UserDB _userRepo = new(true);
+        static ReadingsDB _readingRepo = new(true);
         public static ChromeOptions Options { get; set; } = new();
          
         static IWebDriver driver = new ChromeDriver(Options);
@@ -315,11 +319,58 @@ namespace UITest
         //    Assert.IsNotNull(vegetableFilter);
         //}
 
+        [TestMethod]
+        public void AdminLogin()
+        {
+            string usernameInput = "Jacob";
+            string passwordInput = "Hahaxd";
+            User before = _userRepo.Get(usernameInput, passwordInput);
+            IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
+            toggle.Click();
+            IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
+            IWebElement passwordField = driver.FindElement(By.Id("AdminPassword"));
+            IWebElement loginButton = driver.FindElement(By.Id("LoginButton"));
+
+            nameField.SendKeys(usernameInput);
+            passwordField.SendKeys(passwordInput);
+            loginButton.Click();
+            Thread.Sleep(500);
+            User after = _userRepo.Get(usernameInput, passwordInput);
+            Thread.Sleep(500);
+            IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
+            logoutButton.Click();
+            Assert.AreNotEqual(before.SessionToken, after.SessionToken);
+        }
+
+        [TestMethod]
+        public void AdminLogout()
+        {
+            string usernameInput = "Jacob";
+            string passwordInput = "Hahaxd";
+
+            IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
+            toggle.Click();
+            IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
+            IWebElement passwordField = driver.FindElement(By.Id("AdminPassword"));
+            IWebElement loginButton = driver.FindElement(By.Id("LoginButton"));
+
+            nameField.SendKeys(usernameInput);
+            passwordField.SendKeys(passwordInput);
+            loginButton.Click();
+            Thread.Sleep(500);
+            User before = _userRepo.Get(usernameInput, passwordInput);
+            IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
+            logoutButton.Click();
+            Thread.Sleep(500);
+            User after = _userRepo.Get(usernameInput, passwordInput);
+            Assert.AreNotEqual(before.SessionToken, after.SessionToken);
+        }
+
         [ClassCleanup]
         public static void ClassCleanup()
         {
             driver.Quit();
-            _repo.Nuke(); 
+            _foodRepo.Nuke(); 
         }
 
     }
