@@ -11,15 +11,17 @@ namespace UITest
     {
         [ClassInitialize]
         public static void ClassInitialize(TestContext test) {
-            _repo.Nuke(); 
-            _repo.Setup();
+            _foodRepo.Nuke(); 
+            _foodRepo.Setup();
             _userRepo.Nuke();
             _userRepo.SetUp();
-
+            _readingRepo.Nuke();
+            _readingRepo.Setup();
             
         }
-        static FoodDB _repo = new(true); 
+        static FoodDB _foodRepo = new(true); 
         static UserDB _userRepo = new(true);
+        static ReadingsDB _readingRepo = new(true);
         public static ChromeOptions Options { get; set; } = new();
          
         static IWebDriver driver = new ChromeDriver(Options);
@@ -361,7 +363,7 @@ namespace UITest
         public static void ClassCleanup()
         {
             driver.Quit();
-            _repo.Nuke(); 
+            _foodRepo.Nuke(); 
         }
 
     }

@@ -457,6 +457,7 @@ const app = Vue.createApp({
       }).then(
         () => {
         document.cookie = "sessiontoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC"
+        this.loginWarning = "Du er nu logget ud"
         this.sessionActive = false
       }
       ).catch(
@@ -487,9 +488,14 @@ const app = Vue.createApp({
       )
     },
     async AddFood() {
+      const token = this.GetTokenFromCookie()
       try {
         console.log(this.newFood);
-        const response = await axios.post(this.foodsBaseURL, this.newFood);
+        const response = await axios.post(this.foodsBaseURL, this.newFood,{
+          headers: {
+            'token':token
+          }
+        });
         console.log('Food added successfully!', response.data);
         this.newFood = { 
           name: '',
@@ -507,6 +513,14 @@ const app = Vue.createApp({
         console.log('Food added successfully!');
       } catch (error) {
         console.error(error);
+        if(error.status == 401) {
+          this.CheckSessionToken()
+          this.loginWarning = "Du er blevet automatisk logget ud"
+        } else {
+          this.CheckSessionToken()
+          this.loginWarning = "Noget gik galt. " + error.response.data
+        }
+        
       }
     }
   },

@@ -30,7 +30,7 @@ namespace FruitClassLib
         public Food Add(Food food, string? token = null)
         {
             // If not running in test mode, AND the token is invalid, throw exception
-            if (!_isTest && !_userDB.Validate(token))
+            if (!_userDB.Validate(token))
             {
                 throw new UnauthorizedAccessException("Invalid session token");
             }
