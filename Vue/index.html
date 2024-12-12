@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Frugt&Grønt</title>
+    <link rel="icon" type="image/x-icon" href="src/favicon.ico">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="src/css/bootstrap.css">
     <link rel="stylesheet" href="src/css/style.css">
@@ -23,8 +24,8 @@
                     </h1>
                     
                 </div>
-                <div class="col-1 row">
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin" id="AdminPanelToggle" @click="CheckSessionToken"><i class="fas fa-bars"></i></button>
+                <div class="col-1 align-self-center">
+                <button class="navbar-toggler float-end" type="button" data-bs-toggle="offcanvas" data-bs-target="#admin" id="AdminPanelToggle" @click="CheckSessionToken"><i class="fas fa-bars"></i></button>
             </div>
             </div>
         </header>
@@ -152,7 +153,7 @@
                     <p id="ShelfLife" v-if="chosenFood != undefined && spoilTime != undefined && spoilTime.constructor === Array" class="readingText">
                         {{spoilTime[0]}} dage og {{spoilTime[1]}} timer
                     </p>
-                    <p id="ShelfLife" v-else>
+                    <p id="ShelfLife" v-else class="readingText">
                         Ukendt
                     </p>
                     <p class="tinytext">
