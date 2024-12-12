@@ -290,8 +290,7 @@ const app = Vue.createApp({
       await this.GetLatest();
       const readingObj = Vue.toRaw(this.readings[0]);
       this.newestHumidity = readingObj.humidity;
-      this.newestTemperature = readingObj.temperature;
-      await this.GetImageResponseCode(); 
+      this.newestTemperature = readingObj.temperature; 
     },
 
 /*     spoilMap(hour, day, foodName) {
@@ -544,7 +543,7 @@ const app = Vue.createApp({
     
   },
 
-  mounted() {
+  async mounted() {
     this.baseURL = import.meta.env.VITE_BASE_URL
     this.readingBaseURL = this.baseURL + "api/Readings";
     this.foodsBaseURL = this.baseURL + "api/Foods";
@@ -552,6 +551,7 @@ const app = Vue.createApp({
     this.userBaseURL = this.baseURL + "api/Users";
     this.SetupInitialData();
     this.GetFoodsByName();
+    await this.GetImageResponseCode();
     
 
 

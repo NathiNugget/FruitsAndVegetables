@@ -17,7 +17,6 @@ namespace UITest
             _userRepo.SetUp();
             _readingRepo.Nuke();
             _readingRepo.Setup();
-            
         }
         static FoodDB _foodRepo = new(true); 
         static UserDB _userRepo = new(true);
