@@ -1,5 +1,4 @@
-﻿
-namespace FruitClassLib
+﻿namespace FruitClassLib
 {
     public interface IFoodDB
     {

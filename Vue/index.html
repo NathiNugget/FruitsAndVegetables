@@ -56,44 +56,44 @@
                         <div class="offcanvasInputBox">
                             <label class="col-12">Type og Navn</label>
                             <div class="d-flex flex-wrap justify-content-around">
-                                <select class="flex-grow-1 m-2 offcanvasInput" v-model="newFood.foodTypeId">
+                                <select id="newfoodTypeId" class="flex-grow-1 m-2 offcanvasInput" v-model="newFood.foodTypeId">
                                     <option value="" disabled selected>Vælg Type</option>
-                                    <option value="1">Frugt</option>
-                                    <option value="2">Grønt</option>
+                                    <option id="value1" value="1">Frugt</option>
+                                    <option id="value2" value="2">Grønt</option>
                                 </select>
-                                <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="Navnet" v-model="newFood.name">            
-                                <input type="text" class="flex-grow-1 m-2 offcanvasInput" placeholder="API Linket" v-model="newFood.apiLink">
+                                <input type="text" class="flex-grow-1 m-2 offcanvasInput" id="newfoodname" placeholder="Navnet" v-model="newFood.name">            
+                                <input type="text" class="flex-grow-1 m-2 offcanvasInput" id="newfoodapi" placeholder="API Linket" v-model="newFood.apiLink">
                             </div>
                         </div>
 
                         <div class="offcanvasInputBox">
                             <label class="col-12">Holdbarhed</label>
                             <div class="d-flex flex-wrap">
-                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Dage" v-model="newFood.spoilDate">
-                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Timer"  v-model="newFood.spoilHours">
-                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Q10"  v-model="newFood.q10Factor">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" id="newspoildate" placeholder="Dage" v-model="newFood.spoilDate">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" id="spoilhours" placeholder="Timer"  v-model="newFood.spoilHours">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" id="q10factor" placeholder="Q10"  v-model="newFood.q10Factor">
                             </div>
                         </div>
 
                         <div class="offcanvasInputBox">
                             <label class="col-12">Temperatur</label>
                             <div class="d-flex flex-wrap">
-                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Min" v-model="newFood.minTemp">
-                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Max"  v-model="newFood.maxTemp">
-                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal" v-model="newFood.idealTemperature" >
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" id="mintemp" placeholder="Min" v-model="newFood.minTemp">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" id="maxtemp" placeholder="Max"  v-model="newFood.maxTemp">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" id="idealtemperature" placeholder="Ideal" v-model="newFood.idealTemperature" >
                             </div>
                         </div>
 
                         <div class="offcanvasInputBox">
                             <label class="col-12">Luftfugtighed</label>
                             <div class="d-flex flex-wrap">
-                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" placeholder="Ideal"  v-model="newFood.idealHumidity">
+                                <input type="number" class="flex-grow-1 m-2 offcanvasInput" id="idealhumidity" placeholder="Ideal"  v-model="newFood.idealHumidity">
                             </div>
                         </div>
 
                         <div class="offcanvasInputBox d-flex justify-content-between">
-                            <button class="offcanvasLoginBtn" type="button"  @click="AddFood">Opret</button>
-                            <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas">Fortryd</button>
+                            <button class="offcanvasLoginBtn" type="button" id="addfoodbutton" @click="AddFood">Opret</button>
+                            <button class="offcanvasCancelBtn" type="button" data-bs-dismiss="offcanvas" id="exitButton">Fortryd</button>
                         </div>
                     </div>
                 </div>                

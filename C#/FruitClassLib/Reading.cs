@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace FruitClassLib
+﻿namespace FruitClassLib
 {
     public class Reading
     {
