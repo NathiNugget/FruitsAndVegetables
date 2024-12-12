@@ -362,7 +362,6 @@ namespace UITest
         [TestMethod]
         public void LoginAndSendFormPass()
         {
-            
 
             string usernameInput = "Jacob";
             string passwordInput = "Hahaxd";
@@ -377,8 +376,7 @@ namespace UITest
             double newidealtemperature = 20;
             double newidealhumididty = 20;
 
-            Food foundFood = new Food(newfoodname, newfoodid, newfoodapi, newspoildate, newspoilhours, newidealtemperature, newidealhumididty, 1, "", newq10factor, newmaxtemp, newmintemp);
-            User before = _userRepo.Get(usernameInput, passwordInput);
+
             IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
             toggle.Click();
             IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
@@ -389,7 +387,10 @@ namespace UITest
             passwordField.SendKeys(passwordInput);
             loginButton.Click();
             Thread.Sleep(500);
-            IWebElement foodtypeid = driver.FindElement(By.Id("newfoodTypeId"));
+            Thread.Sleep(500);
+            Thread.Sleep(500);
+            Thread.Sleep(500);
+            IWebElement foodtypeid = driver.FindElement(By.Id("value1"));
             IWebElement foodname = driver.FindElement(By.Id("newfoodname"));
             IWebElement foodapi = driver.FindElement(By.Id("newfoodapi"));
             IWebElement spoildate = driver.FindElement(By.Id("newspoildate"));
@@ -401,8 +402,7 @@ namespace UITest
             IWebElement idealhumidity = driver.FindElement(By.Id("idaelhumidity"));
             IWebElement value1 = driver.FindElement(By.Id("value1"));
 
-            foodtypeid.Click();
-            value1.Click();
+            foodtypeid.SendKeys("1");
             foodname.SendKeys(newfoodname);
             foodapi.SendKeys(newfoodapi.ToString());
             spoildate.SendKeys(newspoildate.ToString());
@@ -412,7 +412,7 @@ namespace UITest
             maxtemp.SendKeys(newmaxtemp.ToString());
             idealtemperature.SendKeys(newidealtemperature.ToString());
             idealhumidity.SendKeys(idealhumidity.ToString());
-            
+
 
             IWebElement addfoodbutton = driver.FindElement(By.Id("addfoodbutton"));
             addfoodbutton.Click();
