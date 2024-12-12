@@ -1,10 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FruitClassLib
 {
@@ -262,7 +256,7 @@ namespace FruitClassLib
             byte spoilHours = reader.GetByte(5);
             double idealTemperature = reader.GetDouble(6);
             double idealHumidity = reader.GetDouble(7);
-            byte q10Factor = reader.GetByte(8);
+            double q10Factor = reader.GetDouble(8);
             double maxTemp = reader.GetDouble(9);
             double minTemp = reader.GetDouble(10);
             string foodTypeName = reader.GetString(11);

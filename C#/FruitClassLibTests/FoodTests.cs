@@ -1,12 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FruitClassLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FruitClassLib.Tests
+﻿namespace FruitClassLib.Tests
 {
     [TestClass()]
     public class FoodTests
@@ -161,9 +153,9 @@ namespace FruitClassLib.Tests
 
 
         [TestMethod]
-        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0,(byte)2)]
-        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, (byte)255)]
-        public void Q10ValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, byte q10)
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0,1.1)]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, 999)]
+        public void Q10ValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, double q10)
         {
             Food mockFood = new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, q10Factor: q10);
             double expected = idealTemperature;
@@ -172,9 +164,9 @@ namespace FruitClassLib.Tests
         }
 
         [TestMethod]
-        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0, (byte)0)]
-        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, (byte)1)]
-        public void Q10NotValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, byte q10)
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, -50.0, 50.0, 0.99)]
+        [DataRow("Banana", 1, "link", (byte)1, (byte)0, 85.0, 50.0, -1)]
+        public void Q10NotValidTest(string name, int foodTypeId, string apiLink, byte spoilDate, byte spoilHours, double idealTemperature, double idealHumidity, double q10)
         {
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Food(name, foodTypeId, apiLink, spoilDate, spoilHours, idealTemperature, idealHumidity, q10Factor: q10));
         }
