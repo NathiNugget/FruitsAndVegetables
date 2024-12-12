@@ -11,11 +11,11 @@ namespace UITest
     {
         [ClassInitialize]
         public static void ClassInitialize(TestContext test) {
-            _repo.Nuke(); 
-            _repo.Setup(); 
+            _repo.Nuke();
+            _repo.Setup();
 
 
-            
+
         }
         static FoodDB _repo = new(true); 
         public static ChromeOptions Options { get; set; } = new();
@@ -283,6 +283,13 @@ namespace UITest
             IWebElement selectedFoodPicture = driver.FindElement(By.Id("ChosenFoodImage"));
             string actual = selectedFoodPicture.GetDomAttribute("src");
             Assert.AreEqual(expected.ToLower(), actual.ToLower());
+        }
+
+        [TestMethod]
+        public void NewestImageNotNull()
+        {
+            IWebElement latestImage = driver.FindElement(By.Id("LatestImage"));
+            Assert.IsTrue(latestImage != null && latestImage.GetDomAttribute("src") == "https://fruitcontainertest.azurewebsites.net/api/Images");
         }
 
         //[TestMethod]

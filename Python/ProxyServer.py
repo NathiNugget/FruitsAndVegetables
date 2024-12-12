@@ -15,7 +15,7 @@ image_name = "newest_image.jpg"
 
 #TODO: Change placeholder to real destination IP addr
 destinationReadingURL = "https://fruitcontainerproduction.azurewebsites.net/api/Readings"
-destinationImageURL = "https://fruitcontainerproduction.azurewebsites.net/api/Images"
+destinationImageURL = "https://fruitcontainertest.azurewebsites.net/api/Images"
 
 serverName = "0.0.0.0"
 
