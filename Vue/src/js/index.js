@@ -57,14 +57,6 @@ class Food {
   }
 }
 
-function debounce(func, wait) {
-  let timeout;
-  return function(...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-}
-
 const chartNumberOne = document.getElementById('tempChart')
 
 let temperatureChart = new Chart(chartNumberOne, {
@@ -563,21 +555,6 @@ const app = Vue.createApp({
           this.humidityWarning = '';
       }
     },
-    debouncedValidateSpoilDate: debounce(function() {
-      this.validateSpoilDate();
-    }, 300),
-    debouncedValidateSpoilHours: debounce(function() {
-      this.validateSpoilHours();
-    }, 300),
-    debouncedValidateQ10Factor: debounce(function() {
-      this.validateQ10Factor();
-    }, 300),
-    debouncedValidateTemp: debounce(function(field, min, max) {
-      this.validateTemp(field, min, max);
-    }, 300),
-    debouncedValidateHumidity: debounce(function() {
-      this.validateHumidity();
-    }, 300)
   },
 
 
