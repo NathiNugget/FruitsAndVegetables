@@ -359,6 +359,73 @@ namespace UITest
             Assert.AreNotEqual(before.SessionToken, after.SessionToken);
         }
 
+        [TestMethod]
+        public void LoginAndSendFormPass()
+        {
+            
+
+            string usernameInput = "Jacob";
+            string passwordInput = "Hahaxd";
+            int newfoodid = 1;
+            string newfoodname = "pære";
+            string newfoodapi = "peir man";
+            byte newspoildate = 20;
+            byte newspoilhours = 15;
+            double newq10factor = 2;
+            double newmintemp = 5;
+            double newmaxtemp = 40;
+            double newidealtemperature = 20;
+            double newidealhumididty = 20;
+
+            Food foundFood = new Food(newfoodname, newfoodid, newfoodapi, newspoildate, newspoilhours, newidealtemperature, newidealhumididty, 1, "", newq10factor, newmaxtemp, newmintemp);
+            User before = _userRepo.Get(usernameInput, passwordInput);
+            IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
+            toggle.Click();
+            IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
+            IWebElement passwordField = driver.FindElement(By.Id("AdminPassword"));
+            IWebElement loginButton = driver.FindElement(By.Id("LoginButton"));
+
+            nameField.SendKeys(usernameInput);
+            passwordField.SendKeys(passwordInput);
+            loginButton.Click();
+            Thread.Sleep(500);
+            IWebElement foodtypeid = driver.FindElement(By.Id("newfoodTypeId"));
+            IWebElement foodname = driver.FindElement(By.Id("newfoodname"));
+            IWebElement foodapi = driver.FindElement(By.Id("newfoodapi"));
+            IWebElement spoildate = driver.FindElement(By.Id("newspoildate"));
+            IWebElement spoilhours = driver.FindElement(By.Id("spoilhours"));
+            IWebElement q10factor = driver.FindElement(By.Id("q10factor"));
+            IWebElement mintemp = driver.FindElement(By.Id("mintemp"));
+            IWebElement maxtemp = driver.FindElement(By.Id("maxtemp"));
+            IWebElement idealtemperature = driver.FindElement(By.Id("idealtemperature"));
+            IWebElement idealhumidity = driver.FindElement(By.Id("idaelhumidity"));
+            IWebElement value1 = driver.FindElement(By.Id("value1"));
+
+            foodtypeid.Click();
+            value1.Click();
+            foodname.SendKeys(newfoodname);
+            foodapi.SendKeys(newfoodapi.ToString());
+            spoildate.SendKeys(newspoildate.ToString());
+            spoilhours.SendKeys(newspoilhours.ToString());
+            q10factor.SendKeys(newq10factor.ToString());
+            mintemp.SendKeys(newmintemp.ToString());
+            maxtemp.SendKeys(newmaxtemp.ToString());
+            idealtemperature.SendKeys(newidealtemperature.ToString());
+            idealhumidity.SendKeys(idealhumidity.ToString());
+            
+
+            IWebElement addfoodbutton = driver.FindElement(By.Id("addfoodbutton"));
+            addfoodbutton.Click();
+
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.Click();
+
+            IWebElement selectedFood = driver.FindElement(By.Id("pære"));
+            Assert.IsNotNull(selectedFood);
+
+
+        }
+
         [ClassCleanup]
         public static void ClassCleanup()
         {
