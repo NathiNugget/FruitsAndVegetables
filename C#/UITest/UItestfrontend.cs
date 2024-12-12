@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using System.Diagnostics.Metrics;
 
 namespace UITest
 {
@@ -337,12 +338,13 @@ namespace UITest
             Thread.Sleep(500);
             IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
             logoutButton.Click();
+            Thread.Sleep(2000); 
             Assert.AreNotEqual(before.SessionToken, after.SessionToken);
         }
 
         [TestMethod]
         public void AdminLogout()
-        {
+            {
             string usernameInput = "Jacob";
             string passwordInput = "Hahaxd";
 
@@ -360,7 +362,7 @@ namespace UITest
             //User before = _userRepo.Get(usernameInput, passwordInput);
             IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
             logoutButton.Click();
-            Thread.Sleep(800);
+            Thread.Sleep(2000);
             Cookie tokenLoggedOut = driver.Manage().Cookies.GetCookieNamed("sessiontoken");
             string? tokenLoggedOutValue;
             try
@@ -442,6 +444,10 @@ namespace UITest
             dropdown.SendKeys(Keys.Enter);
             IWebElement selectedFood = driver.FindElement(By.Id("pære"));
             Assert.IsNotNull(selectedFood);
+
+            driver.Manage().Cookies.DeleteAllCookies(); 
+
+
 
 
         }
