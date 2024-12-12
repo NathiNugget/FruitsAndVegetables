@@ -168,6 +168,19 @@ const app = Vue.createApp({
       isFetchingMealDB: false,
       loginName: null,
       loginPassword: null,
+      newFood: {
+        name: '',
+        apiLink:'',
+        foodTypeId: null,
+        foodTypeName: '',
+        spoilDate: null,
+        spoilHours: null,
+        idealTemperature: null,
+        idealHumidity: null,
+        q10Factor: null,
+        maxTemp: null,
+        minTemp: null
+      },
       sessionActive: false,
       loginWarning: null
     }
@@ -472,6 +485,29 @@ const app = Vue.createApp({
           this.sessionActive = false
         }
       )
+    },
+    async AddFood() {
+      try {
+        console.log(this.newFood);
+        const response = await axios.post(this.foodsBaseURL, this.newFood);
+        console.log('Food added successfully!', response.data);
+        this.newFood = { 
+          name: '',
+          foodTypeId: null,
+          foodTypeName: '',
+          spoilDate: 0,
+          spoilHours: 0,
+          idealTemperature: 0,
+          idealHumidity: 0,
+          q10Factor: 0,
+          maxTemp: 0,
+          minTemp: 0
+        };
+        
+        console.log('Food added successfully!');
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
 
