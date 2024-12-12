@@ -1,5 +1,6 @@
 using FruitClassLib;
 using FruitREST;
+using Microsoft.AspNetCore.Mvc;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,9 +21,11 @@ TestMode.TestModeIsDev = true;
 #endif
 
 
+
 // TODO: Add singleton and create interface
 builder.Services.AddSingleton<IReadingsRepository>(new ReadingsDB(TestMode.TestModeIsDev));
 builder.Services.AddSingleton<IFoodDB>(new FoodDB(TestMode.TestModeIsDev));
+builder.Services.AddSingleton<IUserDB>(new UserDB(TestMode.TestModeIsDev));
 builder.Services.AddCors(opts =>
 {
     opts.AddPolicy("GETpolicy", pol =>

@@ -1,18 +1,15 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FruitClassLib
 {
     public class FoodDB : IFoodDB
     {
         private string _connectionstring;
+        private IUserDB _userDB;
+        private bool _isTest;
         public FoodDB(bool isTest)
         {
+            _userDB = new UserDB(isTest);
             if (isTest)
             {
                 _connectionstring = Secret.SecretKey.ConnectionStringTest;
@@ -21,11 +18,17 @@ namespace FruitClassLib
             {
                 _connectionstring = Secret.SecretKey.ConnectionStringProduction;
             }
+            _isTest = isTest; 
         }
 
-        public Food Add(Food food)
+        public Food Add(Food food, string? token = null)
         {
-
+            // If not running in test mode, AND the token is invalid, throw exception
+            if (!_isTest && !_userDB.Validate(token))
+            {
+                throw new UnauthorizedAccessException("Invalid session token");
+            }
+            
 
             string query = "DECLARE @TypeName  NVARCHAR(20) SELECT @TypeName = TypeName  FROM FoodTypes WHERE FoodTypes.FoodId = @foodTypeId    INSERT INTO Fruits (DanishName, FoodTypeId, ApiMapping, SpoilDays, SpoilHours, IdealTemperature, IdealHumidity, Q10Factor, MaxTemp, MinTemp) \r\n\r\n     OUTPUT inserted.*, @TypeName AS TypeName     VALUES (@name, @foodTypeId, @apiLink, @spoilDate, @spoilHours, @temperature, @humidity, @q10Factor, @maxTemp, @minTemp)";
 
@@ -253,7 +256,7 @@ namespace FruitClassLib
             byte spoilHours = reader.GetByte(5);
             double idealTemperature = reader.GetDouble(6);
             double idealHumidity = reader.GetDouble(7);
-            byte q10Factor = reader.GetByte(8);
+            double q10Factor = reader.GetDouble(8);
             double maxTemp = reader.GetDouble(9);
             double minTemp = reader.GetDouble(10);
             string foodTypeName = reader.GetString(11);

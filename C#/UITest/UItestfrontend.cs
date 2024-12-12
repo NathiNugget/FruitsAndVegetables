@@ -11,13 +11,18 @@ namespace UITest
     {
         [ClassInitialize]
         public static void ClassInitialize(TestContext test) {
-            _repo.Nuke();
-            _repo.Setup();
 
-
+            _foodRepo.Nuke(); 
+            _foodRepo.Setup();
+            _userRepo.Nuke();
+            _userRepo.SetUp();
+            _readingRepo.Nuke();
+            _readingRepo.Setup();
 
         }
-        static FoodDB _repo = new(true); 
+        static FoodDB _foodRepo = new(true); 
+        static UserDB _userRepo = new(true);
+        static ReadingsDB _readingRepo = new(true);
         public static ChromeOptions Options { get; set; } = new();
          
         static IWebDriver driver = new ChromeDriver(Options);
@@ -108,7 +113,6 @@ namespace UITest
             input.SendKeys(selectedFood);
             input.SendKeys(Keys.Return);
             IWebElement shelflife = driver.FindElement(By.Id("ShelfLife"));
-            string expected = "0 dage";
             string actual = shelflife.Text;
             Assert.IsNotNull(actual);
         }
@@ -315,11 +319,140 @@ namespace UITest
         //    Assert.IsNotNull(vegetableFilter);
         //}
 
+        [TestMethod]
+        public void AdminLogin()
+        {
+            string usernameInput = "Jacob";
+            string passwordInput = "Hahaxd";
+            User before = _userRepo.Get(usernameInput, passwordInput);
+            IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
+            toggle.Click();
+            IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
+            IWebElement passwordField = driver.FindElement(By.Id("AdminPassword"));
+            IWebElement loginButton = driver.FindElement(By.Id("LoginButton"));
+
+            nameField.SendKeys(usernameInput);
+            passwordField.SendKeys(passwordInput);
+            loginButton.Click();
+            Thread.Sleep(500);
+            User after = _userRepo.Get(usernameInput, passwordInput);
+            Thread.Sleep(500);
+            IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
+            logoutButton.Click();
+            Assert.AreNotEqual(before.SessionToken, after.SessionToken);
+        }
+
+        [TestMethod]
+        public void AdminLogout()
+        {
+            string usernameInput = "Jacob";
+            string passwordInput = "Hahaxd";
+
+            IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
+            toggle.Click();
+            IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
+            IWebElement passwordField = driver.FindElement(By.Id("AdminPassword"));
+            IWebElement loginButton = driver.FindElement(By.Id("LoginButton"));
+
+            nameField.SendKeys(usernameInput);
+            passwordField.SendKeys(passwordInput);
+            loginButton.Click();
+            Thread.Sleep(800);
+            Cookie tokenLoggedIn = driver.Manage().Cookies.GetCookieNamed("sessiontoken");
+            //User before = _userRepo.Get(usernameInput, passwordInput);
+            IWebElement logoutButton = driver.FindElement(By.Id("LogoutButton"));
+            logoutButton.Click();
+            Thread.Sleep(800);
+            Cookie tokenLoggedOut = driver.Manage().Cookies.GetCookieNamed("sessiontoken");
+            string? tokenLoggedOutValue;
+            try
+            {
+                tokenLoggedOutValue = tokenLoggedOut.Value;
+            }
+            catch (Exception ex)
+            {
+                tokenLoggedOutValue = null;
+            }
+       
+            
+            //User after = _userRepo.Get(usernameInput, passwordInput);
+            Assert.AreNotEqual(tokenLoggedIn.Value, tokenLoggedOutValue);
+        }
+
+        [TestMethod]
+        public void LoginAndSendFormPass()
+        {
+
+            string usernameInput = "Jacob";
+            string passwordInput = "Hahaxd";
+            int newfoodid = 1;
+            string newfoodname = "pære";
+            string newfoodapi = "peir man";
+            byte newspoildate = 20;
+            byte newspoilhours = 15;
+            double newq10factor = 2;
+            double newmintemp = 5;
+            double newmaxtemp = 40;
+            double newidealtemperature = 20;
+            double newidealhumidity = 20;
+
+
+            IWebElement toggle = driver.FindElement(By.Id("AdminPanelToggle"));
+            toggle.Click();
+            IWebElement nameField = driver.FindElement(By.Id("AdminUsername"));
+            IWebElement passwordField = driver.FindElement(By.Id("AdminPassword"));
+            IWebElement loginButton = driver.FindElement(By.Id("LoginButton"));
+
+            nameField.SendKeys(usernameInput);
+            passwordField.SendKeys(passwordInput);
+            loginButton.Click();
+            Thread.Sleep(500);
+            IWebElement foodtypeid = driver.FindElement(By.Id("newfoodTypeId"));
+            SelectElement selectElement = new SelectElement(foodtypeid);
+            IWebElement foodname = driver.FindElement(By.Id("newfoodname"));
+            IWebElement foodapi = driver.FindElement(By.Id("newfoodapi"));
+            IWebElement spoildate = driver.FindElement(By.Id("newspoildate"));
+            IWebElement spoilhours = driver.FindElement(By.Id("spoilhours"));
+            IWebElement q10factor = driver.FindElement(By.Id("q10factor"));
+            IWebElement mintemp = driver.FindElement(By.Id("mintemp"));
+            IWebElement maxtemp = driver.FindElement(By.Id("maxtemp"));
+            IWebElement idealtemperature = driver.FindElement(By.Id("idealtemperature"));
+            IWebElement idealhumidity = driver.FindElement(By.Id("idealhumidity"));
+            IWebElement value1 = driver.FindElement(By.Id("value1"));
+
+            selectElement.SelectByValue("1");
+            foodname.SendKeys(newfoodname);
+            foodapi.SendKeys(newfoodapi.ToString());
+            spoildate.SendKeys(newspoildate.ToString());
+            spoilhours.SendKeys(newspoilhours.ToString());
+            q10factor.SendKeys(newq10factor.ToString());
+            mintemp.SendKeys(newmintemp.ToString());
+            maxtemp.SendKeys(newmaxtemp.ToString());
+            idealtemperature.SendKeys(newidealtemperature.ToString());
+            idealhumidity.SendKeys(newidealhumidity.ToString());
+
+
+            IWebElement addfoodbutton = driver.FindElement(By.Id("addfoodbutton"));
+            addfoodbutton.Click();
+            Thread.Sleep(1000);
+            IWebElement exit = driver.FindElement(By.Id("exitButton"));
+            exit.Click();
+            Thread.Sleep(500);
+            IWebElement dropdown = driver.FindElement(By.Id("FoodDropdown"));
+            dropdown.SendKeys(newfoodname);
+            Thread.Sleep(500);
+            dropdown.SendKeys(Keys.Enter);
+            IWebElement selectedFood = driver.FindElement(By.Id("pære"));
+            Assert.IsNotNull(selectedFood);
+
+
+        }
+
         [ClassCleanup]
         public static void ClassCleanup()
         {
             driver.Quit();
-            _repo.Nuke(); 
+            _foodRepo.Nuke(); 
         }
 
     }

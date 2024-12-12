@@ -100,13 +100,17 @@ namespace FruitREST.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [EnableCors("PrivilegedPolicy")]
 
-        public IActionResult Post([FromBody] FoodDTO dto)
+        public IActionResult Post([FromBody] FoodDTO dto, [FromHeader] string? token = null)
         {
             try
             {
                 Food food = FoodDTOConverter.DTO2Food(dto);
-                Food response = _foodDB.Add(food);
+                Food response = _foodDB.Add(food, token);
                 return Created($"/api/Foods/{response.Id}", response);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return StatusCode(401, e.Message);
             }
             catch (Exception ex)
             {
