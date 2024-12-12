@@ -55,9 +55,14 @@ class Food {
     this.maxtemp = maxTemp;
     this.mintemp = minTemp;
   }
+}
 
-
-
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+  };
 }
 
 const chartNumberOne = document.getElementById('tempChart')
@@ -572,7 +577,7 @@ const app = Vue.createApp({
   }, 300),
   debouncedValidateHumidity: this.debounce(function() {
       this.validateHumidity();
-  }, 300),
+  }, 300)
   },
 
 
