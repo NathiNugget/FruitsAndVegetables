@@ -176,7 +176,6 @@ namespace FruitClassLib
 #if !DEBUG
             return;
 #endif
-            //TODO storeprocedure til NukeFood
             string query = "NukeUsers";
             using (SqlConnection connection = new SqlConnection(_connectionstring))
             {

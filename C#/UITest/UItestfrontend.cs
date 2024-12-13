@@ -27,7 +27,7 @@ namespace UITest
         static IWebDriver driver = new ChromeDriver(Options);
 
 
-        // TODO: Replace URL when running tests
+        // For testing remotely, change the URL here if necessary
         const string TEST_URL = "http://localhost:5173";
         const int _maxWaitMillis = 2000;
 
@@ -98,7 +98,7 @@ namespace UITest
             string expected = "Banan";
             selectElement.SelectByValue(expected);
 
-            IWebElement selectedElement = driver.FindElement(By.Id("SelectedName")); //TODO: Change Placeholder ID to actual element
+            IWebElement selectedElement = driver.FindElement(By.Id("SelectedName"));
             string actual = selectedElement.Text;
             Assert.AreEqual(expected, actual);
         }
@@ -295,29 +295,6 @@ namespace UITest
             Assert.IsTrue(latestImage != null && latestImage.GetDomAttribute("src") == "https://fruitcontainertest.azurewebsites.net/api/Images");
         }
 
-        //[TestMethod]
-        //public void SearchButtonCanBeClicked()
-        //{
-        //    IWebElement filterBtn = driver.FindElement(By.Id("NameSearchBtn"));
-        //    filterBtn.Click();
-        //    Assert.IsNotNull(filterBtn);
-
-        //}
-
-        //[TestMethod]
-        //public void SearchBoxCanBeClicked()
-        //{
-        //    IWebElement 
-        //    IWebElement nameFilter = driver.FindElement(By.Id("NameSearchBox"));   
-        //    nameFilter.Click();
-        //    nameFilter.SendKeys("ag");
-        //    Thread.Sleep(500);
-
-
-        //    Assert.IsNotNull(nameFilter);
-        //    Assert.IsNotNull(vegetableFilter);
-        //}
-
         [TestMethod]
         public void AdminLogin()
         {
@@ -373,9 +350,6 @@ namespace UITest
             {
                 tokenLoggedOutValue = null;
             }
-       
-            
-            //User after = _userRepo.Get(usernameInput, passwordInput);
             Assert.AreNotEqual(tokenLoggedIn.Value, tokenLoggedOutValue);
         }
 
@@ -446,10 +420,6 @@ namespace UITest
             Assert.IsNotNull(selectedFood);
 
             driver.Manage().Cookies.DeleteAllCookies(); 
-
-
-
-
         }
 
         [ClassCleanup]

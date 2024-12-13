@@ -13,7 +13,6 @@ headers = {"Content-Type": "application/json"}
 serverPort = 727
 image_name = "newest_image.jpg"
 
-#TODO: Change placeholder to real destination IP addr
 destinationReadingURL = "https://fruitcontainerproduction.azurewebsites.net/api/Readings"
 destinationImageURL = "https://fruitcontainerproduction.azurewebsites.net/api/Images"
 

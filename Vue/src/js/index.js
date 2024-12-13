@@ -290,21 +290,6 @@ const app = Vue.createApp({
       this.newestTemperature = readingObj.temperature; 
     },
 
-/*     spoilMap(hour, day, foodName) {
-      // foodname argument is assumed to be all lowercase. this method is no longer in use.
-
-      const map = {
-        "agurk": this.CalculateGenericFood(3, 2, 8),
-        "banan": this.CalculateGenericFood(5, 1, 3),
-        "hvidløg": this.CalculateGenericFood(12, 130, 7),
-        "kartoffel": this.CalculateGenericFood(15, 3, 4),
-        "æble": this.CalculateGenericFood(10, 1, 3),
-
-      }
-      console.log(map[foodName]);
-      return map[foodName];
-    }, */
-
     SpoilDaysToHours(spoilDays, spoilHours){
       return (spoilDays*24)+spoilHours
     },
@@ -329,32 +314,6 @@ const app = Vue.createApp({
     },
 
 
-    /* CalculateGenericFood(range, penaltydays, penaltyhours) { // this method is no longer in use.
-      console.log("Hour:" + penaltyhours);
-      console.log("day:" + penaltydays);
-
-      const food = this.chosenFood;
-
-      const isIdeal = (this.newestHumidity >= food.idealhumidity - range && this.newestHumidity <= food.idealHumidity + range && this.newestTemperature >= food.idealTemperature - range && this.newestTemperature <= food.idealTemperature + range);
-      if (isIdeal) {
-        console.log(food.spoildays, food.spoilhours)
-        return [food.spoildays, food.spoilhours];
-      }
-
-      if (food.spoilhours - penaltyhours < 0) {
-        penaltyhours -= food.spoilhours;
-        let durabilityHours = 24 - penaltyhours;
-        let durabiliyDays = food.spoildays - (penaltydays + 1);
-
-        return [durabiliyDays, durabilityHours];
-      }
-
-      let durabilityHours = food.spoilhours - penaltyhours;
-      let durabiliyDays = food.spoildays - penaltydays;
-
-      return [durabiliyDays, durabilityHours];
-    }, */
-
     async ChooseFruit() {
       this.chosenFood = this.foods.find((elem) => elem.name.toLowerCase() == this.chosenFoodString.toLowerCase());
       if (this.chosenFood == null || this.chosenFood == "") {
@@ -367,7 +326,6 @@ const app = Vue.createApp({
       const food = this.chosenFood;
       console.log(this.CalculateQ10SpoilTime(food));
       const foodSpoilTime = this.CalculateQ10SpoilTime(food);
-/*       this.spoilTime = this.spoilMap(food.spoilhours, food.spoildays, food.name.toLowerCase()); */
       this.spoilTime = this.SpoilHoursToDays(foodSpoilTime);
       await this.FetchMealDB(); 
     },
@@ -419,12 +377,8 @@ const app = Vue.createApp({
           console.log(this.recommendedRecipes);
         }
       ).catch(function(error) {
-
-
       });
-
       this.isFetchingMealDB = false
-
     },
     AdminLogin() {
       document.cookie = "sessiontoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
@@ -432,8 +386,6 @@ const app = Vue.createApp({
       if(this.loginName == null || this.loginPassword == null) {
         this.loginWarning = "Husk brugernavn og password"
       } else {
-/*         document.cookie="sessiontoken=itworkssssss" */
-        
          axios.put(this.userBaseURL+"/getnewsessiontoken",null,{
           headers: {
             'username':this.loginName,
@@ -564,13 +516,6 @@ const app = Vue.createApp({
       }
     },
   },
-
-
-
-
-
-
-
   computed: {
     
   },
@@ -584,11 +529,6 @@ const app = Vue.createApp({
     this.SetupInitialData();
     this.GetFoodsByName();
     await this.GetImageResponseCode();
-    
-
-
-
-    //this.POST(); 
   }
 })
 
